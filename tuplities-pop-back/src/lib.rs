@@ -25,3 +25,30 @@ pub trait TuplePopBack {
     /// ```
     fn pop_back(self) -> (Self::Init, Self::Back);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::TuplePopBack;
+
+    #[test]
+    fn test_pop_back_single_element_tuple() {
+        let tuple = (42,);
+        let (init, back) = tuple.pop_back();
+        // Check that the types are correct: (T,) -> Init = (), Back = T
+        let expected_init: () = ();
+        let expected_back: i32 = 42;
+        assert_eq!(init, expected_init);
+        assert_eq!(back, expected_back);
+    }
+
+    #[test]
+    fn test_pop_back_two_element_tuple() {
+        let tuple = (1, 2);
+        let (init, back) = tuple.pop_back();
+        // Check that the types are correct: (T1, T2) -> Init = (T1,), Back = T2
+        let expected_init: (i32,) = (1,);
+        let expected_back: i32 = 2;
+        assert_eq!(init, expected_init);
+        assert_eq!(back, expected_back);
+    }
+}

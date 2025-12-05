@@ -35,3 +35,39 @@ pub trait TupleRemove<Idx: typenum::Unsigned> {
     /// Returns a tuple containing the removed element and the remaining tuple.
     fn remove(self) -> (Self::Type, Self::Remainder);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::TupleRemove;
+    use typenum::{U0, U1};
+
+    #[test]
+    fn test_remove_single_element_tuple() {
+        let tuple = (42,);
+        let (removed, remainder) = TupleRemove::<U0>::remove(tuple);
+        // Check types: (i32,) remove U0 -> Type = i32, Remainder = ()
+        let expected_removed: i32 = 42;
+        let expected_remainder: () = ();
+        assert_eq!(removed, expected_removed);
+        assert_eq!(remainder, expected_remainder);
+    }
+
+    #[test]
+    fn test_remove_two_element_tuple() {
+        // Remove at U0
+        let tuple = (1, 2);
+        let (removed0, remainder0) = TupleRemove::<U0>::remove(tuple);
+        let expected_removed0: i32 = 1;
+        let expected_remainder0: (i32,) = (2,);
+        assert_eq!(removed0, expected_removed0);
+        assert_eq!(remainder0, expected_remainder0);
+
+        // Remove at U1
+        let tuple = (1, 2);
+        let (removed1, remainder1) = TupleRemove::<U1>::remove(tuple);
+        let expected_removed1: i32 = 2;
+        let expected_remainder1: (i32,) = (1,);
+        assert_eq!(removed1, expected_removed1);
+        assert_eq!(remainder1, expected_remainder1);
+    }
+}

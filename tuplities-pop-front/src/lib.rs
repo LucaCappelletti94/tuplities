@@ -25,3 +25,30 @@ pub trait TuplePopFront {
     /// ```
     fn pop_front(self) -> (Self::Front, Self::Tail);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::TuplePopFront;
+
+    #[test]
+    fn test_pop_front_single_element_tuple() {
+        let tuple = (42,);
+        let (front, tail) = tuple.pop_front();
+        // Check that the types are correct: (T,) -> Front = T, Tail = ()
+        let expected_front: i32 = 42;
+        let expected_tail: () = ();
+        assert_eq!(front, expected_front);
+        assert_eq!(tail, expected_tail);
+    }
+
+    #[test]
+    fn test_pop_front_two_element_tuple() {
+        let tuple = (1, 2);
+        let (front, tail) = tuple.pop_front();
+        // Check that the types are correct: (T1, T2) -> Front = T1, Tail = (T2,)
+        let expected_front: i32 = 1;
+        let expected_tail: (i32,) = (2,);
+        assert_eq!(front, expected_front);
+        assert_eq!(tail, expected_tail);
+    }
+}

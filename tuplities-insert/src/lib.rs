@@ -30,3 +30,54 @@ pub trait TupleInsert<Idx: typenum::Unsigned, T> {
     /// Returns the tuple with the element inserted at the specified index.
     fn insert(self, value: T) -> Self::Output;
 }
+
+#[cfg(test)]
+mod tests {
+    use super::TupleInsert;
+    use typenum::{U0, U1, U2};
+
+    #[test]
+    fn test_insert_zero_elements() {
+        let tuple = ();
+        let result = TupleInsert::<U0, _>::insert(tuple, 42);
+        // () insert at U0 -> (i32,)
+        let expected: (i32,) = (42,);
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_insert_single_element() {
+        let tuple = (1,);
+        // Insert at U0
+        let result0 = TupleInsert::<U0, _>::insert(tuple, 42);
+        let expected0: (i32, i32) = (42, 1);
+        assert_eq!(result0, expected0);
+
+        // Insert at U1
+        let tuple = (1,);
+        let result1 = TupleInsert::<U1, _>::insert(tuple, 42);
+        let expected1: (i32, i32) = (1, 42);
+        assert_eq!(result1, expected1);
+    }
+
+    #[test]
+    fn test_insert_two_elements() {
+        let tuple = (1, 2);
+        // Insert at U0
+        let result0 = TupleInsert::<U0, _>::insert(tuple, 42);
+        let expected0: (i32, i32, i32) = (42, 1, 2);
+        assert_eq!(result0, expected0);
+
+        // Insert at U1
+        let tuple = (1, 2);
+        let result1 = TupleInsert::<U1, _>::insert(tuple, 42);
+        let expected1: (i32, i32, i32) = (1, 42, 2);
+        assert_eq!(result1, expected1);
+
+        // Insert at U2
+        let tuple = (1, 2);
+        let result2 = TupleInsert::<U2, _>::insert(tuple, 42);
+        let expected2: (i32, i32, i32) = (1, 2, 42);
+        assert_eq!(result2, expected2);
+    }
+}
