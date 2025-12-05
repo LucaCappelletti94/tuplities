@@ -36,6 +36,7 @@ homepage = "https://github.com/lucacappelletti94/tuplities"
 keywords = ["tuples", "utilities", "metaprogramming", "typenum"]
 categories = ["development-tools", "data-structures"]
 version = "0.1.0"
+readme = "../README.md"
 rust-version = "1.85"
 
 [workspace.dependencies]
