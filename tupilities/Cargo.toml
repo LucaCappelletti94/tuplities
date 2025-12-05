@@ -17,6 +17,8 @@ tupilities-partial-eq.workspace = true
 tupilities-partial-ord.workspace = true
 tupilities-pop-front.workspace = true
 tupilities-pop-back.workspace = true
+tupilities-push-front.workspace = true
+tupilities-push-back.workspace = true
 tupilities-ref.workspace = true
 
 [lints]
@@ -39,6 +41,8 @@ size-16 = [
   "tupilities-ref/size-16",
   "tupilities-pop-front/size-16",
   "tupilities-pop-back/size-16",
+  "tupilities-push-front/size-16",
+  "tupilities-push-back/size-16",
 ]
 size-32 = [
   "tupilities-clone/size-32",
@@ -55,6 +59,8 @@ size-32 = [
   "tupilities-ref/size-32",
   "tupilities-pop-front/size-32",
   "tupilities-pop-back/size-32",
+  "tupilities-push-front/size-32",
+  "tupilities-push-back/size-32",
 ]
 size-48 = [
   "tupilities-clone/size-48",
@@ -71,6 +77,8 @@ size-48 = [
   "tupilities-ref/size-48",
   "tupilities-pop-front/size-48",
   "tupilities-pop-back/size-48",
+  "tupilities-push-front/size-48",
+  "tupilities-push-back/size-48",
 ]
 size-64 = [
   "tupilities-clone/size-64",
@@ -87,6 +95,8 @@ size-64 = [
   "tupilities-ref/size-64",
   "tupilities-pop-front/size-64",
   "tupilities-pop-back/size-64",
+  "tupilities-push-front/size-64",
+  "tupilities-push-back/size-64",
 ]
 size-96 = [
   "tupilities-clone/size-96",
@@ -103,6 +113,8 @@ size-96 = [
   "tupilities-ref/size-96",
   "tupilities-pop-front/size-96",
   "tupilities-pop-back/size-96",
+  "tupilities-push-front/size-96",
+  "tupilities-push-back/size-96",
 ]
 size-128 = [
   "tupilities-clone/size-128",
@@ -119,4 +131,6 @@ size-128 = [
   "tupilities-ref/size-128",
   "tupilities-pop-front/size-128",
   "tupilities-pop-back/size-128",
+  "tupilities-push-front/size-128",
+  "tupilities-push-back/size-128",
 ]

@@ -35,6 +35,8 @@ The library provides several traits for working with tuples:
 - `TupleMut`: Provides a `tuple_mut()` method to get mutable references to each element in the tuple.
 - `PopFront`: Provides a `pop_front()` method to remove and return the first element of the tuple along with the remaining elements as a new tuple.
 - `PopBack`: Provides a `pop_back()` method to remove and return the last element of the tuple along with the remaining elements as a new tuple.
+- `PushFront<T>`: Provides a `push_front(element)` method to add an element to the front of the tuple, returning a new tuple.
+- `PushBack<T>`: Provides a `push_back(element)` method to add an element to the back of the tuple, returning a new tuple.
 
 ## Features
 

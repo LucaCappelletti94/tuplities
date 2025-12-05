@@ -16,5 +16,7 @@ pub mod prelude {
     pub use tupilities_partial_ord::TuplePartialOrd;
     pub use tupilities_pop_back::PopBack;
     pub use tupilities_pop_front::PopFront;
+    pub use tupilities_push_back::PushBack;
+    pub use tupilities_push_front::PushFront;
     pub use tupilities_ref::TupleRef;
 }

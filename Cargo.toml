@@ -16,6 +16,8 @@ members = [
   "tupilities-partial-ord",
   "tupilities-pop-front",
   "tupilities-pop-back",
+  "tupilities-push-front",
+  "tupilities-push-back",
   "tupilities-ref",
   "tupilities-derive",
 ]
@@ -34,6 +36,8 @@ tupilities-partial-eq = { path = "tupilities-partial-eq" }
 tupilities-partial-ord = { path = "tupilities-partial-ord" }
 tupilities-pop-front = { path = "tupilities-pop-front" }
 tupilities-pop-back = { path = "tupilities-pop-back" }
+tupilities-push-front = { path = "tupilities-push-front" }
+tupilities-push-back = { path = "tupilities-push-back" }
 tupilities-ref = { path = "tupilities-ref" }
 tupilities-derive = { path = "tupilities-derive" }
 siphasher = { version = "1" }
