@@ -1,0 +1,19 @@
+[package]
+name = "tupilities"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tupilities-clone.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+default = []
+size-16 = ["tupilities-clone/size-16"]
+size-32 = ["tupilities-clone/size-32"]
+size-48 = ["tupilities-clone/size-48"]
+size-64 = ["tupilities-clone/size-64"]
+size-96 = ["tupilities-clone/size-96"]
+size-128 = ["tupilities-clone/size-128"]

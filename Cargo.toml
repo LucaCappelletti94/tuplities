@@ -1,0 +1,30 @@
+[workspace]
+resolver = "2"
+
+members = ["tupilities", "tupilities-clone", "tupilities-derive"]
+
+[workspace.dependencies]
+tupilities-clone = { path = "tupilities-clone" }
+tupilities-derive = { path = "tupilities-derive" }
+
+[workspace.lints.rust]
+missing_docs = "forbid"
+unused_macro_rules = "forbid"
+unconditional_recursion = "forbid"
+unreachable_patterns = "forbid"
+unused_import_braces = "forbid"
+unused_must_use = "forbid"
+deprecated = "deny"
+
+[workspace.lints.clippy]
+unreadable_literal = "allow"
+missing_panics_doc = "allow"
+new_ret_no_self = "allow"
+struct_excessive_bools = "allow"
+should_panic_without_expect = "allow"
+doc_markdown = "allow"
+unnecessary_cast = "forbid"
+unused_unit = "allow"
+redundant_clone = "forbid"
+clone_on_copy = "forbid"
+pedantic = { level = "deny", priority = -1 }
