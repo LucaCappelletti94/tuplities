@@ -3,7 +3,6 @@
 [![Documentation](https://docs.rs/tupilities/badge.svg)](https://docs.rs/tupilities)
 [![CI](https://github.com/LucaCappelletti94/tupilities/workflows/Rust%20CI/badge.svg)](https://github.com/LucaCappelletti94/tupilities/actions)
 [![Security Audit](https://github.com/LucaCappelletti94/tupilities/workflows/Security%20Audit/badge.svg)](https://github.com/LucaCappelletti94/tupilities/actions)
-[![Codecov](https://codecov.io/gh/LucaCappelletti94/tupilities/branch/main/graph/badge.svg)](https://codecov.io/gh/LucaCappelletti94/tupilities)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Downloads](https://img.shields.io/crates/d/tupilities.svg)](https://crates.io/crates/tupilities)
 
@@ -27,6 +26,8 @@ The library provides several traits for working with tuples:
 - `TupleHash`: Provides a `tuple_hash<H: Hasher>()` method to hash tuples with any hasher. All elements must implement `Hash`.
 - `TupleSipHasher24`: Provides a `tuple_sip_hash()` method that returns a hash value using SipHasher24. All elements must implement `Hash`.
 - `TupleAsRef`: Provides an `as_tuple_ref()` method that returns a tuple of references to a common type. All elements must implement `AsRef<T>` for the same `T`.
+- `TuplePartialEq`: Provides a `tuple_eq()` method to compare tuples for partial equality. All elements must implement `PartialEq`.
+- `TupleEq`: Provides a `tuple_eq()` method to compare tuples for total equality. All elements must implement `Eq`.
 
 ## Features
 

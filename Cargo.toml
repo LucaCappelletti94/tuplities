@@ -8,7 +8,9 @@ members = [
 	"tupilities-copy",
 	"tupilities-debug",
 	"tupilities-default",
+	"tupilities-eq",
 	"tupilities-hash",
+	"tupilities-partial-eq",
 	"tupilities-derive",
 ]
 
@@ -18,7 +20,9 @@ tupilities-clone = { path = "tupilities-clone" }
 tupilities-copy = { path = "tupilities-copy" }
 tupilities-debug = { path = "tupilities-debug" }
 tupilities-default = { path = "tupilities-default" }
+tupilities-eq = { path = "tupilities-eq" }
 tupilities-hash = { path = "tupilities-hash" }
+tupilities-partial-eq = { path = "tupilities-partial-eq" }
 tupilities-derive = { path = "tupilities-derive" }
 siphasher = { version = "1" }
 

@@ -46,7 +46,9 @@ dependencies = [
  "tupilities-copy",
  "tupilities-debug",
  "tupilities-default",
+ "tupilities-eq",
  "tupilities-hash",
+ "tupilities-partial-eq",
 ]
 
 [[package]]
@@ -95,10 +97,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "tupilities-eq"
+version = "0.1.0"
+dependencies = [
+ "tupilities-derive",
+]
+
+[[package]]
 name = "tupilities-hash"
 version = "0.1.0"
 dependencies = [
  "siphasher",
+ "tupilities-derive",
+]
+
+[[package]]
+name = "tupilities-partial-eq"
+version = "0.1.0"
+dependencies = [
  "tupilities-derive",
 ]
 

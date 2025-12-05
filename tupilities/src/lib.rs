@@ -8,5 +8,7 @@ pub mod prelude {
     pub use tupilities_copy::TupleCopy;
     pub use tupilities_debug::TupleDebug;
     pub use tupilities_default::TupleDefault;
+    pub use tupilities_eq::TupleEq;
     pub use tupilities_hash::{TupleHash, TupleSipHasher24};
+    pub use tupilities_partial_eq::TuplePartialEq;
 }
