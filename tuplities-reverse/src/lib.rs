@@ -33,8 +33,7 @@ mod tests {
     #[test]
     fn test_reverse_empty_tuple() {
         let tuple = ();
-        let reversed = tuple.reverse();
-        assert_eq!(reversed, ());
+        let _reversed: () = tuple.reverse();
     }
 
     #[test]

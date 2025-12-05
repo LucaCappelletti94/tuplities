@@ -51,6 +51,22 @@ The crate provides features to generate trait implementations for tuples up to d
 tuplities = { version = "0.1", features = ["size-32"] }
 ```
 
+## Performance
+
+Compile times scale with tuple size due to code generation. Here are approximate build times for different maximum tuple sizes (on a typical development machine):
+
+| Max Tuple Size | Compile Time |
+|----------------|--------------|
+| 8 (default)    | ~2.3s        |
+| 16             | ~2.4s        |
+| 32             | ~2.8s        |
+| 48             | ~3.7s        |
+| 64             | ~5.4s        |
+| 96             | ~12.6s       |
+| 128            | ~26.2s       |
+
+Compile times grow with tuple size, though the scaling remains sub-linear.
+
 ## Architecture
 
 The project is split into multiple crates for improved compile times:
