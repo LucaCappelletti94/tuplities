@@ -53,7 +53,7 @@ tuplities = { version = "0.1", features = ["size-32"] }
 
 ## Performance
 
-Compile times scale nearly linearly with tuple size due to code generation. Here are approximate build times for different maximum tuple sizes (on a typical development machine):
+Compile times scale with tuple size due to code generation. Here are approximate build times for different maximum tuple sizes (on a typical development machine):
 
 | Max Tuple Size | Compile Time |
 |----------------|--------------|
