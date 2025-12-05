@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TuplePushFront` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TuplePushFront` trait.
 
 #[tuplities_derive::impl_push_front]
 /// A trait for tuples that allows pushing an element to the front.

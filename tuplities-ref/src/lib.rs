@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleRef` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleRef` trait.
 
 #[tuplities_derive::impl_tuple_ref]
 /// A trait for tuples that provides a method to get a tuple of references.

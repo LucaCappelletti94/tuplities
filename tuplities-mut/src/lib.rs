@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleMut` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleMut` trait.
 
 #[tuplities_derive::impl_tuple_mut]
 /// A trait for tuples that provides a method to get a tuple of mutable references.

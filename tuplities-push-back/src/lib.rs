@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TuplePushBack` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TuplePushBack` trait.
 
 #[tuplities_derive::impl_push_back]
 /// A trait for tuples that allows pushing an element to the back.

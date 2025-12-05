@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TuplePopBack` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TuplePopBack` trait.
 
 #[tuplities_derive::impl_pop_back]
 /// A trait for tuples that defines the `Init` and `Back` types, and provides a method to pop the back element.

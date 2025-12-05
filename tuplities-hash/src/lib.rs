@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleHash` and `TupleSipHasher24` traits.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleHash` and `TupleSipHasher24` traits.
 
 #[tuplities_derive::impl_tuple_hash]
 /// A trait for hashing tuples with a generic hasher.

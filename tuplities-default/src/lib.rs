@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleDefault` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleDefault` trait.
 
 #[tuplities_derive::impl_tuple_default]
 /// A trait for creating default instances of tuples.

@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleEq` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleEq` trait.
 
 #[tuplities_derive::impl_tuple_eq]
 /// A trait for comparing tuples for total equality.

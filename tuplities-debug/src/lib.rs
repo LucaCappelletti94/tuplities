@@ -1,4 +1,4 @@
-//! tuplities suite crate providing the `TupleDebug` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleDebug` trait.
 #![no_std]
 
 extern crate alloc;

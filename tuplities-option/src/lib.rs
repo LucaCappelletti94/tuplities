@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleOption` and `IntoTupleOption` traits.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleOption` and `IntoTupleOption` traits.
 
 #[tuplities_derive::impl_tuple_option]
 /// A trait for transposing a tuple of options into an option of a tuple.

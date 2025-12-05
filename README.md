@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Downloads](https://img.shields.io/crates/d/tuplities.svg)](https://crates.io/crates/tuplities)
 
-Tuple utilities in Rust, fractioned across several crates to improve compile times. There is a main crate `tuplities` that re-exports traits from subcrates, which can be compiled in parallel cutting down on overall build times.
+Tuple utilities in Rust, fractioned across several crates to improve compile times. There is a main crate `tuplities` that re-exports traits from subcrates in its `prelude` module, so that the subcrates may be compiled in parallel cutting down on overall build times.
 
 This library is `#[no_std]` compatible, making it suitable for embedded systems and other environments without the standard library.
 
@@ -15,33 +15,31 @@ This library is `#[no_std]` compatible, making it suitable for embedded systems 
 tuplities = "0.1"
 ```
 
-## Traits
-
 The library provides several traits for working with tuples:
 
-- `TupleClone`: Provides a `tuple_clone()` method to clone tuples. All elements must implement `Clone`.
-- `TupleCopy`: Provides a `tuple_copy()` method to copy tuples. All elements must implement `Copy`.
-- `TupleDebug`: Provides a `tuple_debug()` method that returns a debug string representation of the tuple. All elements must implement `Debug`.
-- `TupleDefault`: Provides a `tuple_default()` method to create default instances of tuples. All elements must implement `Default`.
-- `TupleHash`: Provides a `tuple_hash<H: Hasher>()` method to hash tuples with any hasher. All elements must implement `Hash`.
-- `TupleSipHasher24`: Provides a `tuple_sip_hash()` method that returns a hash value using SipHasher24. All elements must implement `Hash`.
-- `TuplePartialEq`: Provides a `tuple_eq()` method to compare tuples for partial equality. All elements must implement `PartialEq`.
-- `TupleEq`: Provides a `tuple_eq()` method to compare tuples for total equality. All elements must implement `Eq`.
-- `TuplePartialOrd`: Provides a `tuple_partial_cmp()` method to compare tuples for partial ordering. All elements must implement `PartialOrd`.
-- `TupleOrd`: Provides a `tuple_cmp()` method to compare tuples for total ordering. All elements must implement `Ord`.
-- `TupleOption`: Provides a `transpose()` method to transpose a tuple of options into an option of a tuple. All elements must be `Option<T>`.
-- `IntoTupleOption`: Provides an `into_options()` method to convert a tuple into a tuple of options.
-- `TupleRef`: Provides a `tuple_ref()` method to get references to each element in the tuple.
-- `TupleMut`: Provides a `tuple_mut()` method to get mutable references to each element in the tuple.
-- `TuplePopFront`: Provides a `pop_front()` method to remove and return the first element of the tuple along with the remaining elements as a new tuple.
-- `TuplePopBack`: Provides a `pop_back()` method to remove and return the last element of the tuple along with the remaining elements as a new tuple.
-- `TuplePushFront<T>`: Provides a `push_front(element)` method to add an element to the front of the tuple, returning a new tuple.
-- `TuplePushBack<T>`: Provides a `push_back(element)` method to add an element to the back of the tuple, returning a new tuple.
-- `TupleRemove<Idx>`: Provides a `remove()` method to remove and return the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple along with the remaining elements as a new tuple.
-- `TupleInsert<Idx, T>`: Provides an `insert()` method to insert an element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` into the tuple, returning the tuple with the element inserted.
-- `TupleLen`: Provides the length of the tuple as a compile-time `typenum::Unsigned` type.
-- `TupleIndex<Idx>`: Provides an `index()` method to access the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
-- `TupleIndexMut<Idx>`: Provides an `index_mut()` method to access a mutable reference to the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
+- [`TupleClone`](https://docs.rs/tuplities-clone/trait.TupleClone.html): Provides a [`tuple_clone()`](https://docs.rs/tuplities-clone/trait.TupleClone.html#tymethod.tuple_clone) method to clone tuples. All elements must implement `Clone`.
+- [`TupleCopy`](https://docs.rs/tuplities-copy/trait.TupleCopy.html): Provides a [`tuple_copy()`](https://docs.rs/tuplities-copy/trait.TupleCopy.html#tymethod.tuple_copy) method to copy tuples. All elements must implement `Copy`.
+- [`TupleDebug`](https://docs.rs/tuplities-debug/trait.TupleDebug.html): Provides a [`tuple_debug()`](https://docs.rs/tuplities-debug/trait.TupleDebug.html#tymethod.tuple_debug) method that returns a debug string representation of the tuple. All elements must implement `Debug`.
+- [`TupleDefault`](https://docs.rs/tuplities-default/trait.TupleDefault.html): Provides a [`tuple_default()`](https://docs.rs/tuplities-default/trait.TupleDefault.html#tymethod.tuple_default) method to create default instances of tuples. All elements must implement `Default`.
+- [`TupleHash`](https://docs.rs/tuplities-hash/trait.TupleHash.html): Provides a [`tuple_hash<H: Hasher>()`](https://docs.rs/tuplities-hash/trait.TupleHash.html#tymethod.tuple_hash) method to hash tuples with any hasher. All elements must implement `Hash`.
+- [`TupleSipHasher24`](https://docs.rs/tuplities-hash/trait.TupleSipHasher24.html): Provides a [`tuple_sip_hash()`](https://docs.rs/tuplities-hash/trait.TupleSipHasher24.html#tymethod.tuple_sip_hash) method that returns a hash value using SipHasher24. All elements must implement `Hash`.
+- [`TuplePartialEq`](https://docs.rs/tuplities-partial-eq/trait.TuplePartialEq.html): Provides a [`tuple_eq()`](https://docs.rs/tuplities-partial-eq/trait.TuplePartialEq.html#tymethod.tuple_eq) method to compare tuples for partial equality. All elements must implement `PartialEq`.
+- [`TupleEq`](https://docs.rs/tuplities-eq/trait.TupleEq.html): Provides a [`tuple_eq()`](https://docs.rs/tuplities-eq/trait.TupleEq.html#tymethod.tuple_eq) method to compare tuples for total equality. All elements must implement `Eq`.
+- [`TuplePartialOrd`](https://docs.rs/tuplities-partial-ord/trait.TuplePartialOrd.html): Provides a [`tuple_partial_cmp()`](https://docs.rs/tuplities-partial-ord/trait.TuplePartialOrd.html#tymethod.tuple_partial_cmp) method to compare tuples for partial ordering. All elements must implement `PartialOrd`.
+- [`TupleOrd`](https://docs.rs/tuplities-ord/trait.TupleOrd.html): Provides a [`tuple_cmp()`](https://docs.rs/tuplities-ord/trait.TupleOrd.html#tymethod.tuple_cmp) method to compare tuples for total ordering. All elements must implement `Ord`.
+- [`TupleOption`](https://docs.rs/tuplities-option/trait.TupleOption.html): Provides a [`transpose()`](https://docs.rs/tuplities-option/trait.TupleOption.html#tymethod.transpose) method to transpose a tuple of options into an option of a tuple. All elements must be `Option<T>`.
+- [`IntoTupleOption`](https://docs.rs/tuplities-option/trait.IntoTupleOption.html): Provides an [`into_options()`](https://docs.rs/tuplities-option/trait.IntoTupleOption.html#tymethod.into_options) method to convert a tuple into a tuple of options.
+- [`TupleRef`](https://docs.rs/tuplities-ref/trait.TupleRef.html): Provides a [`tuple_ref()`](https://docs.rs/tuplities-ref/trait.TupleRef.html#tymethod.tuple_ref) method to get references to each element in the tuple.
+- [`TupleMut`](https://docs.rs/tuplities-mut/trait.TupleMut.html): Provides a [`tuple_mut()`](https://docs.rs/tuplities-mut/trait.TupleMut.html#tymethod.tuple_mut) method to get mutable references to each element in the tuple.
+- [`TuplePopFront`](https://docs.rs/tuplities-pop-front/trait.TuplePopFront.html): Provides a [`pop_front()`](https://docs.rs/tuplities-pop-front/trait.TuplePopFront.html#tymethod.pop_front) method to remove and return the first element of the tuple along with the remaining elements as a new tuple.
+- [`TuplePopBack`](https://docs.rs/tuplities-pop-back/trait.TuplePopBack.html): Provides a [`pop_back()`](https://docs.rs/tuplities-pop-back/trait.TuplePopBack.html#tymethod.pop_back) method to remove and return the last element of the tuple along with the remaining elements as a new tuple.
+- [`TuplePushFront<T>`](https://docs.rs/tuplities-push-front/trait.TuplePushFront.html): Provides a [`push_front(element)`](https://docs.rs/tuplities-push-front/trait.TuplePushFront.html#tymethod.push_front) method to add an element to the front of the tuple, returning a new tuple.
+- [`TuplePushBack<T>`](https://docs.rs/tuplities-push-back/trait.TuplePushBack.html): Provides a [`push_back(element)`](https://docs.rs/tuplities-push-back/trait.TuplePushBack.html#tymethod.push_back) method to add an element to the back of the tuple, returning a new tuple.
+- [`TupleRemove<Idx>`](https://docs.rs/tuplities-remove/trait.TupleRemove.html): Provides a [`remove()`](https://docs.rs/tuplities-remove/trait.TupleRemove.html#tymethod.remove) method to remove and return the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple along with the remaining elements as a new tuple.
+- [`TupleInsert<Idx, T>`](https://docs.rs/tuplities-insert/trait.TupleInsert.html): Provides an [`insert()`](https://docs.rs/tuplities-insert/trait.TupleInsert.html#tymethod.insert) method to insert an element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` into the tuple, returning the tuple with the element inserted.
+- [`TupleLen`](https://docs.rs/tuplities-len/trait.TupleLen.html): Provides the length of the tuple as a compile-time `typenum::Unsigned` type.
+- [`TupleIndex<Idx>`](https://docs.rs/tuplities-index/trait.TupleIndex.html): Provides an [`index()`](https://docs.rs/tuplities-index/trait.TupleIndex.html#tymethod.index) method to access the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
+- [`TupleIndexMut<Idx>`](https://docs.rs/tuplities-index/trait.TupleIndexMut.html): Provides an [`index_mut()`](https://docs.rs/tuplities-index/trait.TupleIndexMut.html#tymethod.index_mut) method to access a mutable reference to the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
 
 ## Features
 

@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleClone` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleClone` trait.
 
 #[tuplities_derive::impl_tuple_clone]
 /// A trait for cloning tuples.

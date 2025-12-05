@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TupleCopy` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleCopy` trait.
 
 #[tuplities_derive::impl_tuple_copy]
 /// A trait for copying tuples.

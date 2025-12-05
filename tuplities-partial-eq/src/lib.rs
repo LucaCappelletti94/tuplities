@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TuplePartialEq` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TuplePartialEq` trait.
 
 #[tuplities_derive::impl_tuple_partial_eq]
 /// A trait for comparing tuples for partial equality.

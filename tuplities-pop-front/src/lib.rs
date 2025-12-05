@@ -1,6 +1,6 @@
 #![no_std]
 
-//! tuplities suite crate providing the `TuplePopFront` trait.
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TuplePopFront` trait.
 
 #[tuplities_derive::impl_pop_front]
 /// A trait for tuples that defines the `Front` and `Tail` types, and provides a method to pop the front element.
