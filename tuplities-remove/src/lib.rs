@@ -22,7 +22,7 @@
 /// assert_eq!(removed, "hello");
 /// assert_eq!(remainder, (1, 3.14));
 /// ```
-/// 
+///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_remove]
 pub trait TupleRemove<Idx: typenum::Unsigned> {

@@ -21,7 +21,7 @@ pub trait TuplePartialOrd {
     /// assert_eq!(tuple1.tuple_partial_cmp(&tuple3), Some(Ordering::Less));
     /// assert_eq!(tuple1.tuple_partial_cmp(&tuple1), Some(Ordering::Equal));
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn tuple_partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering>;
 }

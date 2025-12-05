@@ -23,7 +23,7 @@ pub trait TuplePopFront {
     /// assert_eq!(first, 1);
     /// assert_eq!(rest, (2, 3));
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn pop_front(self) -> (Self::Front, Self::Tail);
 }

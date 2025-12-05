@@ -19,7 +19,7 @@ pub trait TuplePushFront<T> {
     /// let new_tuple = tuple.push_front("hello");
     /// assert_eq!(new_tuple, ("hello", "world"));
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn push_front(self, value: T) -> Self::Output;
 }

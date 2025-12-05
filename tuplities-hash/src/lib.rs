@@ -4,7 +4,7 @@
 
 #[tuplities_derive::impl_tuple_hash]
 /// A trait for hashing tuples with a generic hasher.
-/// 
+///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait TupleHash {
     /// Hashes the tuple into the given hasher.
@@ -12,7 +12,7 @@ pub trait TupleHash {
 }
 
 /// A trait for hashing tuples with SipHasher24.
-/// 
+///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait TupleSipHasher24: TupleHash {
     /// Returns the hash value of the tuple using SipHasher24.

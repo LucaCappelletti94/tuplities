@@ -21,7 +21,7 @@ pub trait TupleOrd {
     /// assert_eq!(tuple1.tuple_cmp(&tuple3), Ordering::Less);
     /// assert_eq!(tuple1.tuple_cmp(&tuple1), Ordering::Equal);
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn tuple_cmp(&self, other: &Self) -> core::cmp::Ordering;
 }

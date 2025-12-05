@@ -19,7 +19,7 @@ pub trait TuplePartialEq {
     /// assert!(tuple1.tuple_eq(&tuple2));
     /// assert!(!tuple1.tuple_eq(&tuple3));
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn tuple_eq(&self, other: &Self) -> bool;
 }

@@ -23,7 +23,7 @@ pub trait TuplePopBack {
     /// assert_eq!(front, (1, 2));
     /// assert_eq!(back, 3);
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn pop_back(self) -> (Self::Init, Self::Back);
 }

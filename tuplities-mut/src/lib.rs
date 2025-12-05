@@ -20,7 +20,7 @@
 /// mut_refs.2.push(4);
 /// assert_eq!(tuple, (42, "hello world".to_string(), vec![1, 2, 3, 4]));
 /// ```
-/// 
+///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait TupleMut {
     /// The type of a tuple containing mutable references to each element.

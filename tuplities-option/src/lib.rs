@@ -27,7 +27,7 @@ pub trait TupleOption: TupleDefault {
     /// let transposed: Option<(i32, i32)> = tuple.transpose();
     /// assert_eq!(transposed, None);
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn transpose(self) -> Option<Self::Transposed>;
 }
@@ -48,7 +48,7 @@ pub trait IntoTupleOption {
     /// let into_options: (Option<i32>, Option<i32>) = tuple.into_options();
     /// assert_eq!(into_options, (Some(1), Some(2)));
     /// ```
-    /// 
+    ///
     /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
     fn into_options(self) -> Self::IntoOptions;
 }
