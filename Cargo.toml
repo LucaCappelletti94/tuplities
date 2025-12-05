@@ -30,13 +30,14 @@ members = [
 authors = ["Luca Cappelletti"]
 edition = "2024"
 description = "A collection of utilities for working with tuples in Rust."
-license = "MIT OR Apache-2.0"
+license = "MIT"
+license-file = "LICENSE"
 repository = "https://github.com/lucacappelletti94/tuplities"
 homepage = "https://github.com/lucacappelletti94/tuplities"
 keywords = ["tuples", "utilities", "metaprogramming", "typenum"]
 categories = ["development-tools", "data-structures"]
 version = "0.1.1"
-readme = "../README.md"
+readme = "README.md"
 rust-version = "1.85"
 
 [workspace.dependencies]

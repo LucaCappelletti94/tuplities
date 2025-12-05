@@ -44,12 +44,10 @@ mod tests {
     #[test]
     fn test_remove_single_element_tuple() {
         let tuple = (42,);
-        let (removed, remainder) = TupleRemove::<U0>::remove(tuple);
+        let (removed, _remainder): (i32, ()) = TupleRemove::<U0>::remove(tuple);
         // Check types: (i32,) remove U0 -> Type = i32, Remainder = ()
         let expected_removed: i32 = 42;
-        let expected_remainder: () = ();
         assert_eq!(removed, expected_removed);
-        assert_eq!(remainder, expected_remainder);
     }
 
     #[test]

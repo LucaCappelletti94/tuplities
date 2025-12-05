@@ -33,12 +33,10 @@ mod tests {
     #[test]
     fn test_pop_front_single_element_tuple() {
         let tuple = (42,);
-        let (front, tail) = tuple.pop_front();
+        let (front, _tail): (i32, ()) = tuple.pop_front();
         // Check that the types are correct: (T,) -> Front = T, Tail = ()
         let expected_front: i32 = 42;
-        let expected_tail: () = ();
         assert_eq!(front, expected_front);
-        assert_eq!(tail, expected_tail);
     }
 
     #[test]

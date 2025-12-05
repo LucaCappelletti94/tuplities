@@ -33,11 +33,9 @@ mod tests {
     #[test]
     fn test_pop_back_single_element_tuple() {
         let tuple = (42,);
-        let (init, back) = tuple.pop_back();
+        let (_init, back): ((), i32) = tuple.pop_back();
         // Check that the types are correct: (T,) -> Init = (), Back = T
-        let expected_init: () = ();
         let expected_back: i32 = 42;
-        assert_eq!(init, expected_init);
         assert_eq!(back, expected_back);
     }
 
