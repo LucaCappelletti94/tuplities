@@ -66,4 +66,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contribution
 
-Contributions are welcome! Please open issues or pull requests on the [GitHub repository](https://github.com/lucac/tuplities).
+Contributions are welcome! Please open issues or pull requests on the [GitHub repository](https://github.com/lucacappelletti94/tuplities).

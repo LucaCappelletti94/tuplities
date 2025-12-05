@@ -31,10 +31,12 @@ authors = ["Luca Cappelletti"]
 edition = "2024"
 description = "A collection of utilities for working with tuples in Rust."
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/lucacappelletti/tuplities"
+repository = "https://github.com/lucacappelletti94/tuplities"
+homepage = "https://github.com/lucacappelletti94/tuplities"
 keywords = ["tuples", "utilities", "metaprogramming", "typenum"]
 categories = ["development-tools", "data-structures"]
 version = "0.1.0"
+rust-version = "1.85"
 
 [workspace.dependencies]
 tuplities-clone = { path = "tuplities-clone", version = "0.1.0" }
