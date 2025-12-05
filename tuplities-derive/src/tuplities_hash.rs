@@ -11,7 +11,7 @@ pub fn impl_tuple_hash() -> proc_macro2::TokenStream {
         let indices = indices(size);
 
         quote! {
-            impl<#(#type_params: core::hash::Hash,)*> TupleHash for (#(#type_params,)*)
+            impl<#(#type_params: core::hash::Hash + Eq,)*> TupleHash for (#(#type_params,)*)
             {
                 #[inline]
                 fn tuple_hash<H: core::hash::Hasher>(&self, state: &mut H) {

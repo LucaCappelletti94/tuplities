@@ -2,9 +2,11 @@
 
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TuplePartialOrd` trait.
 
+use tuplities_partial_eq::TuplePartialEq;
+
 #[tuplities_derive::impl_tuple_partial_ord]
 /// A trait for comparing tuples for partial ordering.
-pub trait TuplePartialOrd {
+pub trait TuplePartialOrd: TuplePartialEq {
     /// Returns the partial ordering of `self` and `other`.
     ///
     /// # Examples

@@ -9,20 +9,22 @@ members = [
   "tuplities-default",
   "tuplities-eq",
   "tuplities-hash",
+  "tuplities-index",
+  "tuplities-insert",
+  "tuplities-len",
   "tuplities-mut",
   "tuplities-option",
   "tuplities-ord",
   "tuplities-partial-eq",
   "tuplities-partial-ord",
-  "tuplities-remove",
-  "tuplities-insert",
-  "tuplities-len",
-  "tuplities-index",
-  "tuplities-pop-front",
   "tuplities-pop-back",
-  "tuplities-push-front",
+  "tuplities-pop-front",
   "tuplities-push-back",
+  "tuplities-push-front",
   "tuplities-ref",
+  "tuplities-remove",
+  "tuplities-reverse",
+  "tuplities-split",
   "tuplities-derive",
 ]
 
@@ -47,22 +49,23 @@ tuplities-debug = { path = "tuplities-debug", version = "0.1.2" }
 tuplities-default = { path = "tuplities-default", version = "0.1.2" }
 tuplities-eq = { path = "tuplities-eq", version = "0.1.2" }
 tuplities-hash = { path = "tuplities-hash", version = "0.1.2" }
+tuplities-index = { path = "tuplities-index", version = "0.1.2" }
+tuplities-insert = { path = "tuplities-insert", version = "0.1.2" }
+tuplities-len = { path = "tuplities-len", version = "0.1.2" }
 tuplities-mut = { path = "tuplities-mut", version = "0.1.2" }
 tuplities-option = { path = "tuplities-option", version = "0.1.2" }
 tuplities-ord = { path = "tuplities-ord", version = "0.1.2" }
 tuplities-partial-eq = { path = "tuplities-partial-eq", version = "0.1.2" }
 tuplities-partial-ord = { path = "tuplities-partial-ord", version = "0.1.2" }
-tuplities-remove = { path = "tuplities-remove", version = "0.1.2" }
-tuplities-insert = { path = "tuplities-insert", version = "0.1.2" }
-tuplities-len = { path = "tuplities-len", version = "0.1.2" }
-tuplities-index = { path = "tuplities-index", version = "0.1.2" }
-tuplities-pop-front = { path = "tuplities-pop-front", version = "0.1.2" }
 tuplities-pop-back = { path = "tuplities-pop-back", version = "0.1.2" }
-tuplities-push-front = { path = "tuplities-push-front", version = "0.1.2" }
+tuplities-pop-front = { path = "tuplities-pop-front", version = "0.1.2" }
 tuplities-push-back = { path = "tuplities-push-back", version = "0.1.2" }
+tuplities-push-front = { path = "tuplities-push-front", version = "0.1.2" }
 tuplities-ref = { path = "tuplities-ref", version = "0.1.2" }
+tuplities-remove = { path = "tuplities-remove", version = "0.1.2" }
+tuplities-reverse = { path = "tuplities-reverse", version = "0.1.2" }
+tuplities-split = { path = "tuplities-split", version = "0.1.2" }
 tuplities-derive = { path = "tuplities-derive", version = "0.1.2" }
-siphasher = { version = "1" }
 typenum = { version = "1" }
 
 [workspace.lints.rust]

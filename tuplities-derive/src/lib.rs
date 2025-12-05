@@ -24,6 +24,8 @@ mod tuplities_push_back;
 mod tuplities_push_front;
 mod tuplities_ref;
 mod tuplities_remove;
+mod tuplities_reverse;
+mod tuplities_split;
 
 /// Generate `TableIndex` trait implementations for all tuple sizes.
 #[proc_macro_attribute]
@@ -166,6 +168,22 @@ pub fn impl_push_back(_attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn impl_push_front(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_push_front::impl_push_front());
+    item.into()
+}
+
+/// Generate `TupleReverse` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_reverse(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_reverse::impl_reverse());
+    item.into()
+}
+
+/// Generate `TupleSplit` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_split(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_split::impl_split());
     item.into()
 }
 

@@ -2,9 +2,12 @@
 
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleOrd` trait.
 
+use tuplities_eq::TupleEq;
+use tuplities_partial_ord::TuplePartialOrd;
+
 #[tuplities_derive::impl_tuple_ord]
 /// A trait for comparing tuples for total ordering.
-pub trait TupleOrd {
+pub trait TupleOrd: TuplePartialOrd + TupleEq {
     /// Returns the total ordering of `self` and `other`.
     ///
     /// # Examples

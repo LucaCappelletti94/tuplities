@@ -2,11 +2,13 @@
 
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TupleEq` trait.
 
+use tuplities_partial_eq::TuplePartialEq;
+
 #[tuplities_derive::impl_tuple_eq]
 /// A trait for comparing tuples for total equality.
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait TupleEq {
+pub trait TupleEq: TuplePartialEq {
     /// Returns `true` if `self` and `other` are equal.
     ///
     /// # Examples

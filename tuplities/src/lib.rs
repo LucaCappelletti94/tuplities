@@ -8,7 +8,7 @@ pub mod prelude {
     pub use tuplities_debug::TupleDebug;
     pub use tuplities_default::TupleDefault;
     pub use tuplities_eq::TupleEq;
-    pub use tuplities_hash::{TupleHash, TupleSipHasher24};
+    pub use tuplities_hash::TupleHash;
     pub use tuplities_index::{TupleIndex, TupleIndexMut};
     pub use tuplities_insert::TupleInsert;
     pub use tuplities_len::TupleLen;
@@ -23,4 +23,6 @@ pub mod prelude {
     pub use tuplities_push_front::TuplePushFront;
     pub use tuplities_ref::TupleRef;
     pub use tuplities_remove::TupleRemove;
+    pub use tuplities_reverse::TupleReverse;
+    pub use tuplities_split::TupleSplit;
 }

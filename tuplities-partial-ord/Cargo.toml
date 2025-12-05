@@ -14,15 +14,16 @@ homepage.workspace = true
 
 [dependencies]
 tuplities-derive.workspace = true
+tuplities-partial-eq.workspace = true
 
 [lints]
 workspace = true
 
 [features]
 default = []
-size-16 = ["tuplities-derive/size-16"]
-size-32 = ["tuplities-derive/size-32"]
-size-48 = ["tuplities-derive/size-48"]
-size-64 = ["tuplities-derive/size-64"]
-size-96 = ["tuplities-derive/size-96"]
-size-128 = ["tuplities-derive/size-128"]
+size-16 = ["tuplities-derive/size-16", "tuplities-partial-eq/size-16"]
+size-32 = ["tuplities-derive/size-32", "tuplities-partial-eq/size-32"]
+size-48 = ["tuplities-derive/size-48", "tuplities-partial-eq/size-48"]
+size-64 = ["tuplities-derive/size-64", "tuplities-partial-eq/size-64"]
+size-96 = ["tuplities-derive/size-96", "tuplities-partial-eq/size-96"]
+size-128 = ["tuplities-derive/size-128", "tuplities-partial-eq/size-128"]
