@@ -41,24 +41,18 @@ dependencies = [
 name = "tupilities"
 version = "0.1.0"
 dependencies = [
- "tupilities-as-ref",
  "tupilities-clone",
  "tupilities-copy",
  "tupilities-debug",
  "tupilities-default",
  "tupilities-eq",
  "tupilities-hash",
+ "tupilities-mut",
  "tupilities-option",
  "tupilities-ord",
  "tupilities-partial-eq",
  "tupilities-partial-ord",
-]
-
-[[package]]
-name = "tupilities-as-ref"
-version = "0.1.0"
-dependencies = [
- "tupilities-derive",
+ "tupilities-ref",
 ]
 
 [[package]]
@@ -115,6 +109,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "tupilities-mut"
+version = "0.1.0"
+dependencies = [
+ "tupilities-derive",
+]
+
+[[package]]
 name = "tupilities-option"
 version = "0.1.0"
 dependencies = [
@@ -137,6 +138,13 @@ dependencies = [
 
 [[package]]
 name = "tupilities-partial-ord"
+version = "0.1.0"
+dependencies = [
+ "tupilities-derive",
+]
+
+[[package]]
+name = "tupilities-ref"
 version = "0.1.0"
 dependencies = [
  "tupilities-derive",

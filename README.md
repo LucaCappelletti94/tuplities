@@ -25,13 +25,14 @@ The library provides several traits for working with tuples:
 - `TupleDefault`: Provides a `tuple_default()` method to create default instances of tuples. All elements must implement `Default`.
 - `TupleHash`: Provides a `tuple_hash<H: Hasher>()` method to hash tuples with any hasher. All elements must implement `Hash`.
 - `TupleSipHasher24`: Provides a `tuple_sip_hash()` method that returns a hash value using SipHasher24. All elements must implement `Hash`.
-- `TupleAsRef`: Provides an `as_tuple_ref()` method that returns a tuple of references to a common type. All elements must implement `AsRef<T>` for the same `T`.
 - `TuplePartialEq`: Provides a `tuple_eq()` method to compare tuples for partial equality. All elements must implement `PartialEq`.
 - `TupleEq`: Provides a `tuple_eq()` method to compare tuples for total equality. All elements must implement `Eq`.
 - `TuplePartialOrd`: Provides a `tuple_partial_cmp()` method to compare tuples for partial ordering. All elements must implement `PartialOrd`.
 - `TupleOrd`: Provides a `tuple_cmp()` method to compare tuples for total ordering. All elements must implement `Ord`.
 - `TupleOption`: Provides a `transpose()` method to transpose a tuple of options into an option of a tuple. All elements must be `Option<T>`.
 - `IntoTupleOption`: Provides an `into_options()` method to convert a tuple into a tuple of options.
+- `TupleRef`: Provides a `tuple_ref()` method to get references to each element in the tuple.
+- `TupleMut`: Provides a `tuple_mut()` method to get mutable references to each element in the tuple.
 
 ## Features
 

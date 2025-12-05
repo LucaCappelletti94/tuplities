@@ -2,33 +2,35 @@
 resolver = "2"
 
 members = [
-	"tupilities",
-	"tupilities-as-ref",
-	"tupilities-clone",
-	"tupilities-copy",
-	"tupilities-debug",
-	"tupilities-default",
-	"tupilities-eq",
-	"tupilities-hash",
-	"tupilities-option",
-	"tupilities-ord",
-	"tupilities-partial-eq",
-	"tupilities-partial-ord",
-	"tupilities-derive",
+  "tupilities",
+  "tupilities-clone",
+  "tupilities-copy",
+  "tupilities-debug",
+  "tupilities-default",
+  "tupilities-eq",
+  "tupilities-hash",
+  "tupilities-mut",
+  "tupilities-option",
+  "tupilities-ord",
+  "tupilities-partial-eq",
+  "tupilities-partial-ord",
+  "tupilities-ref",
+  "tupilities-derive",
 ]
 
 [workspace.dependencies]
-tupilities-as-ref = { path = "tupilities-as-ref" }
 tupilities-clone = { path = "tupilities-clone" }
 tupilities-copy = { path = "tupilities-copy" }
 tupilities-debug = { path = "tupilities-debug" }
 tupilities-default = { path = "tupilities-default" }
 tupilities-eq = { path = "tupilities-eq" }
 tupilities-hash = { path = "tupilities-hash" }
+tupilities-mut = { path = "tupilities-mut" }
 tupilities-option = { path = "tupilities-option" }
 tupilities-ord = { path = "tupilities-ord" }
 tupilities-partial-eq = { path = "tupilities-partial-eq" }
 tupilities-partial-ord = { path = "tupilities-partial-ord" }
+tupilities-ref = { path = "tupilities-ref" }
 tupilities-derive = { path = "tupilities-derive" }
 siphasher = { version = "1" }
 

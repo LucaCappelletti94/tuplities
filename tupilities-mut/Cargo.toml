@@ -1,5 +1,5 @@
 [package]
-name = "tupilities-as-ref"
+name = "tupilities-mut"
 version = "0.1.0"
 edition = "2024"
 

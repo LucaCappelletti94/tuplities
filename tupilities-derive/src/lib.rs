@@ -9,10 +9,12 @@ mod tupilities_debug;
 mod tupilities_default;
 mod tupilities_eq;
 mod tupilities_hash;
+mod tupilities_mut;
 mod tupilities_option;
 mod tupilities_ord;
 mod tupilities_partial_eq;
 mod tupilities_partial_ord;
+mod tupilities_ref;
 mod tuple_size;
 
 /// Generate `TableIndex` trait implementations for all tuple sizes.
@@ -92,6 +94,22 @@ pub fn impl_tuple_partial_ord(_attr: TokenStream, item: TokenStream) -> TokenStr
 pub fn impl_tuple_ord(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tupilities_ord::impl_tuple_ord());
+    item.into()
+}
+
+/// Generate `TupleRef` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_ref(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tupilities_ref::impl_tuple_ref());
+    item.into()
+}
+
+/// Generate `TupleMut` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tupilities_mut::impl_tuple_mut());
     item.into()
 }
 
