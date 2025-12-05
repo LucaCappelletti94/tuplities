@@ -1,5 +1,5 @@
 #![no_std]
-#![doc = include_str!("../../README.md")]
+#![doc = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/../README.md"))]
 
 /// Re-exports of commonly used traits and types.
 pub mod prelude {
