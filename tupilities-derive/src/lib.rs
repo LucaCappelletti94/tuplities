@@ -9,6 +9,7 @@ mod tupilities_debug;
 mod tupilities_default;
 mod tupilities_eq;
 mod tupilities_hash;
+mod tupilities_option;
 mod tupilities_ord;
 mod tupilities_partial_eq;
 mod tupilities_partial_ord;
@@ -91,5 +92,14 @@ pub fn impl_tuple_partial_ord(_attr: TokenStream, item: TokenStream) -> TokenStr
 pub fn impl_tuple_ord(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tupilities_ord::impl_tuple_ord());
+    item.into()
+}
+
+/// Generate `TupleOption` and `IntoTupleOption` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_option(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tupilities_option::impl_tuple_option());
+    item.extend(tupilities_option::impl_into_tuple_option());
     item.into()
 }

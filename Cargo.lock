@@ -48,6 +48,7 @@ dependencies = [
  "tupilities-default",
  "tupilities-eq",
  "tupilities-hash",
+ "tupilities-option",
  "tupilities-ord",
  "tupilities-partial-eq",
  "tupilities-partial-ord",
@@ -110,6 +111,13 @@ name = "tupilities-hash"
 version = "0.1.0"
 dependencies = [
  "siphasher",
+ "tupilities-derive",
+]
+
+[[package]]
+name = "tupilities-option"
+version = "0.1.0"
+dependencies = [
  "tupilities-derive",
 ]
 

@@ -11,6 +11,7 @@ tupilities-debug.workspace = true
 tupilities-default.workspace = true
 tupilities-eq.workspace = true
 tupilities-hash.workspace = true
+tupilities-option.workspace = true
 tupilities-ord.workspace = true
 tupilities-partial-eq.workspace = true
 tupilities-partial-ord.workspace = true
@@ -20,9 +21,9 @@ workspace = true
 
 [features]
 default = []
-size-16 = ["tupilities-as-ref/size-16", "tupilities-clone/size-16", "tupilities-copy/size-16", "tupilities-debug/size-16", "tupilities-default/size-16", "tupilities-eq/size-16", "tupilities-hash/size-16", "tupilities-ord/size-16", "tupilities-partial-eq/size-16", "tupilities-partial-ord/size-16"]
-size-32 = ["tupilities-as-ref/size-32", "tupilities-clone/size-32", "tupilities-copy/size-32", "tupilities-debug/size-32", "tupilities-default/size-32", "tupilities-eq/size-32", "tupilities-hash/size-32", "tupilities-ord/size-32", "tupilities-partial-eq/size-32", "tupilities-partial-ord/size-32"]
-size-48 = ["tupilities-as-ref/size-48", "tupilities-clone/size-48", "tupilities-copy/size-48", "tupilities-debug/size-48", "tupilities-default/size-48", "tupilities-eq/size-48", "tupilities-hash/size-48", "tupilities-ord/size-48", "tupilities-partial-eq/size-48", "tupilities-partial-ord/size-48"]
-size-64 = ["tupilities-as-ref/size-64", "tupilities-clone/size-64", "tupilities-copy/size-64", "tupilities-debug/size-64", "tupilities-default/size-64", "tupilities-eq/size-64", "tupilities-hash/size-64", "tupilities-ord/size-64", "tupilities-partial-eq/size-64", "tupilities-partial-ord/size-64"]
-size-96 = ["tupilities-as-ref/size-96", "tupilities-clone/size-96", "tupilities-copy/size-96", "tupilities-debug/size-96", "tupilities-default/size-96", "tupilities-eq/size-96", "tupilities-hash/size-96", "tupilities-ord/size-96", "tupilities-partial-eq/size-96", "tupilities-partial-ord/size-96"]
-size-128 = ["tupilities-as-ref/size-128", "tupilities-clone/size-128", "tupilities-copy/size-128", "tupilities-debug/size-128", "tupilities-default/size-128", "tupilities-eq/size-128", "tupilities-hash/size-128", "tupilities-ord/size-128", "tupilities-partial-eq/size-128", "tupilities-partial-ord/size-128"]
+size-16 = ["tupilities-as-ref/size-16", "tupilities-clone/size-16", "tupilities-copy/size-16", "tupilities-debug/size-16", "tupilities-default/size-16", "tupilities-eq/size-16", "tupilities-hash/size-16", "tupilities-option/size-16", "tupilities-ord/size-16", "tupilities-partial-eq/size-16", "tupilities-partial-ord/size-16"]
+size-32 = ["tupilities-as-ref/size-32", "tupilities-clone/size-32", "tupilities-copy/size-32", "tupilities-debug/size-32", "tupilities-default/size-32", "tupilities-eq/size-32", "tupilities-hash/size-32", "tupilities-option/size-32", "tupilities-ord/size-32", "tupilities-partial-eq/size-32", "tupilities-partial-ord/size-32"]
+size-48 = ["tupilities-as-ref/size-48", "tupilities-clone/size-48", "tupilities-copy/size-48", "tupilities-debug/size-48", "tupilities-default/size-48", "tupilities-eq/size-48", "tupilities-hash/size-48", "tupilities-option/size-48", "tupilities-ord/size-48", "tupilities-partial-eq/size-48", "tupilities-partial-ord/size-48"]
+size-64 = ["tupilities-as-ref/size-64", "tupilities-clone/size-64", "tupilities-copy/size-64", "tupilities-debug/size-64", "tupilities-default/size-64", "tupilities-eq/size-64", "tupilities-hash/size-64", "tupilities-option/size-64", "tupilities-ord/size-64", "tupilities-partial-eq/size-64", "tupilities-partial-ord/size-64"]
+size-96 = ["tupilities-as-ref/size-96", "tupilities-clone/size-96", "tupilities-copy/size-96", "tupilities-debug/size-96", "tupilities-default/size-96", "tupilities-eq/size-96", "tupilities-hash/size-96", "tupilities-option/size-96", "tupilities-ord/size-96", "tupilities-partial-eq/size-96", "tupilities-partial-ord/size-96"]
+size-128 = ["tupilities-as-ref/size-128", "tupilities-clone/size-128", "tupilities-copy/size-128", "tupilities-debug/size-128", "tupilities-default/size-128", "tupilities-eq/size-128", "tupilities-hash/size-128", "tupilities-option/size-128", "tupilities-ord/size-128", "tupilities-partial-eq/size-128", "tupilities-partial-ord/size-128"]
