@@ -1,33 +1,33 @@
-//! Procedural macros for the Tupilities suite.
+//! Procedural macros for the tuplities suite.
 
 use proc_macro::TokenStream;
 
-mod tupilities_as_ref;
-mod tupilities_clone;
-mod tupilities_copy;
-mod tupilities_debug;
-mod tupilities_default;
-mod tupilities_eq;
-mod tupilities_hash;
-mod tupilities_index;
-mod tupilities_mut;
-mod tupilities_option;
-mod tupilities_ord;
-mod tupilities_partial_eq;
-mod tupilities_partial_ord;
-mod tupilities_pop;
-mod tupilities_pop_back;
-mod tupilities_pop_front;
-mod tupilities_push_back;
-mod tupilities_push_front;
-mod tupilities_ref;
+mod tuplities_as_ref;
+mod tuplities_clone;
+mod tuplities_copy;
+mod tuplities_debug;
+mod tuplities_default;
+mod tuplities_eq;
+mod tuplities_hash;
+mod tuplities_index;
+mod tuplities_mut;
+mod tuplities_option;
+mod tuplities_ord;
+mod tuplities_partial_eq;
+mod tuplities_partial_ord;
+mod tuplities_pop;
+mod tuplities_pop_back;
+mod tuplities_pop_front;
+mod tuplities_push_back;
+mod tuplities_push_front;
+mod tuplities_ref;
 mod tuple_size;
 
 /// Generate `TableIndex` trait implementations for all tuple sizes.
 #[proc_macro_attribute]
 pub fn impl_tuple_clone(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_clone::impl_tuple_clone());
+    item.extend(tuplities_clone::impl_tuple_clone());
     item.into()
 }
 
@@ -35,7 +35,7 @@ pub fn impl_tuple_clone(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_copy(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_copy::impl_tuple_copy());
+    item.extend(tuplities_copy::impl_tuple_copy());
     item.into()
 }
 
@@ -43,7 +43,7 @@ pub fn impl_tuple_copy(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_debug(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_debug::impl_tuple_debug());
+    item.extend(tuplities_debug::impl_tuple_debug());
     item.into()
 }
 
@@ -51,7 +51,7 @@ pub fn impl_tuple_debug(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_default(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_default::impl_tuple_default());
+    item.extend(tuplities_default::impl_tuple_default());
     item.into()
 }
 
@@ -59,7 +59,7 @@ pub fn impl_tuple_default(_attr: TokenStream, item: TokenStream) -> TokenStream 
 #[proc_macro_attribute]
 pub fn impl_tuple_hash(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_hash::impl_tuple_hash());
+    item.extend(tuplities_hash::impl_tuple_hash());
     item.into()
 }
 
@@ -67,7 +67,7 @@ pub fn impl_tuple_hash(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_as_ref(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_as_ref::impl_tuple_as_ref());
+    item.extend(tuplities_as_ref::impl_tuple_as_ref());
     item.into()
 }
 
@@ -75,7 +75,7 @@ pub fn impl_tuple_as_ref(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_partial_eq(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_partial_eq::impl_tuple_partial_eq());
+    item.extend(tuplities_partial_eq::impl_tuple_partial_eq());
     item.into()
 }
 
@@ -83,7 +83,7 @@ pub fn impl_tuple_partial_eq(_attr: TokenStream, item: TokenStream) -> TokenStre
 #[proc_macro_attribute]
 pub fn impl_tuple_eq(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_eq::impl_tuple_eq());
+    item.extend(tuplities_eq::impl_tuple_eq());
     item.into()
 }
 
@@ -91,7 +91,7 @@ pub fn impl_tuple_eq(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_partial_ord(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_partial_ord::impl_tuple_partial_ord());
+    item.extend(tuplities_partial_ord::impl_tuple_partial_ord());
     item.into()
 }
 
@@ -99,7 +99,7 @@ pub fn impl_tuple_partial_ord(_attr: TokenStream, item: TokenStream) -> TokenStr
 #[proc_macro_attribute]
 pub fn impl_tuple_ord(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_ord::impl_tuple_ord());
+    item.extend(tuplities_ord::impl_tuple_ord());
     item.into()
 }
 
@@ -107,7 +107,7 @@ pub fn impl_tuple_ord(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_pop_front(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_pop_front::impl_pop_front());
+    item.extend(tuplities_pop_front::impl_pop_front());
     item.into()
 }
 
@@ -115,7 +115,7 @@ pub fn impl_pop_front(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_pop_back(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_pop_back::impl_pop_back());
+    item.extend(tuplities_pop_back::impl_pop_back());
     item.into()
 }
 
@@ -123,7 +123,7 @@ pub fn impl_pop_back(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_pop(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_pop::impl_pop());
+    item.extend(tuplities_pop::impl_pop());
     item.into()
 }
 
@@ -131,7 +131,7 @@ pub fn impl_pop(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_index(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_index::impl_tuple_index());
+    item.extend(tuplities_index::impl_tuple_index());
     item.into()
 }
 
@@ -139,7 +139,7 @@ pub fn impl_tuple_index(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_push_back(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_push_back::impl_push_back());
+    item.extend(tuplities_push_back::impl_push_back());
     item.into()
 }
 
@@ -147,7 +147,7 @@ pub fn impl_push_back(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_push_front(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_push_front::impl_push_front());
+    item.extend(tuplities_push_front::impl_push_front());
     item.into()
 }
 
@@ -155,7 +155,7 @@ pub fn impl_push_front(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_ref(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_ref::impl_tuple_ref());
+    item.extend(tuplities_ref::impl_tuple_ref());
     item.into()
 }
 
@@ -163,7 +163,7 @@ pub fn impl_tuple_ref(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_mut::impl_tuple_mut());
+    item.extend(tuplities_mut::impl_tuple_mut());
     item.into()
 }
 
@@ -171,7 +171,7 @@ pub fn impl_tuple_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn impl_tuple_option(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tupilities_option::impl_tuple_option());
-    item.extend(tupilities_option::impl_into_tuple_option());
+    item.extend(tuplities_option::impl_tuple_option());
+    item.extend(tuplities_option::impl_into_tuple_option());
     item.into()
 }

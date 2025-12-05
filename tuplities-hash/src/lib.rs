@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TupleHash` and `TupleSipHasher24` traits.
+//! tuplities suite crate providing the `TupleHash` and `TupleSipHasher24` traits.
 
-#[tupilities_derive::impl_tuple_hash]
+#[tuplities_derive::impl_tuple_hash]
 /// A trait for hashing tuples with a generic hasher.
 pub trait TupleHash {
     /// Hashes the tuple into the given hasher.
@@ -16,7 +16,7 @@ pub trait TupleSipHasher24: TupleHash {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_hash::TupleSipHasher24;
+    /// use tuplities_hash::TupleSipHasher24;
     ///
     /// let tuple = (1, "hello", 42);
     /// let hash_value = tuple.tuple_sip_hash();

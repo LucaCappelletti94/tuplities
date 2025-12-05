@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TupleCopy` trait.
+//! tuplities suite crate providing the `TupleCopy` trait.
 
-#[tupilities_derive::impl_tuple_copy]
+#[tuplities_derive::impl_tuple_copy]
 /// A trait for copying tuples.
 pub trait TupleCopy {
     #[must_use]
@@ -11,7 +11,7 @@ pub trait TupleCopy {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_copy::TupleCopy;
+    /// use tuplities_copy::TupleCopy;
     ///
     /// let tuple = (1, "hello", 3.14);
     /// let copied_tuple = tuple.tuple_copy();

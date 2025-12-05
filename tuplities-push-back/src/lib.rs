@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `PushBack` trait.
+//! tuplities suite crate providing the `PushBack` trait.
 
-#[tupilities_derive::impl_push_back]
+#[tuplities_derive::impl_push_back]
 /// A trait for tuples that allows pushing an element to the back.
 pub trait PushBack<T> {
     /// The type of the tuple after adding `T` to the back.
@@ -13,7 +13,7 @@ pub trait PushBack<T> {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_push_back::PushBack;
+    /// use tuplities_push_back::PushBack;
     ///
     /// let tuple = ("hello",);
     /// let new_tuple = tuple.push_back("world");

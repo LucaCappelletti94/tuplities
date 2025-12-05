@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TupleOrd` trait.
+//! tuplities suite crate providing the `TupleOrd` trait.
 
-#[tupilities_derive::impl_tuple_ord]
+#[tuplities_derive::impl_tuple_ord]
 /// A trait for comparing tuples for total ordering.
 pub trait TupleOrd {
     /// Returns the total ordering of `self` and `other`.
@@ -10,7 +10,7 @@ pub trait TupleOrd {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_ord::TupleOrd;
+    /// use tuplities_ord::TupleOrd;
     /// use core::cmp::Ordering;
     ///
     /// let tuple1 = (1, 2);

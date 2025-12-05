@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TupleMut` trait.
+//! tuplities suite crate providing the `TupleMut` trait.
 
-#[tupilities_derive::impl_tuple_mut]
+#[tuplities_derive::impl_tuple_mut]
 /// A trait for tuples that provides a method to get a tuple of mutable references.
 ///
 /// This trait provides both an associated type `Mut<'a>` that represents a tuple
@@ -11,7 +11,7 @@
 /// # Examples
 ///
 /// ```rust
-/// use tupilities_mut::TupleMut;
+/// use tuplities_mut::TupleMut;
 ///
 /// let mut tuple = (1, "hello".to_string(), vec![1, 2, 3]);
 /// let mut_refs = tuple.tuple_mut();
@@ -31,7 +31,7 @@ pub trait TupleMut {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_mut::TupleMut;
+    /// use tuplities_mut::TupleMut;
     ///
     /// let mut tuple = (42, "world".to_string());
     /// let mut_refs = tuple.tuple_mut();

@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TupleDefault` trait.
+//! tuplities suite crate providing the `TupleDefault` trait.
 
-#[tupilities_derive::impl_tuple_default]
+#[tuplities_derive::impl_tuple_default]
 /// A trait for creating default instances of tuples.
 pub trait TupleDefault {
     /// Returns the default value of the tuple.
@@ -10,7 +10,7 @@ pub trait TupleDefault {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_default::TupleDefault;
+    /// use tuplities_default::TupleDefault;
     ///
     /// let default_tuple: (i32, String, f64) = <(i32, String, f64)>::tuple_default();
     ///

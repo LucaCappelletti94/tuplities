@@ -13,14 +13,14 @@
 /// # Examples
 ///
 /// ```
-/// use tupilities_index::TupleIndex;
+/// use tuplities_index::TupleIndex;
 /// use typenum::U1;
 ///
 /// let tuple = (1, "hello", 3.14);
 /// let element = TupleIndex::<U1>::tuple_index(&tuple);
 /// assert_eq!(*element, "hello");
 /// ```
-#[tupilities_derive::impl_tuple_index]
+#[tuplities_derive::impl_tuple_index]
 pub trait TupleIndex<Idx: typenum::Unsigned> {
     /// The type of the element at index `Idx`.
     type Type;
@@ -37,7 +37,7 @@ pub trait TupleIndex<Idx: typenum::Unsigned> {
 /// # Examples
 ///
 /// ```
-/// use tupilities_index::TupleIndexMut;
+/// use tuplities_index::TupleIndexMut;
 /// use typenum::U1;
 ///
 /// let mut tuple = (1, "hello", 3.14);

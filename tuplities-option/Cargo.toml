@@ -1,19 +1,19 @@
 [package]
-name = "tupilities-option"
+name = "tuplities-option"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-tupilities-derive.workspace = true
+tuplities-derive.workspace = true
 
 [lints]
 workspace = true
 
 [features]
 default = []
-size-16 = ["tupilities-derive/size-16"]
-size-32 = ["tupilities-derive/size-32"]
-size-48 = ["tupilities-derive/size-48"]
-size-64 = ["tupilities-derive/size-64"]
-size-96 = ["tupilities-derive/size-96"]
-size-128 = ["tupilities-derive/size-128"]
+size-16 = ["tuplities-derive/size-16"]
+size-32 = ["tuplities-derive/size-32"]
+size-48 = ["tuplities-derive/size-48"]
+size-64 = ["tuplities-derive/size-64"]
+size-96 = ["tuplities-derive/size-96"]
+size-128 = ["tuplities-derive/size-128"]

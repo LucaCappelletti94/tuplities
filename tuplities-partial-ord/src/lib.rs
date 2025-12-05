@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TuplePartialOrd` trait.
+//! tuplities suite crate providing the `TuplePartialOrd` trait.
 
-#[tupilities_derive::impl_tuple_partial_ord]
+#[tuplities_derive::impl_tuple_partial_ord]
 /// A trait for comparing tuples for partial ordering.
 pub trait TuplePartialOrd {
     /// Returns the partial ordering of `self` and `other`.
@@ -10,7 +10,7 @@ pub trait TuplePartialOrd {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_partial_ord::TuplePartialOrd;
+    /// use tuplities_partial_ord::TuplePartialOrd;
     /// use core::cmp::Ordering;
     ///
     /// let tuple1 = (1, 2);

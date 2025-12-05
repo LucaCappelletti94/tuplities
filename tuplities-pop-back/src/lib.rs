@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `PopBack` trait.
+//! tuplities suite crate providing the `PopBack` trait.
 
-#[tupilities_derive::impl_pop_back]
+#[tuplities_derive::impl_pop_back]
 /// A trait for tuples that defines the `Init` and `Back` types, and provides a method to pop the back element.
 pub trait PopBack {
     /// The type of the tuple without the last element.
@@ -16,7 +16,7 @@ pub trait PopBack {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_pop_back::PopBack;
+    /// use tuplities_pop_back::PopBack;
     ///
     /// let tuple = (1, 2, 3);
     /// let (front, back) = tuple.pop_back();

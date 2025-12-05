@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `PopFront` trait.
+//! tuplities suite crate providing the `PopFront` trait.
 
-#[tupilities_derive::impl_pop_front]
+#[tuplities_derive::impl_pop_front]
 /// A trait for tuples that defines the `Front` and `Tail` types, and provides a method to pop the front element.
 pub trait PopFront {
     /// The type of the first element.
@@ -16,7 +16,7 @@ pub trait PopFront {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_pop_front::PopFront;
+    /// use tuplities_pop_front::PopFront;
     ///
     /// let tuple = (1, 2, 3);
     /// let (first, rest) = tuple.pop_front();

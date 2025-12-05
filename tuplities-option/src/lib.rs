@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TupleOption` and `IntoTupleOption` traits.
+//! tuplities suite crate providing the `TupleOption` and `IntoTupleOption` traits.
 
-#[tupilities_derive::impl_tuple_option]
+#[tuplities_derive::impl_tuple_option]
 /// A trait for transposing a tuple of options into an option of a tuple.
 pub trait TupleOption {
     /// The transposed type: an option of the tuple of the inner types.
@@ -15,7 +15,7 @@ pub trait TupleOption {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_option::TupleOption;
+    /// use tuplities_option::TupleOption;
     ///
     /// let tuple = (Some(1), Some(2));
     /// let transposed: Option<(i32, i32)> = tuple.transpose();
@@ -38,7 +38,7 @@ pub trait IntoTupleOption {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_option::IntoTupleOption;
+    /// use tuplities_option::IntoTupleOption;
     ///
     /// let tuple = (1, 2);
     /// let into_options: (Option<i32>, Option<i32>) = tuple.into_options();

@@ -14,7 +14,7 @@
 /// # Examples
 ///
 /// ```
-/// use tupilities_pop::Pop;
+/// use tuplities_pop::Pop;
 /// use typenum::U1;
 ///
 /// let tuple = (1, "hello", 3.14);
@@ -22,7 +22,7 @@
 /// assert_eq!(popped, "hello");
 /// assert_eq!(remainder, (1, 3.14));
 /// ```
-#[tupilities_derive::impl_pop]
+#[tuplities_derive::impl_pop]
 pub trait Pop<Idx: typenum::Unsigned> {
     /// The type of the element being popped.
     type Type;

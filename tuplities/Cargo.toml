@@ -1,27 +1,27 @@
 [package]
-name = "tupilities"
+name = "tuplities"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-tupilities-clone.workspace = true
-tupilities-copy.workspace = true
-tupilities-debug.workspace = true
-tupilities-default.workspace = true
-tupilities-eq.workspace = true
-tupilities-hash.workspace = true
-tupilities-mut.workspace = true
-tupilities-option.workspace = true
-tupilities-ord.workspace = true
-tupilities-partial-eq.workspace = true
-tupilities-partial-ord.workspace = true
-tupilities-pop.workspace = true
-tupilities-index.workspace = true
-tupilities-pop-front.workspace = true
-tupilities-pop-back.workspace = true
-tupilities-push-front.workspace = true
-tupilities-push-back.workspace = true
-tupilities-ref.workspace = true
+tuplities-clone.workspace = true
+tuplities-copy.workspace = true
+tuplities-debug.workspace = true
+tuplities-default.workspace = true
+tuplities-eq.workspace = true
+tuplities-hash.workspace = true
+tuplities-mut.workspace = true
+tuplities-option.workspace = true
+tuplities-ord.workspace = true
+tuplities-partial-eq.workspace = true
+tuplities-partial-ord.workspace = true
+tuplities-pop.workspace = true
+tuplities-index.workspace = true
+tuplities-pop-front.workspace = true
+tuplities-pop-back.workspace = true
+tuplities-push-front.workspace = true
+tuplities-push-back.workspace = true
+tuplities-ref.workspace = true
 
 [lints]
 workspace = true
@@ -29,122 +29,122 @@ workspace = true
 [features]
 default = []
 size-16 = [
-  "tupilities-clone/size-16",
-  "tupilities-copy/size-16",
-  "tupilities-debug/size-16",
-  "tupilities-default/size-16",
-  "tupilities-eq/size-16",
-  "tupilities-hash/size-16",
-  "tupilities-option/size-16",
-  "tupilities-ord/size-16",
-  "tupilities-partial-eq/size-16",
-  "tupilities-partial-ord/size-16",
-  "tupilities-mut/size-16",
-  "tupilities-pop/size-16",
-  "tupilities-index/size-16",
-  "tupilities-ref/size-16",
-  "tupilities-pop-front/size-16",
-  "tupilities-pop-back/size-16",
-  "tupilities-push-front/size-16",
-  "tupilities-push-back/size-16",
+  "tuplities-clone/size-16",
+  "tuplities-copy/size-16",
+  "tuplities-debug/size-16",
+  "tuplities-default/size-16",
+  "tuplities-eq/size-16",
+  "tuplities-hash/size-16",
+  "tuplities-option/size-16",
+  "tuplities-ord/size-16",
+  "tuplities-partial-eq/size-16",
+  "tuplities-partial-ord/size-16",
+  "tuplities-mut/size-16",
+  "tuplities-pop/size-16",
+  "tuplities-index/size-16",
+  "tuplities-ref/size-16",
+  "tuplities-pop-front/size-16",
+  "tuplities-pop-back/size-16",
+  "tuplities-push-front/size-16",
+  "tuplities-push-back/size-16",
 ]
 size-32 = [
-  "tupilities-clone/size-32",
-  "tupilities-copy/size-32",
-  "tupilities-debug/size-32",
-  "tupilities-default/size-32",
-  "tupilities-eq/size-32",
-  "tupilities-hash/size-32",
-  "tupilities-option/size-32",
-  "tupilities-ord/size-32",
-  "tupilities-partial-eq/size-32",
-  "tupilities-partial-ord/size-32",
-  "tupilities-mut/size-32",
-  "tupilities-pop/size-32",
-  "tupilities-index/size-32",
-  "tupilities-ref/size-32",
-  "tupilities-pop-front/size-32",
-  "tupilities-pop-back/size-32",
-  "tupilities-push-front/size-32",
-  "tupilities-push-back/size-32",
+  "tuplities-clone/size-32",
+  "tuplities-copy/size-32",
+  "tuplities-debug/size-32",
+  "tuplities-default/size-32",
+  "tuplities-eq/size-32",
+  "tuplities-hash/size-32",
+  "tuplities-option/size-32",
+  "tuplities-ord/size-32",
+  "tuplities-partial-eq/size-32",
+  "tuplities-partial-ord/size-32",
+  "tuplities-mut/size-32",
+  "tuplities-pop/size-32",
+  "tuplities-index/size-32",
+  "tuplities-ref/size-32",
+  "tuplities-pop-front/size-32",
+  "tuplities-pop-back/size-32",
+  "tuplities-push-front/size-32",
+  "tuplities-push-back/size-32",
 ]
 size-48 = [
-  "tupilities-clone/size-48",
-  "tupilities-copy/size-48",
-  "tupilities-debug/size-48",
-  "tupilities-default/size-48",
-  "tupilities-eq/size-48",
-  "tupilities-hash/size-48",
-  "tupilities-option/size-48",
-  "tupilities-ord/size-48",
-  "tupilities-partial-eq/size-48",
-  "tupilities-partial-ord/size-48",
-  "tupilities-mut/size-48",
-  "tupilities-pop/size-48",
-  "tupilities-index/size-48",
-  "tupilities-ref/size-48",
-  "tupilities-pop-front/size-48",
-  "tupilities-pop-back/size-48",
-  "tupilities-push-front/size-48",
-  "tupilities-push-back/size-48",
+  "tuplities-clone/size-48",
+  "tuplities-copy/size-48",
+  "tuplities-debug/size-48",
+  "tuplities-default/size-48",
+  "tuplities-eq/size-48",
+  "tuplities-hash/size-48",
+  "tuplities-option/size-48",
+  "tuplities-ord/size-48",
+  "tuplities-partial-eq/size-48",
+  "tuplities-partial-ord/size-48",
+  "tuplities-mut/size-48",
+  "tuplities-pop/size-48",
+  "tuplities-index/size-48",
+  "tuplities-ref/size-48",
+  "tuplities-pop-front/size-48",
+  "tuplities-pop-back/size-48",
+  "tuplities-push-front/size-48",
+  "tuplities-push-back/size-48",
 ]
 size-64 = [
-  "tupilities-clone/size-64",
-  "tupilities-copy/size-64",
-  "tupilities-debug/size-64",
-  "tupilities-default/size-64",
-  "tupilities-eq/size-64",
-  "tupilities-hash/size-64",
-  "tupilities-option/size-64",
-  "tupilities-ord/size-64",
-  "tupilities-partial-eq/size-64",
-  "tupilities-partial-ord/size-64",
-  "tupilities-mut/size-64",
-  "tupilities-pop/size-64",
-  "tupilities-index/size-64",
-  "tupilities-ref/size-64",
-  "tupilities-pop-front/size-64",
-  "tupilities-pop-back/size-64",
-  "tupilities-push-front/size-64",
-  "tupilities-push-back/size-64",
+  "tuplities-clone/size-64",
+  "tuplities-copy/size-64",
+  "tuplities-debug/size-64",
+  "tuplities-default/size-64",
+  "tuplities-eq/size-64",
+  "tuplities-hash/size-64",
+  "tuplities-option/size-64",
+  "tuplities-ord/size-64",
+  "tuplities-partial-eq/size-64",
+  "tuplities-partial-ord/size-64",
+  "tuplities-mut/size-64",
+  "tuplities-pop/size-64",
+  "tuplities-index/size-64",
+  "tuplities-ref/size-64",
+  "tuplities-pop-front/size-64",
+  "tuplities-pop-back/size-64",
+  "tuplities-push-front/size-64",
+  "tuplities-push-back/size-64",
 ]
 size-96 = [
-  "tupilities-clone/size-96",
-  "tupilities-copy/size-96",
-  "tupilities-debug/size-96",
-  "tupilities-default/size-96",
-  "tupilities-eq/size-96",
-  "tupilities-hash/size-96",
-  "tupilities-option/size-96",
-  "tupilities-ord/size-96",
-  "tupilities-partial-eq/size-96",
-  "tupilities-partial-ord/size-96",
-  "tupilities-mut/size-96",
-  "tupilities-pop/size-96",
-  "tupilities-index/size-96",
-  "tupilities-ref/size-96",
-  "tupilities-pop-front/size-96",
-  "tupilities-pop-back/size-96",
-  "tupilities-push-front/size-96",
-  "tupilities-push-back/size-96",
+  "tuplities-clone/size-96",
+  "tuplities-copy/size-96",
+  "tuplities-debug/size-96",
+  "tuplities-default/size-96",
+  "tuplities-eq/size-96",
+  "tuplities-hash/size-96",
+  "tuplities-option/size-96",
+  "tuplities-ord/size-96",
+  "tuplities-partial-eq/size-96",
+  "tuplities-partial-ord/size-96",
+  "tuplities-mut/size-96",
+  "tuplities-pop/size-96",
+  "tuplities-index/size-96",
+  "tuplities-ref/size-96",
+  "tuplities-pop-front/size-96",
+  "tuplities-pop-back/size-96",
+  "tuplities-push-front/size-96",
+  "tuplities-push-back/size-96",
 ]
 size-128 = [
-  "tupilities-clone/size-128",
-  "tupilities-copy/size-128",
-  "tupilities-debug/size-128",
-  "tupilities-default/size-128",
-  "tupilities-eq/size-128",
-  "tupilities-hash/size-128",
-  "tupilities-option/size-128",
-  "tupilities-ord/size-128",
-  "tupilities-partial-eq/size-128",
-  "tupilities-partial-ord/size-128",
-  "tupilities-mut/size-128",
-  "tupilities-pop/size-128",
-  "tupilities-index/size-128",
-  "tupilities-ref/size-128",
-  "tupilities-pop-front/size-128",
-  "tupilities-pop-back/size-128",
-  "tupilities-push-front/size-128",
-  "tupilities-push-back/size-128",
+  "tuplities-clone/size-128",
+  "tuplities-copy/size-128",
+  "tuplities-debug/size-128",
+  "tuplities-default/size-128",
+  "tuplities-eq/size-128",
+  "tuplities-hash/size-128",
+  "tuplities-option/size-128",
+  "tuplities-ord/size-128",
+  "tuplities-partial-eq/size-128",
+  "tuplities-partial-ord/size-128",
+  "tuplities-mut/size-128",
+  "tuplities-pop/size-128",
+  "tuplities-index/size-128",
+  "tuplities-ref/size-128",
+  "tuplities-pop-front/size-128",
+  "tuplities-pop-back/size-128",
+  "tuplities-push-front/size-128",
+  "tuplities-push-back/size-128",
 ]

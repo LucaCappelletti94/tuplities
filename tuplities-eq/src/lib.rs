@@ -1,8 +1,8 @@
 #![no_std]
 
-//! Tupilities suite crate providing the `TupleEq` trait.
+//! tuplities suite crate providing the `TupleEq` trait.
 
-#[tupilities_derive::impl_tuple_eq]
+#[tuplities_derive::impl_tuple_eq]
 /// A trait for comparing tuples for total equality.
 pub trait TupleEq {
     /// Returns `true` if `self` and `other` are equal.
@@ -10,7 +10,7 @@ pub trait TupleEq {
     /// # Examples
     ///
     /// ```rust
-    /// use tupilities_eq::TupleEq;
+    /// use tuplities_eq::TupleEq;
     ///
     /// let tuple1 = (1, "hello");
     /// let tuple2 = (1, "hello");
