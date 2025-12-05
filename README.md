@@ -31,7 +31,7 @@ The library provides several traits for working with tuples:
 - `TuplePartialOrd`: Provides a `tuple_partial_cmp()` method to compare tuples for partial ordering. All elements must implement `PartialOrd`.
 - `TupleOrd`: Provides a `tuple_cmp()` method to compare tuples for total ordering. All elements must implement `Ord`.
 - `TupleOption`: Provides a `transpose()` method to transpose a tuple of options into an option of a tuple. All elements must be `Option<T>`.
-- `IntoTupleOption`: Provides an `as_options()` method to convert a tuple into a tuple of options.
+- `IntoTupleOption`: Provides an `into_options()` method to convert a tuple into a tuple of options.
 
 ## Features
 
