@@ -21,14 +21,14 @@ pub trait TupleTryFrom<T, E> {
     /// use tuplities_try_from::TupleTryFrom;
     ///
     /// let source = (1u32, 2u32);
-    /// let target: Result<(u8, u8), _> = TupleTryFrom::<_, std::num::TryFromIntError>::try_from(source);
+    /// let target: Result<(u8, u8), _> = TupleTryFrom::<_, std::num::TryFromIntError>::tuple_try_from(source);
     /// assert_eq!(target, Ok((1, 2)));
     ///
     /// let invalid = (300u32, 2u32); // 300 is too big for u8
-    /// let result: Result<(u8, u8), _> = TupleTryFrom::<_, std::num::TryFromIntError>::try_from(invalid);
+    /// let result: Result<(u8, u8), _> = TupleTryFrom::<_, std::num::TryFromIntError>::tuple_try_from(invalid);
     /// assert!(result.is_err());
     /// ```
-    fn try_from(value: T) -> Result<Self, E>
+    fn tuple_try_from(value: T) -> Result<Self, E>
     where
         Self: Sized;
 }
@@ -53,14 +53,14 @@ pub trait TupleTryInto<T, E> {
     /// use tuplities_try_from::TupleTryInto;
     ///
     /// let source = (1u32, 2u32);
-    /// let target: Result<(u8, u8), _> = TupleTryInto::<(u8, u8), std::num::TryFromIntError>::try_into(source);
+    /// let target: Result<(u8, u8), _> = TupleTryInto::<(u8, u8), std::num::TryFromIntError>::tuple_try_into(source);
     /// assert_eq!(target, Ok((1, 2)));
     ///
     /// let invalid = (300u32, 2u32); // 300 is too big for u8
-    /// let result: Result<(u8, u8), _> = TupleTryInto::<(u8, u8), std::num::TryFromIntError>::try_into(invalid);
+    /// let result: Result<(u8, u8), _> = TupleTryInto::<(u8, u8), std::num::TryFromIntError>::tuple_try_into(invalid);
     /// assert!(result.is_err());
     /// ```
-    fn try_into(self) -> Result<T, E>;
+    fn tuple_try_into(self) -> Result<T, E>;
 }
 
 // Blanket implementation of TupleTryInto based on TupleTryFrom
@@ -68,7 +68,7 @@ impl<T, U, E> TupleTryInto<T, E> for U
 where
     T: TupleTryFrom<U, E>,
 {
-    fn try_into(self) -> Result<T, E> {
-        T::try_from(self)
+    fn tuple_try_into(self) -> Result<T, E> {
+        T::tuple_try_from(self)
     }
 }

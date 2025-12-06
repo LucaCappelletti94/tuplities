@@ -14,7 +14,7 @@ pub fn impl_tuple_try_from() -> proc_macro2::TokenStream {
         if size == 0 {
             return quote! {
                 impl<E> TupleTryFrom<(), E> for () {
-                    fn try_from(_value: ()) -> Result<Self, E> {
+                    fn tuple_try_from(_value: ()) -> Result<Self, E> {
                         Ok(())
                     }
                 }
@@ -29,7 +29,7 @@ pub fn impl_tuple_try_from() -> proc_macro2::TokenStream {
                 #(#target_type_params: core::convert::TryFrom<#source_type_params>,)*
                 E: #(From<<#target_type_params as core::convert::TryFrom<#source_type_params>>::Error>)+*
             {
-                fn try_from(value: #source_tuple) -> Result<Self, E> {
+                fn tuple_try_from(value: #source_tuple) -> Result<Self, E> {
                     Ok((#(#target_type_params::try_from(value.#indices)?,)*))
                 }
             }

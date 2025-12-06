@@ -14,7 +14,7 @@ pub fn impl_tuple_from() -> proc_macro2::TokenStream {
         if size == 0 {
             return quote! {
                 impl TupleFrom<()> for () {
-                    fn from(_value: ()) -> Self {}
+                    fn tuple_from(_value: ()) -> Self {}
                 }
             };
         }
@@ -24,7 +24,7 @@ pub fn impl_tuple_from() -> proc_macro2::TokenStream {
         quote! {
             impl<#(#source_type_params,)* #(#target_type_params: From<#source_type_params>,)*> TupleFrom<#source_tuple> for (#(#target_type_params,)*)
             {
-                fn from(value: #source_tuple) -> Self {
+                fn tuple_from(value: #source_tuple) -> Self {
                     (#(From::from(value.#indices),)*)
                 }
             }
