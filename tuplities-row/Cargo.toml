@@ -1,0 +1,68 @@
+[package]
+name = "tuplities-row"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "A trait for indexing rows in tuples of tuples"
+readme.workspace = true
+license-file.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+homepage.workspace = true
+
+[dependencies]
+tuplities-derive.workspace = true
+tuplities-index.workspace = true
+tuplities-ref.workspace = true
+tuplities-mut.workspace = true
+tuplities-len.workspace = true
+typenum.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+default = []
+size-16 = [
+  "tuplities-derive/size-16",
+  "tuplities-index/size-16",
+  "tuplities-ref/size-16",
+  "tuplities-mut/size-16",
+  "tuplities-len/size-16",
+]
+size-32 = [
+  "tuplities-derive/size-32",
+  "tuplities-index/size-32",
+  "tuplities-ref/size-32",
+  "tuplities-mut/size-32",
+  "tuplities-len/size-32",
+]
+size-48 = [
+  "tuplities-derive/size-48",
+  "tuplities-index/size-48",
+  "tuplities-ref/size-48",
+  "tuplities-mut/size-48",
+  "tuplities-len/size-48",
+]
+size-64 = [
+  "tuplities-derive/size-64",
+  "tuplities-index/size-64",
+  "tuplities-ref/size-64",
+  "tuplities-mut/size-64",
+  "tuplities-len/size-64",
+]
+size-96 = [
+  "tuplities-derive/size-96",
+  "tuplities-index/size-96",
+  "tuplities-ref/size-96",
+  "tuplities-mut/size-96",
+  "tuplities-len/size-96",
+]
+size-128 = [
+  "tuplities-derive/size-128",
+  "tuplities-index/size-128",
+  "tuplities-ref/size-128",
+  "tuplities-mut/size-128",
+  "tuplities-len/size-128",
+]

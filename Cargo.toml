@@ -26,6 +26,7 @@ members = [
   "tuplities-remove",
   "tuplities-replicate",
   "tuplities-reverse",
+  "tuplities-row",
   "tuplities-split",
   "tuplities-try-from",
   "tuplities-derive",
@@ -69,6 +70,7 @@ tuplities-ref = { path = "tuplities-ref", version = "0.1.3" }
 tuplities-remove = { path = "tuplities-remove", version = "0.1.3" }
 tuplities-replicate = { path = "tuplities-replicate", version = "0.1.3" }
 tuplities-reverse = { path = "tuplities-reverse", version = "0.1.3" }
+tuplities-row = { path = "tuplities-row", version = "0.1.3" }
 tuplities-split = { path = "tuplities-split", version = "0.1.3" }
 tuplities-try-from = { path = "tuplities-try-from", version = "0.1.3" }
 tuplities-derive = { path = "tuplities-derive", version = "0.1.3" }

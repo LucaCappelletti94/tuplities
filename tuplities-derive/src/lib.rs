@@ -27,6 +27,8 @@ mod tuplities_ref;
 mod tuplities_remove;
 mod tuplities_replicate;
 mod tuplities_reverse;
+mod tuplities_row;
+mod tuplities_row_mut;
 mod tuplities_split;
 mod tuplities_try_from;
 
@@ -236,5 +238,21 @@ pub fn impl_tuple_try_from(_attr: TokenStream, item: TokenStream) -> TokenStream
 pub fn impl_tuple_from(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_from::impl_tuple_from());
+    item.into()
+}
+
+/// Generate `Row` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_row(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_row::impl_row());
+    item.into()
+}
+
+/// Generate `RowMut` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_row_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_row_mut::impl_row_mut());
     item.into()
 }

@@ -1,0 +1,63 @@
+#![no_std]
+
+//! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `Row` and `RowMut` traits.
+
+use tuplities_len::TupleLen;
+use tuplities_mut::TupleMut;
+use tuplities_ref::TupleRef;
+
+/// A trait for indexing rows in tuples of tuples.
+///
+/// This trait allows accessing elements at a specific index across all tuples in a tuple of tuples.
+/// For a tuple of tuples like `((A, B), (C, D))`, `Row<U0>` would return `(&A, &C)` and `Row<U1>` would return `(&B, &D)`.
+///
+/// Each inner tuple must implement `TupleIndex<Idx>`, and the returned row tuple implements `TupleRef`.
+///
+/// # Examples
+///
+/// ```
+/// use tuplities_row::Row;
+/// use typenum::U0;
+///
+/// let matrix = ((1, 2), (3, 4), (5, 6));
+/// let first_row = Row::<U0>::row(&matrix);
+/// assert_eq!(first_row, (&1, &3, &5));
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+#[tuplities_derive::impl_row]
+pub trait Row<Idx: typenum::Unsigned>: TupleLen {
+    /// The type of the row tuple containing elements at index `Idx`.
+    type RowType: TupleRef + TupleLen<Idx = <Self as TupleLen>::Idx>;
+
+    /// Returns a tuple of references to the elements at index `Idx` in each inner tuple.
+    fn row(&self) -> <Self::RowType as TupleRef>::Ref<'_>;
+}
+
+/// A trait for mutable indexing rows in tuples of tuples.
+///
+/// This trait allows mutable access to elements at a specific index across all tuples in a tuple of tuples.
+/// For a tuple of tuples like `((A, B), (C, D))`, `RowMut<U0>` would return `(&mut A, &mut C)` and `RowMut<U1>` would return `(&mut B, &mut D)`.
+///
+/// Each inner tuple must implement `TupleIndexMut<Idx>`, and the returned row tuple implements `TupleMut`.
+///
+/// # Examples
+///
+/// ```
+/// use tuplities_row::RowMut;
+/// use typenum::U0;
+///
+/// let mut matrix = ((1, 2), (3, 4), (5, 6));
+/// let first_row = RowMut::<U0>::row_mut(&mut matrix);
+/// *first_row.0 = 10;
+/// *first_row.1 = 30;
+/// *first_row.2 = 50;
+/// assert_eq!(matrix, ((10, 2), (30, 4), (50, 6)));
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+#[tuplities_derive::impl_row_mut]
+pub trait RowMut<Idx: typenum::Unsigned>: Row<Idx, RowType: TupleMut> {
+    /// Returns a tuple of mutable references to the elements at index `Idx` in each inner tuple.
+    fn row_mut(&mut self) -> <Self::RowType as TupleMut>::Mut<'_>;
+}

@@ -36,6 +36,7 @@ tuplities-push-back.workspace = true
 tuplities-ref.workspace = true
 tuplities-replicate.workspace = true
 tuplities-reverse.workspace = true
+tuplities-row.workspace = true
 tuplities-split.workspace = true
 tuplities-try-from.workspace = true
 

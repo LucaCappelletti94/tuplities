@@ -3,7 +3,7 @@ name = "tuplities-from"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
-description.workspace = true
+description = "Traits for converting values into tuples"
 readme.workspace = true
 license-file.workspace = true
 repository.workspace = true
@@ -12,7 +12,7 @@ categories.workspace = true
 homepage.workspace = true
 
 [dependencies]
-tuplities-derive = { path = "../tuplities-derive", version = "0.1" }
+tuplities-derive.workspace = true
 
 [features]
 default = []

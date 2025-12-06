@@ -12,7 +12,7 @@ This library is `#[no_std]` compatible, making it suitable for embedded systems 
 
 ```toml
 [dependencies]
-tuplities = "0.1"
+tuplities = "0.1.4"
 ```
 
 The library provides several traits for working with tuples:
@@ -48,6 +48,8 @@ The library provides several traits for working with tuples:
 - [`SingletonTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.SingletonTuple.html): A marker trait implemented for single-element tuples `(T,)` with `TupleLen<Idx = U1>`.
 - [`TupleIndex<Idx>`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndex.html): Provides an [`index()`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndex.html#tymethod.index) method to access the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
 - [`TupleIndexMut<Idx>`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndexMut.html): Provides an [`index_mut()`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndexMut.html#tymethod.index_mut) method to access a mutable reference to the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
+- [`Row<Idx>`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.Row.html): Provides a [`row()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.Row.html#tymethod.row) method to access elements at the specified index across all tuples in a tuple of tuples (row-wise indexing).
+- [`RowMut<Idx>`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.RowMut.html): Provides a [`row_mut()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.RowMut.html#tymethod.row_mut) method to access mutable elements at the specified index across all tuples in a tuple of tuples (mutable row-wise indexing).
 
 ## Features
 
@@ -55,22 +57,22 @@ The crate provides features to generate trait implementations for tuples up to d
 
 ```toml
 [dependencies]
-tuplities = { version = "0.1", features = ["size-32"] }
+tuplities = { version = "0.1.4", features = ["size-32"] }
 ```
 
 ## Performance
 
-Compile times scale with tuple size due to code generation. Here are approximate build times for different maximum tuple sizes (on a typical development machine):
+Compile times scale with tuple size due to code generation. Here are measured build times for different maximum tuple sizes (on a typical development machine):
 
 | Max Tuple Size | Compile Time |
 |----------------|--------------|
-| 8 (default)    | ~2.4s        |
-| 16             | ~2.5s        |
-| 32             | ~2.9s        |
-| 48             | ~3.9s        |
-| 64             | ~5.6s        |
-| 96             | ~12.8s       |
-| 128            | ~26.9s       |
+| 8 (default)    | 3.4s         |
+| 16             | 2.6s         |
+| 32             | 3.1s         |
+| 48             | 4.1s         |
+| 64             | 6.1s         |
+| 96             | 14.0s        |
+| 128            | 28.7s        |
 
 ## Architecture
 
