@@ -5,9 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.1.4] - 2025-12-06
+
+### Added in 0.1.4
+
+- `TupleTryFrom<T, E>` and `TupleTryInto<U, E>` traits for fallible conversions between tuples where elements implement `TryFrom`/`TryInto`
+- `TupleFrom<T>` and `TupleInto<U>` traits for infallible conversions between tuples where elements implement `From`/`Into`
+- Support for tuple conversions with proper error handling and type safety
+
+### Changed
+
+- Cleaned up procedural macro implementations for better maintainability and consistency
+
 ## [0.1.0] - 2025-12-05
 
-### Added
+### Added in 0.1.0
 
 - Initial release of tuplities, a collection of utilities for working with tuples in Rust.
 - Support for various tuple operations: clone, copy, debug, default, eq, hash, index, insert, len, mut, option, ord, partial_eq, partial_ord, pop_back, pop_front, push_back, push_front, ref, remove.

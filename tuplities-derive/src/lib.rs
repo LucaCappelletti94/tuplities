@@ -9,6 +9,7 @@ mod tuplities_copy;
 mod tuplities_debug;
 mod tuplities_default;
 mod tuplities_eq;
+mod tuplities_from;
 mod tuplities_hash;
 mod tuplities_index;
 mod tuplities_insert;
@@ -26,6 +27,7 @@ mod tuplities_ref;
 mod tuplities_remove;
 mod tuplities_reverse;
 mod tuplities_split;
+mod tuplities_try_from;
 
 /// Generate `TableIndex` trait implementations for all tuple sizes.
 #[proc_macro_attribute]
@@ -209,5 +211,21 @@ pub fn impl_tuple_option(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_option::impl_tuple_option());
     item.extend(tuplities_option::impl_into_tuple_option());
+    item.into()
+}
+
+/// Generate `TupleTryFrom` and `TupleTryInto` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_try_from(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_try_from::impl_tuple_try_from());
+    item.into()
+}
+
+/// Generate `TupleFrom` and `TupleInto` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_from(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_from::impl_tuple_from());
     item.into()
 }
