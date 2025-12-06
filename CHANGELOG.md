@@ -18,7 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TupleTryFrom<T, E>` and `TupleTryInto<U, E>` traits for fallible conversions between tuples where elements implement `TryFrom`/`TryInto`
 - `TupleFrom<T>` and `TupleInto<U>` traits for infallible conversions between tuples where elements implement `From`/`Into`
 - Support for tuple conversions with proper error handling and type safety
-- `Row<Idx>` and `RowMut<Idx>` traits for indexing rows in tuples of tuples
+- `TupleRow<Idx>` and `TupleRowMut<Idx>` traits for indexing rows in tuples of tuples
+
+### Changed in Unreleased
+
+- Renamed `Row` and `RowMut` traits to `TupleRow` and `TupleRowMut` respectively to avoid naming collisions
+- Renamed `row()` and `row_mut()` methods to `tuple_row()` and `tuple_row_mut()` for consistency
 
 ## [0.1.0] - 2025-12-05
 
