@@ -12,7 +12,7 @@ pub fn impl_len() -> proc_macro2::TokenStream {
         let typenum: syn::Path = syn::parse_quote!(typenum::#typenum_ident);
         quote! {
             impl<#(#type_params,)*> TupleLen for (#(#type_params,)*) {
-                type Idx = #typenum;
+                type Len = #typenum;
             }
         }
     })

@@ -28,7 +28,7 @@ use tuplities_ref::TupleRef;
 #[tuplities_derive::impl_row]
 pub trait TupleRow<Idx: typenum::Unsigned>: TupleLen {
     /// The type of the row tuple containing elements at index `Idx`.
-    type RowType: TupleRef + TupleLen<Idx = <Self as TupleLen>::Idx>;
+    type RowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
 
     /// Returns a tuple of references to the elements at index `Idx` in each inner tuple.
     fn tuple_row(&self) -> <Self::RowType as TupleRef>::Ref<'_>;

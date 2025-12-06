@@ -7,14 +7,14 @@
 
 /// A trait for getting the compile-time length of a tuple.
 ///
-/// This trait provides the length of a tuple as an associated type `Idx`
+/// This trait provides the length of a tuple as an associated type `Len`
 /// that implements `typenum::Unsigned`.
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_len]
 pub trait TupleLen {
     /// The length of the tuple as a `typenum::Unsigned` type.
-    type Idx: typenum::Unsigned;
+    type Len: typenum::Unsigned;
 }
 
 /// A marker trait for empty tuples (size 0).
@@ -37,7 +37,7 @@ pub trait TupleLen {
 /// ```
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait UnitTuple: TupleLen<Idx = typenum::U0> {}
+pub trait UnitTuple: TupleLen<Len = typenum::U0> {}
 
 impl UnitTuple for () {}
 
@@ -62,6 +62,6 @@ impl UnitTuple for () {}
 /// ```
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait SingletonTuple: TupleLen<Idx = typenum::U1> {}
+pub trait SingletonTuple: TupleLen<Len = typenum::U1> {}
 
 impl<T> SingletonTuple for (T,) {}

@@ -13,8 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optimized implementation that avoids unnecessary cloning: no `Clone` bound for empty/single-element tuples, moves value to last position for multi-element tuples
 - `TupleSplit<Idx>` trait for splitting tuples at compile-time indices using `typenum`
 - `TupleReverse` trait for reversing tuple element order
-- `UnitTuple` marker trait for empty tuples `()` with `TupleLen<Idx = U0>`
-- `SingletonTuple` marker trait for single-element tuples `(T,)` with `TupleLen<Idx = U1>`
+- `UnitTuple` marker trait for empty tuples `()` with `TupleLen<Len = U0>`
+- `SingletonTuple` marker trait for single-element tuples `(T,)` with `TupleLen<Len = U1>`
 - `TupleTryFrom<T, E>` and `TupleTryInto<U, E>` traits for fallible conversions between tuples where elements implement `TryFrom`/`TryInto`
 - `TupleFrom<T>` and `TupleInto<U>` traits for infallible conversions between tuples where elements implement `From`/`Into`
 - Support for tuple conversions with proper error handling and type safety
@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Renamed `Row` and `RowMut` traits to `TupleRow` and `TupleRowMut` respectively to avoid naming collisions
 - Renamed `row()` and `row_mut()` methods to `tuple_row()` and `tuple_row_mut()` for consistency
+- Renamed `TupleLen::Idx` associated type to `TupleLen::Len` for better naming consistency
 
 ## [0.1.0] - 2025-12-05
 
