@@ -25,6 +25,7 @@ mod tuplities_push_back;
 mod tuplities_push_front;
 mod tuplities_ref;
 mod tuplities_remove;
+mod tuplities_replicate;
 mod tuplities_reverse;
 mod tuplities_split;
 mod tuplities_try_from;
@@ -194,6 +195,14 @@ pub fn impl_split(_attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn impl_tuple_ref(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_ref::impl_tuple_ref());
+    item.into()
+}
+
+/// Generate `TupleReplicate` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_replicate(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_replicate::impl_tuple_replicate());
     item.into()
 }
 

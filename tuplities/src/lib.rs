@@ -24,6 +24,7 @@ pub mod prelude {
     pub use tuplities_push_front::TuplePushFront;
     pub use tuplities_ref::TupleRef;
     pub use tuplities_remove::TupleRemove;
+    pub use tuplities_replicate::TupleReplicate;
     pub use tuplities_reverse::TupleReverse;
     pub use tuplities_split::TupleSplit;
     pub use tuplities_try_from::{TupleTryFrom, TupleTryInto};

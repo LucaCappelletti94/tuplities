@@ -34,6 +34,7 @@ tuplities-pop-back.workspace = true
 tuplities-push-front.workspace = true
 tuplities-push-back.workspace = true
 tuplities-ref.workspace = true
+tuplities-replicate.workspace = true
 tuplities-reverse.workspace = true
 tuplities-split.workspace = true
 tuplities-try-from.workspace = true
@@ -61,6 +62,7 @@ size-16 = [
   "tuplities-len/size-16",
   "tuplities-index/size-16",
   "tuplities-ref/size-16",
+  "tuplities-replicate/size-16",
   "tuplities-pop-front/size-16",
   "tuplities-pop-back/size-16",
   "tuplities-push-front/size-16",
@@ -87,6 +89,7 @@ size-32 = [
   "tuplities-len/size-32",
   "tuplities-index/size-32",
   "tuplities-ref/size-32",
+  "tuplities-replicate/size-32",
   "tuplities-pop-front/size-32",
   "tuplities-pop-back/size-32",
   "tuplities-push-front/size-32",
@@ -113,6 +116,7 @@ size-48 = [
   "tuplities-len/size-48",
   "tuplities-index/size-48",
   "tuplities-ref/size-48",
+  "tuplities-replicate/size-48",
   "tuplities-pop-front/size-48",
   "tuplities-pop-back/size-48",
   "tuplities-push-front/size-48",
@@ -139,6 +143,7 @@ size-64 = [
   "tuplities-len/size-64",
   "tuplities-index/size-64",
   "tuplities-ref/size-64",
+  "tuplities-replicate/size-64",
   "tuplities-pop-front/size-64",
   "tuplities-pop-back/size-64",
   "tuplities-push-front/size-64",
@@ -165,6 +170,7 @@ size-96 = [
   "tuplities-len/size-96",
   "tuplities-index/size-96",
   "tuplities-ref/size-96",
+  "tuplities-replicate/size-96",
   "tuplities-pop-front/size-96",
   "tuplities-pop-back/size-96",
   "tuplities-push-front/size-96",
@@ -191,6 +197,7 @@ size-128 = [
   "tuplities-len/size-128",
   "tuplities-index/size-128",
   "tuplities-ref/size-128",
+  "tuplities-replicate/size-128",
   "tuplities-pop-front/size-128",
   "tuplities-pop-back/size-128",
   "tuplities-push-front/size-128",

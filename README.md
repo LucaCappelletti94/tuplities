@@ -21,6 +21,7 @@ The library provides several traits for working with tuples:
 - [`TupleCopy`](https://docs.rs/tuplities-copy/latest/tuplities_copy/trait.TupleCopy.html): Provides a [`tuple_copy()`](https://docs.rs/tuplities-copy/latest/tuplities_copy/trait.TupleCopy.html#tymethod.tuple_copy) method to copy tuples. All elements must implement `Copy`.
 - [`TupleDebug`](https://docs.rs/tuplities-debug/latest/tuplities_debug/trait.TupleDebug.html): Provides a [`tuple_debug()`](https://docs.rs/tuplities-debug/latest/tuplities_debug/trait.TupleDebug.html#tymethod.tuple_debug) method that returns a debug string representation of the tuple. All elements must implement `Debug`.
 - [`TupleDefault`](https://docs.rs/tuplities-default/latest/tuplities_default/trait.TupleDefault.html): Provides a [`tuple_default()`](https://docs.rs/tuplities-default/latest/tuplities_default/trait.TupleDefault.html#tymethod.tuple_default) method to create default instances of tuples. All elements must implement `Default`.
+- [`TupleReplicate<T>`](https://docs.rs/tuplities-replicate/latest/tuplities_replicate/trait.TupleReplicate.html): Provides a [`tuple_replicate(value)`](https://docs.rs/tuplities-replicate/latest/tuplities_replicate/trait.TupleReplicate.html#tymethod.tuple_replicate) method to create tuples by replicating a single value across all positions. The value must implement `Clone` for tuples with 2+ elements, but not for empty tuples or single-element tuples.
 - [`TupleHash`](https://docs.rs/tuplities-hash/latest/tuplities_hash/trait.TupleHash.html): Provides a [`tuple_hash<H: Hasher>()`](https://docs.rs/tuplities-hash/latest/tuplities_hash/trait.TupleHash.html#tymethod.tuple_hash) method to hash tuples with any hasher. All elements must implement `Hash`.
 - [`TuplePartialEq`](https://docs.rs/tuplities-partial-eq/latest/tuplities_partial_eq/trait.TuplePartialEq.html): Provides a [`tuple_eq()`](https://docs.rs/tuplities-partial-eq/latest/tuplities_partial_eq/trait.TuplePartialEq.html#tymethod.tuple_eq) method to compare tuples for partial equality. All elements must implement `PartialEq`.
 - [`TupleEq`](https://docs.rs/tuplities-eq/latest/tuplities_eq/trait.TupleEq.html): Provides a [`tuple_eq()`](https://docs.rs/tuplities-eq/latest/tuplities_eq/trait.TupleEq.html#tymethod.tuple_eq) method to compare tuples for total equality. All elements must implement `Eq`.
@@ -67,7 +68,7 @@ Compile times scale with tuple size due to code generation. Here are approximate
 | 48             | ~3.9s        |
 | 64             | ~5.6s        |
 | 96             | ~12.8s       |
-| 128            | ~26.8s       |
+| 128            | ~26.9s       |
 
 ## Architecture
 

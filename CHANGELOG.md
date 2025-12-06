@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.4] - 2025-12-06
+### Added in Unreleased
 
-### Added in 0.1.4
-
+- `TupleReplicate<T>` trait for creating tuples by replicating a single value across all positions
+- Optimized implementation that avoids unnecessary cloning: no `Clone` bound for empty/single-element tuples, moves value to last position for multi-element tuples
+- `TupleSplit<Idx>` trait for splitting tuples at compile-time indices using `typenum`
+- `TupleReverse` trait for reversing tuple element order
 - `TupleTryFrom<T, E>` and `TupleTryInto<U, E>` traits for fallible conversions between tuples where elements implement `TryFrom`/`TryInto`
 - `TupleFrom<T>` and `TupleInto<U>` traits for infallible conversions between tuples where elements implement `From`/`Into`
 - Support for tuple conversions with proper error handling and type safety
