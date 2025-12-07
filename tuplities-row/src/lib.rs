@@ -80,10 +80,10 @@ pub trait TupleRowMut<Idx: typenum::Unsigned>: TupleRow<Idx, RowType: TupleMut> 
 #[tuplities_derive::impl_first_tuple_row]
 pub trait FirstTupleRow: TupleLen {
     /// The type of the row tuple containing references to the first elements.
-    type RowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
+    type FirstRowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
 
     /// Returns a tuple of references to the first element in each inner tuple.
-    fn first_tuple_row(&self) -> <Self::RowType as TupleRef>::Ref<'_>;
+    fn first_tuple_row(&self) -> <Self::FirstRowType as TupleRef>::Ref<'_>;
 }
 
 /// A convenience trait for accessing the last row in tuples of tuples.
@@ -106,8 +106,8 @@ pub trait FirstTupleRow: TupleLen {
 #[tuplities_derive::impl_last_tuple_row]
 pub trait LastTupleRow: TupleLen {
     /// The type of the row tuple containing references to the last elements.
-    type RowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
+    type LastRowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
 
     /// Returns a tuple of references to the last element in each inner tuple.
-    fn last_tuple_row(&self) -> <Self::RowType as TupleRef>::Ref<'_>;
+    fn last_tuple_row(&self) -> <Self::LastRowType as TupleRef>::Ref<'_>;
 }

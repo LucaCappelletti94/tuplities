@@ -13,9 +13,9 @@ pub fn impl_first_tuple_row() -> proc_macro2::TokenStream {
         quote! {
             impl<#(#type_params: tuplities_pop_front::TupleRefFront,)*> FirstTupleRow for (#(#type_params,)*)
             {
-                type RowType = (#(< #type_params as tuplities_pop_front::TuplePopFront >::Front,)*);
+                type FirstRowType = (#(< #type_params as tuplities_pop_front::TuplePopFront >::Front,)*);
 
-                fn first_tuple_row(&self) -> <Self::RowType as tuplities_ref::TupleRef>::Ref<'_> {
+                fn first_tuple_row(&self) -> <Self::FirstRowType as tuplities_ref::TupleRef>::Ref<'_> {
                     (#(self.#indices.ref_front(),)*)
                 }
             }

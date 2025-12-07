@@ -13,9 +13,9 @@ pub fn impl_last_tuple_row() -> proc_macro2::TokenStream {
         quote! {
             impl<#(#type_params: tuplities_pop_back::TupleRefBack,)*> LastTupleRow for (#(#type_params,)*)
             {
-                type RowType = (#(< #type_params as tuplities_pop_back::TuplePopBack >::Back,)*);
+                type LastRowType = (#(< #type_params as tuplities_pop_back::TuplePopBack >::Back,)*);
 
-                fn last_tuple_row(&self) -> <Self::RowType as tuplities_ref::TupleRef>::Ref<'_> {
+                fn last_tuple_row(&self) -> <Self::LastRowType as tuplities_ref::TupleRef>::Ref<'_> {
                     (#(self.#indices.ref_back(),)*)
                 }
             }
