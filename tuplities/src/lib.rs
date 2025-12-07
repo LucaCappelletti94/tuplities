@@ -14,7 +14,9 @@ pub mod prelude {
     #[cfg(feature = "eq")]
     pub use tuplities_eq::TupleEq;
     #[cfg(feature = "flatten-nest")]
-    pub use tuplities_flatten_nest::{FlattenNestedTuple, NestTuple, NestedTupleIndex, NestedTupleIndexMut};
+    pub use tuplities_flatten_nest::{
+        FlattenNestedTuple, NestTuple, NestedTupleIndex, NestedTupleIndexMut,
+    };
     #[cfg(feature = "from")]
     pub use tuplities_from::{TupleFrom, TupleInto};
     #[cfg(feature = "hash")]
