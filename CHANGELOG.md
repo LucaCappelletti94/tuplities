@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `FirstTupleIndex` and `LastTupleIndex` convenience traits for accessing the first and last elements in tuples
 - `TupleRefMap` trait for applying `TupleRef` to each element of a tuple of tuples
 - `TupleMutMap` trait for applying `TupleMut` to each element of a tuple of tuples
+- `FlattenNestedTuple` trait for converting nested tuples like `(A, (B, (C,)))` to flat tuples like `(A, B, C)`
+- `NestTuple` trait for converting flat tuples like `(A, B, C)` to nested tuples like `(A, (B, (C,)))`
 
 ## [0.1.0] - 2025-12-05
 

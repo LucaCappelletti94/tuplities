@@ -8,6 +8,7 @@ pub mod prelude {
     pub use tuplities_debug::TupleDebug;
     pub use tuplities_default::TupleDefault;
     pub use tuplities_eq::TupleEq;
+    pub use tuplities_flatten_nest::{FlattenNestedTuple, NestTuple};
     pub use tuplities_from::{TupleFrom, TupleInto};
     pub use tuplities_hash::TupleHash;
     pub use tuplities_index::{FirstTupleIndex, LastTupleIndex, TupleIndex, TupleIndexMut};

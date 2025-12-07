@@ -8,6 +8,7 @@ members = [
   "tuplities-debug",
   "tuplities-default",
   "tuplities-eq",
+  "tuplities-flatten-nest",
   "tuplities-from",
   "tuplities-hash",
   "tuplities-index",
@@ -52,6 +53,7 @@ tuplities-copy = { path = "tuplities-copy", version = "0.1.3" }
 tuplities-debug = { path = "tuplities-debug", version = "0.1.3" }
 tuplities-default = { path = "tuplities-default", version = "0.1.3" }
 tuplities-eq = { path = "tuplities-eq", version = "0.1.3" }
+tuplities-flatten-nest = { path = "tuplities-flatten-nest", version = "0.1.3" }
 tuplities-from = { path = "tuplities-from", version = "0.1.3" }
 tuplities-hash = { path = "tuplities-hash", version = "0.1.3" }
 tuplities-index = { path = "tuplities-index", version = "0.1.3" }

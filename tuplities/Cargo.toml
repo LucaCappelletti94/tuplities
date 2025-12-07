@@ -18,6 +18,7 @@ tuplities-copy.workspace = true
 tuplities-debug.workspace = true
 tuplities-default.workspace = true
 tuplities-eq.workspace = true
+tuplities-flatten-nest.workspace = true
 tuplities-from.workspace = true
 tuplities-hash.workspace = true
 tuplities-mut.workspace = true

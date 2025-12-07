@@ -46,6 +46,7 @@ dependencies = [
  "tuplities-debug",
  "tuplities-default",
  "tuplities-eq",
+ "tuplities-flatten-nest",
  "tuplities-from",
  "tuplities-hash",
  "tuplities-index",
@@ -115,6 +116,13 @@ version = "0.1.3"
 dependencies = [
  "tuplities-derive",
  "tuplities-partial-eq",
+]
+
+[[package]]
+name = "tuplities-flatten-nest"
+version = "0.1.3"
+dependencies = [
+ "tuplities-derive",
 ]
 
 [[package]]
