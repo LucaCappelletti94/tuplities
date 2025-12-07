@@ -18,6 +18,12 @@ pub fn impl_flatten_nested_tuple() -> proc_macro2::TokenStream {
         // Generate the flatten implementation
         let flatten_impl = generate_flatten_impl(size);
 
+        // Generate the flatten_ref implementation
+        let flatten_ref_impl = generate_flatten_ref_impl(size);
+
+        // Generate the flatten_mut implementation
+        let flatten_mut_impl = generate_flatten_mut_impl(size);
+
         quote! {
             impl<#(#type_params,)*> FlattenNestedTuple for #nested_input_type {
                 type Flattened = #flattened_output_type;
@@ -25,6 +31,16 @@ pub fn impl_flatten_nested_tuple() -> proc_macro2::TokenStream {
                 #[inline]
                 fn flatten(self) -> Self::Flattened {
                     #flatten_impl
+                }
+
+                #[inline]
+                fn flatten_ref(&self) -> <Self::Flattened as TupleRef>::Ref<'_> {
+                    #flatten_ref_impl
+                }
+
+                #[inline]
+                fn flatten_mut(&mut self) -> <Self::Flattened as TupleMut>::Mut<'_> {
+                    #flatten_mut_impl
                 }
             }
         }
@@ -65,6 +81,52 @@ fn generate_flatten_impl(size: usize) -> proc_macro2::TokenStream {
                         quote! { #acc .1 }
                     });
                     quote! { #nested_access .0 }
+                }
+            });
+
+            quote! { (#(#accesses,)*) }
+        }
+    }
+}
+
+/// Generate the flatten_ref implementation that extracts references from nested structure
+fn generate_flatten_ref_impl(size: usize) -> proc_macro2::TokenStream {
+    match size {
+        0 => quote! { () },
+        1 => quote! { (&self.0,) },
+        _ => {
+            let accesses = (0..size).map(|i| {
+                if i == 0 {
+                    quote! { &self.0 }
+                } else {
+                    // Generate nested access: self.1.1.1...1.0 with (i-1) ones
+                    let nested_access = (1..i).fold(quote! { self.1 }, |acc, _| {
+                        quote! { #acc .1 }
+                    });
+                    quote! { &(#nested_access .0) }
+                }
+            });
+
+            quote! { (#(#accesses,)*) }
+        }
+    }
+}
+
+/// Generate the flatten_mut implementation that extracts mutable references from nested structure
+fn generate_flatten_mut_impl(size: usize) -> proc_macro2::TokenStream {
+    match size {
+        0 => quote! { () },
+        1 => quote! { (&mut self.0,) },
+        _ => {
+            let accesses = (0..size).map(|i| {
+                if i == 0 {
+                    quote! { &mut self.0 }
+                } else {
+                    // Generate nested access: self.1.1.1...1.0 with (i-1) ones
+                    let nested_access = (1..i).fold(quote! { self.1 }, |acc, _| {
+                        quote! { #acc .1 }
+                    });
+                    quote! { &mut (#nested_access .0) }
                 }
             });
 

@@ -2,6 +2,9 @@
 
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `FlattenNestedTuple` and `NestTuple` traits.
 
+use tuplities_mut::TupleMut;
+use tuplities_ref::TupleRef;
+
 #[tuplities_derive::impl_flatten_nested_tuple]
 #[tuplities_derive::impl_nest_tuple]
 /// A trait for flattening nested tuples into flat tuples.
@@ -12,10 +15,39 @@
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait FlattenNestedTuple {
     /// The flattened tuple type.
-    type Flattened: NestTuple;
+    type Flattened: NestTuple + TupleRef + TupleMut;
 
     /// Flattens the nested tuple into a flat tuple.
     fn flatten(self) -> Self::Flattened;
+
+    /// Flattens the nested tuple into a flat tuple of references.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use tuplities_flatten_nest::FlattenNestedTuple;
+    ///
+    /// let nested = (1, (2, (3,)));
+    /// let refs = nested.flatten_ref();
+    /// assert_eq!(refs, (&1, &2, &3));
+    /// ```
+    fn flatten_ref(&self) -> <Self::Flattened as TupleRef>::Ref<'_>;
+
+    /// Flattens the nested tuple into a flat tuple of mutable references.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use tuplities_flatten_nest::FlattenNestedTuple;
+    ///
+    /// let mut nested = (1, (2, (3,)));
+    /// let mut_refs = nested.flatten_mut();
+    /// *mut_refs.0 = 10;
+    /// *mut_refs.1 = 20;
+    /// *mut_refs.2 = 30;
+    /// assert_eq!(nested, (10, (20, (30,))));
+    /// ```
+    fn flatten_mut(&mut self) -> <Self::Flattened as TupleMut>::Mut<'_>;
 }
 
 /// A trait for nesting flat tuples into nested tuples.
@@ -64,5 +96,40 @@ mod tests {
         let nested = original.nest();
         let flattened = nested.flatten();
         assert_eq!(original, flattened);
+    }
+
+    #[test]
+    fn test_flatten_ref_3() {
+        let nested = (1, (2, (3,)));
+        let refs = nested.flatten_ref();
+        assert_eq!(refs, (&1, &2, &3));
+    }
+
+    #[test]
+    fn test_flatten_mut_3() {
+        let mut nested = (1, (2, (3,)));
+        let mut_refs = nested.flatten_mut();
+        *mut_refs.0 = 10;
+        *mut_refs.1 = 20;
+        *mut_refs.2 = 30;
+        assert_eq!(nested, (10, (20, (30,))));
+    }
+
+    #[test]
+    fn test_flatten_ref_2() {
+        let nested = (42, ("hello",));
+        let refs = nested.flatten_ref();
+        assert_eq!(refs, (&42, &"hello"));
+    }
+
+    #[test]
+    fn test_flatten_mut_2() {
+        let mut nested = (42, ([1, 2, 3],));
+        let mut_refs = nested.flatten_mut();
+        *mut_refs.0 = 24;
+        mut_refs.1[0] = 10;
+        mut_refs.1[1] = 20;
+        mut_refs.1[2] = 30;
+        assert_eq!(nested, (24, ([10, 20, 30],)));
     }
 }

@@ -123,6 +123,8 @@ name = "tuplities-flatten-nest"
 version = "0.1.3"
 dependencies = [
  "tuplities-derive",
+ "tuplities-mut",
+ "tuplities-ref",
 ]
 
 [[package]]
