@@ -11,7 +11,7 @@ pub fn impl_row() -> proc_macro2::TokenStream {
         let indices = indices(size);
 
         quote! {
-            impl<Idx: typenum::Unsigned, #(#type_params: tuplities_index::TupleIndex<Idx>,)*> TupleRow<Idx> for (#(#type_params,)*)
+            impl<Idx, #(#type_params: tuplities_index::TupleIndex<Idx>,)*> TupleRow<Idx> for (#(#type_params,)*)
             {
                 type RowType = (#(#type_params::Element,)*);
 

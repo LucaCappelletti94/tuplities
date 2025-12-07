@@ -25,7 +25,7 @@ use tuplities_len::TupleLen;
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_tuple_index]
-pub trait TupleIndex<Idx: typenum::Unsigned>: TupleLen {
+pub trait TupleIndex<Idx>: TupleLen {
     /// The type of the element at index `Idx`.
     type Element;
 
@@ -51,7 +51,7 @@ pub trait TupleIndex<Idx: typenum::Unsigned>: TupleLen {
 /// ```
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait TupleIndexMut<Idx: typenum::Unsigned>: TupleIndex<Idx> {
+pub trait TupleIndexMut<Idx>: TupleIndex<Idx> {
     /// Returns a mutable reference to the element at index `Idx`.
     fn tuple_index_mut(&mut self) -> &mut Self::Element;
 }

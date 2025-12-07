@@ -11,7 +11,7 @@ pub fn impl_row_mut() -> proc_macro2::TokenStream {
         let indices = indices(size);
 
         quote! {
-            impl<Idx: typenum::Unsigned, #(#type_params: tuplities_index::TupleIndexMut<Idx>,)*> TupleRowMut<Idx> for (#(#type_params,)*)
+            impl<Idx, #(#type_params: tuplities_index::TupleIndexMut<Idx>,)*> TupleRowMut<Idx> for (#(#type_params,)*)
             {
                 fn tuple_row_mut(&mut self) -> <Self::RowType as tuplities_mut::TupleMut>::Mut<'_> {
                     (#(self.#indices.tuple_index_mut(),)*)

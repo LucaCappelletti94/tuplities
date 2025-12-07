@@ -21,7 +21,7 @@
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_split]
-pub trait TupleSplit<Idx: typenum::Unsigned> {
+pub trait TupleSplit<Idx> {
     /// The type of the tuple containing elements before the split index.
     type Left;
 

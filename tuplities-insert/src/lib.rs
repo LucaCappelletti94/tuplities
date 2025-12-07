@@ -23,7 +23,7 @@
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_insert]
-pub trait TupleInsert<Idx: typenum::Unsigned, T> {
+pub trait TupleInsert<Idx, T> {
     /// The type of the tuple after inserting the element.
     type Output;
 

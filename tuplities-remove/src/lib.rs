@@ -25,7 +25,7 @@
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_remove]
-pub trait TupleRemove<Idx: typenum::Unsigned> {
+pub trait TupleRemove<Idx> {
     /// The type of the element being removed.
     type Type;
 

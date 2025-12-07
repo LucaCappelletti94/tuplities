@@ -26,7 +26,7 @@ use tuplities_ref::TupleRef;
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_row]
-pub trait TupleRow<Idx: typenum::Unsigned>: TupleLen {
+pub trait TupleRow<Idx>: TupleLen {
     /// The type of the row tuple containing elements at index `Idx`.
     type RowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
 
@@ -57,7 +57,7 @@ pub trait TupleRow<Idx: typenum::Unsigned>: TupleLen {
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_row_mut]
-pub trait TupleRowMut<Idx: typenum::Unsigned>: TupleRow<Idx, RowType: TupleMut> {
+pub trait TupleRowMut<Idx>: TupleRow<Idx, RowType: TupleMut> {
     /// Returns a tuple of mutable references to the elements at index `Idx` in each inner tuple.
     fn tuple_row_mut(&mut self) -> <Self::RowType as TupleMut>::Mut<'_>;
 }
