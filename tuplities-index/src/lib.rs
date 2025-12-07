@@ -27,10 +27,10 @@ use tuplities_len::TupleLen;
 #[tuplities_derive::impl_tuple_index]
 pub trait TupleIndex<Idx: typenum::Unsigned>: TupleLen {
     /// The type of the element at index `Idx`.
-    type Type;
+    type Element;
 
     /// Returns a reference to the element at index `Idx`.
-    fn tuple_index(&self) -> &Self::Type;
+    fn tuple_index(&self) -> &Self::Element;
 }
 
 /// A trait for mutable indexing into tuples at compile-time known positions.
@@ -53,7 +53,7 @@ pub trait TupleIndex<Idx: typenum::Unsigned>: TupleLen {
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait TupleIndexMut<Idx: typenum::Unsigned>: TupleIndex<Idx> {
     /// Returns a mutable reference to the element at index `Idx`.
-    fn tuple_index_mut(&mut self) -> &mut Self::Type;
+    fn tuple_index_mut(&mut self) -> &mut Self::Element;
 }
 
 /// A convenience trait for accessing the first element (index 0) in tuples.
@@ -73,7 +73,7 @@ pub trait TupleIndexMut<Idx: typenum::Unsigned>: TupleIndex<Idx> {
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait FirstTupleIndex: TupleIndex<typenum::U0> {
     /// Returns a reference to the first element in the tuple.
-    fn first_tuple_index(&self) -> &Self::Type {
+    fn first_tuple_index(&self) -> &Self::Element {
         self.tuple_index()
     }
 }
@@ -103,7 +103,7 @@ pub trait LastTupleIndex:
     >
 {
     /// Returns a reference to the last element in the tuple.
-    fn last_tuple_index(&self) -> &Self::Type;
+    fn last_tuple_index(&self) -> &Self::Element;
 }
 
 impl<T> LastTupleIndex for T
@@ -113,7 +113,7 @@ where
             Len: core::ops::Sub<typenum::U1, Output: typenum::Unsigned>,
         >,
 {
-    fn last_tuple_index(&self) -> &Self::Type {
+    fn last_tuple_index(&self) -> &Self::Element {
         self.tuple_index()
     }
 }

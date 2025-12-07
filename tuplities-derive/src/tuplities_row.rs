@@ -13,7 +13,7 @@ pub fn impl_row() -> proc_macro2::TokenStream {
         quote! {
             impl<Idx: typenum::Unsigned, #(#type_params: tuplities_index::TupleIndex<Idx>,)*> TupleRow<Idx> for (#(#type_params,)*)
             {
-                type RowType = (#(#type_params::Type,)*);
+                type RowType = (#(#type_params::Element,)*);
 
                 fn tuple_row(&self) -> <Self::RowType as tuplities_ref::TupleRef>::Ref<'_> {
                     (#(self.#indices.tuple_index(),)*)

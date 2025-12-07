@@ -18,17 +18,17 @@ pub fn impl_tuple_index() -> proc_macro2::TokenStream {
                 quote! {
                     impl<#(#type_params,)*> TupleIndex<#typenum> for (#(#type_params,)*)
                     {
-                        type Type = #indexed_type;
+                        type Element = #indexed_type;
 
                         #[inline]
-                        fn tuple_index(&self) -> &Self::Type {
+                        fn tuple_index(&self) -> &Self::Element {
                             &self.#indexed_index
                         }
                     }
                     impl<#(#type_params,)*> TupleIndexMut<#typenum> for (#(#type_params,)*)
                     {
                         #[inline]
-                        fn tuple_index_mut(&mut self) -> &mut Self::Type {
+                        fn tuple_index_mut(&mut self) -> &mut Self::Element {
                             &mut self.#indexed_index
                         }
                     }
