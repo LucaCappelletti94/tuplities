@@ -15,7 +15,7 @@ use tuplities_ref::TupleRef;
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait FlattenNestedTuple {
     /// The flattened tuple type.
-    type Flattened: NestTuple + TupleRef + TupleMut;
+    type Flattened: NestTuple<Nested = Self> + TupleRef + TupleMut;
 
     /// Flattens the nested tuple into a flat tuple.
     fn flatten(self) -> Self::Flattened;
@@ -58,7 +58,7 @@ pub trait FlattenNestedTuple {
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestTuple {
     /// The nested tuple type.
-    type Nested: FlattenNestedTuple;
+    type Nested: FlattenNestedTuple<Flattened = Self>;
 
     /// Nests the flat tuple into a nested tuple.
     fn nest(self) -> Self::Nested;
