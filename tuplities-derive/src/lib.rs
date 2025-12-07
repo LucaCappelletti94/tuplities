@@ -9,10 +9,12 @@ mod tuplities_copy;
 mod tuplities_debug;
 mod tuplities_default;
 mod tuplities_eq;
+mod tuplities_first_tuple_row;
 mod tuplities_from;
 mod tuplities_hash;
 mod tuplities_index;
 mod tuplities_insert;
+mod tuplities_last_tuple_row;
 mod tuplities_len;
 mod tuplities_mut;
 mod tuplities_option;
@@ -254,5 +256,21 @@ pub fn impl_row(_attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn impl_row_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_row_mut::impl_row_mut());
+    item.into()
+}
+
+/// Generate `FirstTupleRow` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_first_tuple_row(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_first_tuple_row::impl_first_tuple_row());
+    item.into()
+}
+
+/// Generate `LastTupleRow` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_last_tuple_row(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_last_tuple_row::impl_last_tuple_row());
     item.into()
 }

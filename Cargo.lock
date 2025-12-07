@@ -261,6 +261,8 @@ dependencies = [
  "tuplities-index",
  "tuplities-len",
  "tuplities-mut",
+ "tuplities-pop-back",
+ "tuplities-pop-front",
  "tuplities-ref",
  "typenum",
 ]

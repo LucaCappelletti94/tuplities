@@ -28,6 +28,47 @@ pub trait TuplePopBack {
     fn pop_back(self) -> (Self::Init, Self::Back);
 }
 
+/// A trait for accessing a reference to the last element of a tuple.
+///
+/// This trait provides a method to get a reference to the last element without consuming the tuple.
+///
+/// # Examples
+///
+/// ```rust
+/// use tuplities_pop_back::TupleRefBack;
+///
+/// let tuple = (1, 2, 3);
+/// let last = tuple.ref_back();
+/// assert_eq!(*last, 3);
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait TupleRefBack: TuplePopBack {
+    /// Returns a reference to the last element of the tuple.
+    fn ref_back(&self) -> &Self::Back;
+}
+
+/// A trait for accessing a mutable reference to the last element of a tuple.
+///
+/// This trait provides a method to get a mutable reference to the last element without consuming the tuple.
+///
+/// # Examples
+///
+/// ```rust
+/// use tuplities_pop_back::TupleMutBack;
+///
+/// let mut tuple = (1, 2, 3);
+/// let last = tuple.mut_back();
+/// *last = 42;
+/// assert_eq!(tuple, (1, 2, 42));
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait TupleMutBack: TupleRefBack {
+    /// Returns a mutable reference to the last element of the tuple.
+    fn mut_back(&mut self) -> &mut Self::Back;
+}
+
 #[cfg(test)]
 mod tests {
     use super::TuplePopBack;

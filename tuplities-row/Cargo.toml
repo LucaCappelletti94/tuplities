@@ -17,6 +17,8 @@ tuplities-index.workspace = true
 tuplities-ref.workspace = true
 tuplities-mut.workspace = true
 tuplities-len.workspace = true
+tuplities-pop-front.workspace = true
+tuplities-pop-back.workspace = true
 typenum.workspace = true
 
 [lints]

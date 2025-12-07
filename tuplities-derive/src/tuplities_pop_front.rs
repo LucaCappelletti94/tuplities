@@ -23,6 +23,22 @@ pub fn impl_pop_front() -> proc_macro2::TokenStream {
                     (self.#first_index, (#(self.#other_indices,)*))
                 }
             }
+
+            impl<#(#type_params,)*> TupleRefFront for (#(#type_params,)*)
+            {
+                #[inline]
+                fn ref_front(&self) -> &Self::Front {
+                    &self.#first_index
+                }
+            }
+
+            impl<#(#type_params,)*> TupleMutFront for (#(#type_params,)*)
+            {
+                #[inline]
+                fn mut_front(&mut self) -> &mut Self::Front {
+                    &mut self.#first_index
+                }
+            }
         }
     })
 }

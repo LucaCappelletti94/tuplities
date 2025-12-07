@@ -64,7 +64,7 @@ pub trait TupleRowMut<Idx: typenum::Unsigned>: TupleRow<Idx, RowType: TupleMut> 
 
 /// A convenience trait for accessing the first row (index 0) in tuples of tuples.
 ///
-/// This trait is automatically implemented for any tuple of tuples that implements `TupleRow<U0>`.
+/// This trait is automatically implemented for any tuple of tuples where each inner tuple implements `TupleRefFront`.
 ///
 /// # Examples
 ///
@@ -77,14 +77,14 @@ pub trait TupleRowMut<Idx: typenum::Unsigned>: TupleRow<Idx, RowType: TupleMut> 
 /// ```
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait FirstTupleRow: TupleRow<typenum::U0> {
-    /// Returns a tuple of references to the first element in each inner tuple.
-    fn first_tuple_row(&self) -> <Self::RowType as TupleRef>::Ref<'_> {
-        self.tuple_row()
-    }
-}
+#[tuplities_derive::impl_first_tuple_row]
+pub trait FirstTupleRow: TupleLen {
+    /// The type of the row tuple containing references to the first elements.
+    type RowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
 
-impl<T: TupleRow<typenum::U0>> FirstTupleRow for T {}
+    /// Returns a tuple of references to the first element in each inner tuple.
+    fn first_tuple_row(&self) -> <Self::RowType as TupleRef>::Ref<'_>;
+}
 
 /// A convenience trait for accessing the last row in tuples of tuples.
 ///
@@ -103,24 +103,11 @@ impl<T: TupleRow<typenum::U0>> FirstTupleRow for T {}
 /// ```
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait LastTupleRow:
-    TupleRow<
-        <<Self as TupleLen>::Len as core::ops::Sub<typenum::U1>>::Output,
-        Len: core::ops::Sub<typenum::U1, Output: typenum::Unsigned>,
-    >
-{
+#[tuplities_derive::impl_last_tuple_row]
+pub trait LastTupleRow: TupleLen {
+    /// The type of the row tuple containing references to the last elements.
+    type RowType: TupleRef + TupleLen<Len = <Self as TupleLen>::Len>;
+
     /// Returns a tuple of references to the last element in each inner tuple.
     fn last_tuple_row(&self) -> <Self::RowType as TupleRef>::Ref<'_>;
-}
-
-impl<T> LastTupleRow for T
-where
-    T: TupleRow<
-            <<T as TupleLen>::Len as core::ops::Sub<typenum::U1>>::Output,
-            Len: core::ops::Sub<typenum::U1, Output: typenum::Unsigned>,
-        >,
-{
-    fn last_tuple_row(&self) -> <Self::RowType as TupleRef>::Ref<'_> {
-        self.tuple_row()
-    }
 }

@@ -28,6 +28,47 @@ pub trait TuplePopFront {
     fn pop_front(self) -> (Self::Front, Self::Tail);
 }
 
+/// A trait for accessing a reference to the first element of a tuple.
+///
+/// This trait provides a method to get a reference to the first element without consuming the tuple.
+///
+/// # Examples
+///
+/// ```rust
+/// use tuplities_pop_front::TupleRefFront;
+///
+/// let tuple = (1, 2, 3);
+/// let first = tuple.ref_front();
+/// assert_eq!(*first, 1);
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait TupleRefFront: TuplePopFront {
+    /// Returns a reference to the first element of the tuple.
+    fn ref_front(&self) -> &Self::Front;
+}
+
+/// A trait for accessing a mutable reference to the first element of a tuple.
+///
+/// This trait provides a method to get a mutable reference to the first element without consuming the tuple.
+///
+/// # Examples
+///
+/// ```rust
+/// use tuplities_pop_front::TupleMutFront;
+///
+/// let mut tuple = (1, 2, 3);
+/// let first = tuple.mut_front();
+/// *first = 42;
+/// assert_eq!(tuple, (42, 2, 3));
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait TupleMutFront: TupleRefFront {
+    /// Returns a mutable reference to the first element of the tuple.
+    fn mut_front(&mut self) -> &mut Self::Front;
+}
+
 #[cfg(test)]
 mod tests {
     use super::TuplePopFront;

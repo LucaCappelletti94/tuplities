@@ -23,6 +23,22 @@ pub fn impl_pop_back() -> proc_macro2::TokenStream {
                     ((#(self.#other_indices,)*), self.#last_index)
                 }
             }
+
+            impl<#(#type_params,)*> TupleRefBack for (#(#type_params,)*)
+            {
+                #[inline]
+                fn ref_back(&self) -> &Self::Back {
+                    &self.#last_index
+                }
+            }
+
+            impl<#(#type_params,)*> TupleMutBack for (#(#type_params,)*)
+            {
+                #[inline]
+                fn mut_back(&mut self) -> &mut Self::Back {
+                    &mut self.#last_index
+                }
+            }
         }
     })
 }

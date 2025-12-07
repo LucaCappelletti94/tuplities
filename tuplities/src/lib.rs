@@ -18,8 +18,8 @@ pub mod prelude {
     pub use tuplities_ord::TupleOrd;
     pub use tuplities_partial_eq::TuplePartialEq;
     pub use tuplities_partial_ord::TuplePartialOrd;
-    pub use tuplities_pop_back::TuplePopBack;
-    pub use tuplities_pop_front::TuplePopFront;
+    pub use tuplities_pop_back::{TupleMutBack, TuplePopBack, TupleRefBack};
+    pub use tuplities_pop_front::{TupleMutFront, TuplePopFront, TupleRefFront};
     pub use tuplities_push_back::TuplePushBack;
     pub use tuplities_push_front::TuplePushFront;
     pub use tuplities_ref::TupleRef;
