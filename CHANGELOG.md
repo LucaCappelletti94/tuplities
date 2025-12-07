@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TupleRow<Idx>` and `TupleRowMut<Idx>` traits for indexing rows in tuples of tuples
 - `FirstTupleRow` and `LastTupleRow` convenience traits for accessing the first and last rows in tuples of tuples
 - `FirstTupleIndex` and `LastTupleIndex` convenience traits for accessing the first and last elements in tuples
+- `TupleRefMap` trait for applying `TupleRef` to each element of a tuple of tuples
+- `TupleMutMap` trait for applying `TupleMut` to each element of a tuple of tuples
 
 ## [0.1.0] - 2025-12-05
 

@@ -17,6 +17,7 @@ mod tuplities_insert;
 mod tuplities_last_tuple_row;
 mod tuplities_len;
 mod tuplities_mut;
+mod tuplities_mut_map;
 mod tuplities_option;
 mod tuplities_ord;
 mod tuplities_partial_eq;
@@ -26,6 +27,7 @@ mod tuplities_pop_front;
 mod tuplities_push_back;
 mod tuplities_push_front;
 mod tuplities_ref;
+mod tuplities_ref_map;
 mod tuplities_remove;
 mod tuplities_replicate;
 mod tuplities_reverse;
@@ -215,6 +217,22 @@ pub fn impl_tuple_replicate(_attr: TokenStream, item: TokenStream) -> TokenStrea
 pub fn impl_tuple_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_mut::impl_tuple_mut());
+    item.into()
+}
+
+/// Generate `TupleRefMap` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_ref_map(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_ref_map::impl_tuple_ref_map());
+    item.into()
+}
+
+/// Generate `TupleMutMap` trait implementations for all tuple sizes.
+#[proc_macro_attribute]
+pub fn impl_tuple_mut_map(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_mut_map::impl_tuple_mut_map());
     item.into()
 }
 

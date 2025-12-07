@@ -43,3 +43,30 @@ pub trait TupleMut {
     /// ```
     fn tuple_mut(&mut self) -> Self::Mut<'_>;
 }
+
+#[tuplities_derive::impl_tuple_mut_map]
+/// A trait for applying `TupleMut` to each element of a tuple.
+///
+/// This trait takes a mutable reference to a tuple where each element implements `TupleMut` and returns
+/// a tuple where each element is the result of calling `tuple_mut()` on the original elements.
+///
+/// # Examples
+///
+/// ```rust
+/// use tuplities_mut::TupleMutMap;
+///
+/// let mut matrix = ((1, 2), (3, 4), (5, 6));
+/// let mut_ref_matrix = matrix.tuple_mut_map();
+/// assert_eq!(mut_ref_matrix, ((&mut 1, &mut 2), (&mut 3, &mut 4), (&mut 5, &mut 6)));
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait TupleMutMap {
+    /// The type of a tuple containing tuples of mutable references to each inner element.
+    type MutMap<'a>
+    where
+        Self: 'a;
+
+    /// Returns a tuple where each element is a tuple of mutable references to the inner elements.
+    fn tuple_mut_map(&mut self) -> Self::MutMap<'_>;
+}

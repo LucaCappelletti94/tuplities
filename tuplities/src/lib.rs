@@ -14,6 +14,7 @@ pub mod prelude {
     pub use tuplities_insert::TupleInsert;
     pub use tuplities_len::{PairTuple, SingletonTuple, TupleLen, UnitTuple};
     pub use tuplities_mut::TupleMut;
+    pub use tuplities_mut::TupleMutMap;
     pub use tuplities_option::{IntoTupleOption, TupleOption};
     pub use tuplities_ord::TupleOrd;
     pub use tuplities_partial_eq::TuplePartialEq;
@@ -23,6 +24,7 @@ pub mod prelude {
     pub use tuplities_push_back::TuplePushBack;
     pub use tuplities_push_front::TuplePushFront;
     pub use tuplities_ref::TupleRef;
+    pub use tuplities_ref::TupleRefMap;
     pub use tuplities_remove::TupleRemove;
     pub use tuplities_replicate::TupleReplicate;
     pub use tuplities_reverse::TupleReverse;

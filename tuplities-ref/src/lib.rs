@@ -38,3 +38,31 @@ pub trait TupleRef {
     /// ```
     fn tuple_ref(&self) -> Self::Ref<'_>;
 }
+
+#[tuplities_derive::impl_tuple_ref_map]
+
+/// A trait for applying `TupleRef` to each element of a tuple.
+///
+/// This trait takes a tuple where each element implements `TupleRef` and returns
+/// a tuple where each element is the result of calling `tuple_ref()` on the original elements.
+///
+/// # Examples
+///
+/// ```rust
+/// use tuplities_ref::TupleRefMap;
+///
+/// let matrix = ((1, 2), (3, 4), (5, 6));
+/// let ref_matrix = matrix.tuple_ref_map();
+/// assert_eq!(ref_matrix, ((&1, &2), (&3, &4), (&5, &6)));
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait TupleRefMap {
+    /// The type of a tuple containing tuples of references to each inner element.
+    type RefMap<'a>
+    where
+        Self: 'a;
+
+    /// Returns a tuple where each element is a tuple of references to the inner elements.
+    fn tuple_ref_map(&self) -> Self::RefMap<'_>;
+}
