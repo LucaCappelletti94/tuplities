@@ -20,12 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TupleFrom<T>` and `TupleInto<U>` traits for infallible conversions between tuples where elements implement `From`/`Into`
 - Support for tuple conversions with proper error handling and type safety
 - `TupleRow<Idx>` and `TupleRowMut<Idx>` traits for indexing rows in tuples of tuples
-
-### Changed in Unreleased
-
-- Renamed `Row` and `RowMut` traits to `TupleRow` and `TupleRowMut` respectively to avoid naming collisions
-- Renamed `row()` and `row_mut()` methods to `tuple_row()` and `tuple_row_mut()` for consistency
-- Renamed `TupleLen::Idx` associated type to `TupleLen::Len` for better naming consistency
+- `FirstTupleRow` and `LastTupleRow` convenience traits for accessing the first and last rows in tuples of tuples
 
 ## [0.1.0] - 2025-12-05
 

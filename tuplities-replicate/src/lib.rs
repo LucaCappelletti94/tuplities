@@ -22,6 +22,20 @@ pub trait TupleReplicate<T> {
     ///
     /// let tuple: (i32, i32, i32) = TupleReplicate::tuple_replicate(42);
     /// assert_eq!(tuple, (42, 42, 42));
+    /// let _tuple_empty: () = TupleReplicate::tuple_replicate(42);
+    /// let tuple_single: (i32,) = TupleReplicate::tuple_replicate(42);
+    /// assert_eq!(tuple_single, (42,));
+    /// let tuple_two: (i32, i32) = TupleReplicate::tuple_replicate(42);
+    /// assert_eq!(tuple_two, (42, 42));
+    ///
+    /// let tuple_refs: (&str, &str, &str) = TupleReplicate::tuple_replicate("hello");
+    /// assert_eq!(tuple_refs, ("hello", "hello", "hello"));
+    ///
+    /// let tuple_strings: (String, String) = TupleReplicate::tuple_replicate(String::from("world"));
+    /// assert_eq!(tuple_strings, (String::from("world"), String::from("world")));
+    ///
+    /// let tuple_refs2: (&i32, &i32) = TupleReplicate::tuple_replicate(&100);
+    /// assert_eq!(tuple_refs2, (&100, &100));
     /// ```
     fn tuple_replicate(value: T) -> Self;
 }
