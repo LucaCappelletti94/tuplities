@@ -15,6 +15,7 @@ homepage.workspace = true
 [dependencies]
 typenum = { workspace = true }
 tuplities-derive = { workspace = true }
+tuplities-len = { workspace = true }
 
 [features]
 default = []

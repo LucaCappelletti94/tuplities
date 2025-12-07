@@ -10,7 +10,7 @@ pub mod prelude {
     pub use tuplities_eq::TupleEq;
     pub use tuplities_from::{TupleFrom, TupleInto};
     pub use tuplities_hash::TupleHash;
-    pub use tuplities_index::{TupleIndex, TupleIndexMut};
+    pub use tuplities_index::{FirstTupleIndex, LastTupleIndex, TupleIndex, TupleIndexMut};
     pub use tuplities_insert::TupleInsert;
     pub use tuplities_len::{PairTuple, SingletonTuple, TupleLen, UnitTuple};
     pub use tuplities_mut::TupleMut;

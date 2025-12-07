@@ -5,6 +5,8 @@
 
 #![no_std]
 
+use tuplities_len::TupleLen;
+
 /// A trait for indexing into tuples at compile-time known positions.
 ///
 /// This trait allows accessing elements at specific indices `Idx`
@@ -23,7 +25,7 @@
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 #[tuplities_derive::impl_tuple_index]
-pub trait TupleIndex<Idx: typenum::Unsigned> {
+pub trait TupleIndex<Idx: typenum::Unsigned>: TupleLen {
     /// The type of the element at index `Idx`.
     type Type;
 
@@ -52,4 +54,66 @@ pub trait TupleIndex<Idx: typenum::Unsigned> {
 pub trait TupleIndexMut<Idx: typenum::Unsigned>: TupleIndex<Idx> {
     /// Returns a mutable reference to the element at index `Idx`.
     fn tuple_index_mut(&mut self) -> &mut Self::Type;
+}
+
+/// A convenience trait for accessing the first element (index 0) in tuples.
+///
+/// This trait is automatically implemented for any tuple that implements `TupleIndex<U0>`.
+///
+/// # Examples
+///
+/// ```
+/// use tuplities_index::FirstTupleIndex;
+///
+/// let tuple = (1, "hello", 3.14);
+/// let first = tuple.first_tuple_index();
+/// assert_eq!(*first, 1);
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait FirstTupleIndex: TupleIndex<typenum::U0> {
+    /// Returns a reference to the first element in the tuple.
+    fn first_tuple_index(&self) -> &Self::Type {
+        self.tuple_index()
+    }
+}
+
+impl<T: TupleIndex<typenum::U0>> FirstTupleIndex for T {}
+
+/// A convenience trait for accessing the last element in tuples.
+///
+/// This trait is automatically implemented for any tuple that implements `TupleIndex<LastIndex>`
+/// where `LastIndex` is calculated as `TupleLen::Len - 1`.
+///
+/// # Examples
+///
+/// ```
+/// use tuplities_index::LastTupleIndex;
+///
+/// let tuple = (1, "hello", 3.14);
+/// let last = tuple.last_tuple_index();
+/// assert_eq!(*last, 3.14);
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait LastTupleIndex:
+    TupleIndex<
+        <<Self as TupleLen>::Len as core::ops::Sub<typenum::U1>>::Output,
+        Len: core::ops::Sub<typenum::U1, Output: typenum::Unsigned>,
+    >
+{
+    /// Returns a reference to the last element in the tuple.
+    fn last_tuple_index(&self) -> &Self::Type;
+}
+
+impl<T> LastTupleIndex for T
+where
+    T: TupleIndex<
+            <<T as TupleLen>::Len as core::ops::Sub<typenum::U1>>::Output,
+            Len: core::ops::Sub<typenum::U1, Output: typenum::Unsigned>,
+        >,
+{
+    fn last_tuple_index(&self) -> &Self::Type {
+        self.tuple_index()
+    }
 }
