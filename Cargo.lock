@@ -125,6 +125,7 @@ dependencies = [
  "tuplities-derive",
  "tuplities-mut",
  "tuplities-ref",
+ "typenum",
 ]
 
 [[package]]

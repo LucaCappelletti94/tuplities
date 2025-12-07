@@ -45,8 +45,10 @@ The library provides several traits for working with tuples:
 - [`TupleTryInto<T>`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryInto.html): Provides a [`tuple_try_into()`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryInto.html#tymethod.tuple_try_into) method to fallibly convert tuples into other types.
 - [`TupleFrom<T>`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleFrom.html): Provides a [`tuple_from()`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleFrom.html#tymethod.tuple_from) method to infallibly convert from other types into tuples.
 - [`TupleInto<T>`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleInto.html): Provides a [`tuple_into()`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleInto.html#tymethod.tuple_into) method to infallibly convert tuples into other types.
-- [`FlattenNestedTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html): Provides a [`flatten()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten) method to convert nested tuples like `(A, (B, (C,)))` into flat tuples like `(A, B, C)`.
+- [`FlattenNestedTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html): Provides a [`flatten()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten) method to convert nested tuples like `(A, (B, (C,)))` into flat tuples like `(A, B, C)`. Also provides [`flatten_ref()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten_ref) and [`flatten_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten_mut) methods for accessing references to flattened elements.
 - [`NestTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html): Provides a [`nest()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html#tymethod.nest) method to convert flat tuples like `(A, B, C)` into nested tuples like `(A, (B, (C,)))`.
+- [`NestedTupleIndex<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html): Provides a [`nested_index()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html#tymethod.nested_index) method to access elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
+- [`NestedTupleIndexMut<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html): Provides a [`nested_index_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html#tymethod.nested_index_mut) method to access mutable elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
 - [`TupleLen`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.TupleLen.html): Provides the length of the tuple as a compile-time [`typenum::Unsigned`](https://docs.rs/typenum/latest/typenum/marker_traits/trait.Unsigned.html) type.
 - [`UnitTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.UnitTuple.html): A marker trait implemented for empty tuples `()` with `TupleLen<Len = U0>`.
 - [`SingletonTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.SingletonTuple.html): A marker trait implemented for single-element tuples `(T,)` with `TupleLen<Len = U1>`.
@@ -62,11 +64,47 @@ The library provides several traits for working with tuples:
 
 ## Features
 
-The crate provides features to generate trait implementations for tuples up to different sizes: 8 (default), 16, 32, 48, 64, 96, or 128 elements. Use the `size-XX` features to enable larger tuple support.
+The crate provides optional features to enable specific traits. All features are enabled by default for convenience, but can be selectively disabled to reduce compile time and binary size.
+
+### Trait Features
+
+The following features enable individual trait crates:
+
+- `clone`: Enables `TupleClone` trait
+- `copy`: Enables `TupleCopy` trait
+- `debug`: Enables `TupleDebug` trait
+- `tuple-default`: Enables `TupleDefault` trait
+- `eq`: Enables `TupleEq` trait
+- `flatten-nest`: Enables `FlattenNestedTuple`, `NestTuple`, `NestedTupleIndex`, and `NestedTupleIndexMut` traits
+- `from`: Enables `TupleFrom` and `TupleInto` traits
+- `hash`: Enables `TupleHash` trait
+- `mut`: Enables `TupleMut` and `TupleMutMap` traits
+- `option`: Enables `TupleOption` and `IntoTupleOption` traits
+- `ord`: Enables `TupleOrd` trait
+- `partial-eq`: Enables `TuplePartialEq` trait
+- `partial-ord`: Enables `TuplePartialOrd` trait
+- `remove`: Enables `TupleRemove` trait
+- `insert`: Enables `TupleInsert` trait
+- `len`: Enables `TupleLen`, `UnitTuple`, `SingletonTuple`, and `PairTuple` traits
+- `index`: Enables `TupleIndex`, `TupleIndexMut`, `FirstTupleIndex`, and `LastTupleIndex` traits
+- `pop-front`: Enables `TuplePopFront`, `TupleRefFront`, and `TupleMutFront` traits
+- `pop-back`: Enables `TuplePopBack`, `TupleRefBack`, and `TupleMutBack` traits
+- `push-front`: Enables `TuplePushFront` trait
+- `push-back`: Enables `TuplePushBack` trait
+- `ref`: Enables `TupleRef` and `TupleRefMap` traits
+- `replicate`: Enables `TupleReplicate` trait
+- `reverse`: Enables `TupleReverse` trait
+- `row`: Enables `TupleRow`, `TupleRowMut`, `FirstTupleRow`, and `LastTupleRow` traits
+- `split`: Enables `TupleSplit` trait
+- `try-from`: Enables `TupleTryFrom` and `TupleTryInto` traits
+
+### Size Features
+
+Additionally, the crate provides features to generate trait implementations for tuples up to different sizes: 8 (default), 16, 32, 48, 64, 96, or 128 elements. Use the `size-XX` features to enable larger tuple support.
 
 ```toml
 [dependencies]
-tuplities = { version = "0.1.4", features = ["size-32"] }
+tuplities = { version = "0.1.4", default-features = false, features = ["clone", "index", "size-32"] }
 ```
 
 ## Performance
@@ -75,13 +113,13 @@ Compile times scale with tuple size due to code generation. Here are measured bu
 
 | Max Tuple Size | Compile Time |
 |----------------|--------------|
-| 8 (default)    | 3.4s         |
-| 16             | 2.6s         |
-| 32             | 3.1s         |
-| 48             | 4.1s         |
-| 64             | 6.1s         |
-| 96             | 14.0s        |
-| 128            | 28.7s        |
+| 8 (default)    | ~3s          |
+| 16             | ~3s          |
+| 32             | ~4s          |
+| 48             | ~6s          |
+| 64             | ~12s         |
+| 96             | ~44s         |
+| 128            | ~122s        |
 
 ## Architecture
 

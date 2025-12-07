@@ -19,6 +19,7 @@ mod tuplities_last_tuple_row;
 mod tuplities_len;
 mod tuplities_mut;
 mod tuplities_mut_map;
+mod tuplities_nested_tuple_index;
 mod tuplities_nest_tuple;
 mod tuplities_option;
 mod tuplities_ord;
@@ -163,6 +164,22 @@ pub fn impl_len(_attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn impl_tuple_index(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_index::impl_tuple_index());
+    item.into()
+}
+
+/// Generate `NestedTupleIndex<Idx>` trait implementations for all nested tuple sizes and indices.
+#[proc_macro_attribute]
+pub fn impl_nested_tuple_index(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_nested_tuple_index::impl_nested_tuple_index());
+    item.into()
+}
+
+/// Generate `NestedTupleIndexMut<Idx>` trait implementations for all nested tuple sizes and indices.
+#[proc_macro_attribute]
+pub fn impl_nested_tuple_index_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut item = proc_macro2::TokenStream::from(item);
+    item.extend(tuplities_nested_tuple_index::impl_nested_tuple_index_mut());
     item.into()
 }
 

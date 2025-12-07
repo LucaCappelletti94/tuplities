@@ -16,6 +16,7 @@ homepage.workspace = true
 tuplities-derive.workspace = true
 tuplities-ref.workspace = true
 tuplities-mut.workspace = true
+typenum.workspace = true
 
 [lints]
 workspace = true

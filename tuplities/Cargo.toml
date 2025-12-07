@@ -13,63 +13,120 @@ homepage.workspace = true
 
 
 [dependencies]
-tuplities-clone.workspace = true
-tuplities-copy.workspace = true
-tuplities-debug.workspace = true
-tuplities-default.workspace = true
-tuplities-eq.workspace = true
-tuplities-flatten-nest.workspace = true
-tuplities-from.workspace = true
-tuplities-hash.workspace = true
-tuplities-mut.workspace = true
-tuplities-option.workspace = true
-tuplities-ord.workspace = true
-tuplities-partial-eq.workspace = true
-tuplities-partial-ord.workspace = true
-tuplities-remove.workspace = true
-tuplities-insert.workspace = true
-tuplities-len.workspace = true
-tuplities-index.workspace = true
-tuplities-pop-front.workspace = true
-tuplities-pop-back.workspace = true
-tuplities-push-front.workspace = true
-tuplities-push-back.workspace = true
-tuplities-ref.workspace = true
-tuplities-replicate.workspace = true
-tuplities-reverse.workspace = true
-tuplities-row.workspace = true
-tuplities-split.workspace = true
-tuplities-try-from.workspace = true
+tuplities-clone = { workspace = true, optional = true }
+tuplities-copy = { workspace = true, optional = true }
+tuplities-debug = { workspace = true, optional = true }
+tuplities-default = { workspace = true, optional = true }
+tuplities-eq = { workspace = true, optional = true }
+tuplities-flatten-nest = { workspace = true, optional = true }
+tuplities-from = { workspace = true, optional = true }
+tuplities-hash = { workspace = true, optional = true }
+tuplities-mut = { workspace = true, optional = true }
+tuplities-option = { workspace = true, optional = true }
+tuplities-ord = { workspace = true, optional = true }
+tuplities-partial-eq = { workspace = true, optional = true }
+tuplities-partial-ord = { workspace = true, optional = true }
+tuplities-remove = { workspace = true, optional = true }
+tuplities-insert = { workspace = true, optional = true }
+tuplities-len = { workspace = true, optional = true }
+tuplities-index = { workspace = true, optional = true }
+tuplities-pop-front = { workspace = true, optional = true }
+tuplities-pop-back = { workspace = true, optional = true }
+tuplities-push-front = { workspace = true, optional = true }
+tuplities-push-back = { workspace = true, optional = true }
+tuplities-ref = { workspace = true, optional = true }
+tuplities-replicate = { workspace = true, optional = true }
+tuplities-reverse = { workspace = true, optional = true }
+tuplities-row = { workspace = true, optional = true }
+tuplities-split = { workspace = true, optional = true }
+tuplities-try-from = { workspace = true, optional = true }
 
 [lints]
 workspace = true
 
 [features]
-default = []
+default = [
+  "clone",
+  "copy",
+  "debug",
+  "tuple-default",
+  "eq",
+  "flatten-nest",
+  "from",
+  "hash",
+  "mut",
+  "option",
+  "ord",
+  "partial-eq",
+  "partial-ord",
+  "remove",
+  "insert",
+  "len",
+  "index",
+  "pop-front",
+  "pop-back",
+  "push-front",
+  "push-back",
+  "ref",
+  "replicate",
+  "reverse",
+  "row",
+  "split",
+  "try-from",
+]
+clone = ["tuplities-clone"]
+copy = ["tuplities-copy"]
+debug = ["tuplities-debug"]
+tuple-default = ["tuplities-default"]
+eq = ["tuplities-eq"]
+flatten-nest = ["tuplities-flatten-nest"]
+from = ["tuplities-from"]
+hash = ["tuplities-hash"]
+mut = ["tuplities-mut"]
+option = ["tuplities-option"]
+ord = ["tuplities-ord"]
+partial-eq = ["tuplities-partial-eq"]
+partial-ord = ["tuplities-partial-ord"]
+remove = ["tuplities-remove"]
+insert = ["tuplities-insert"]
+len = ["tuplities-len"]
+index = ["tuplities-index"]
+pop-front = ["tuplities-pop-front"]
+pop-back = ["tuplities-pop-back"]
+push-front = ["tuplities-push-front"]
+push-back = ["tuplities-push-back"]
+ref = ["tuplities-ref"]
+replicate = ["tuplities-replicate"]
+reverse = ["tuplities-reverse"]
+row = ["tuplities-row"]
+split = ["tuplities-split"]
+try-from = ["tuplities-try-from"]
 size-16 = [
   "tuplities-clone/size-16",
   "tuplities-copy/size-16",
   "tuplities-debug/size-16",
   "tuplities-default/size-16",
   "tuplities-eq/size-16",
+  "tuplities-flatten-nest/size-16",
   "tuplities-from/size-16",
   "tuplities-hash/size-16",
+  "tuplities-mut/size-16",
   "tuplities-option/size-16",
   "tuplities-ord/size-16",
   "tuplities-partial-eq/size-16",
   "tuplities-partial-ord/size-16",
-  "tuplities-mut/size-16",
   "tuplities-remove/size-16",
   "tuplities-insert/size-16",
   "tuplities-len/size-16",
   "tuplities-index/size-16",
-  "tuplities-ref/size-16",
-  "tuplities-replicate/size-16",
   "tuplities-pop-front/size-16",
   "tuplities-pop-back/size-16",
   "tuplities-push-front/size-16",
   "tuplities-push-back/size-16",
+  "tuplities-ref/size-16",
+  "tuplities-replicate/size-16",
   "tuplities-reverse/size-16",
+  "tuplities-row/size-16",
   "tuplities-split/size-16",
   "tuplities-try-from/size-16",
 ]
@@ -79,24 +136,26 @@ size-32 = [
   "tuplities-debug/size-32",
   "tuplities-default/size-32",
   "tuplities-eq/size-32",
+  "tuplities-flatten-nest/size-32",
   "tuplities-from/size-32",
   "tuplities-hash/size-32",
+  "tuplities-mut/size-32",
   "tuplities-option/size-32",
   "tuplities-ord/size-32",
   "tuplities-partial-eq/size-32",
   "tuplities-partial-ord/size-32",
-  "tuplities-mut/size-32",
   "tuplities-remove/size-32",
   "tuplities-insert/size-32",
   "tuplities-len/size-32",
   "tuplities-index/size-32",
-  "tuplities-ref/size-32",
-  "tuplities-replicate/size-32",
   "tuplities-pop-front/size-32",
   "tuplities-pop-back/size-32",
   "tuplities-push-front/size-32",
   "tuplities-push-back/size-32",
+  "tuplities-ref/size-32",
+  "tuplities-replicate/size-32",
   "tuplities-reverse/size-32",
+  "tuplities-row/size-32",
   "tuplities-split/size-32",
   "tuplities-try-from/size-32",
 ]
@@ -106,24 +165,26 @@ size-48 = [
   "tuplities-debug/size-48",
   "tuplities-default/size-48",
   "tuplities-eq/size-48",
+  "tuplities-flatten-nest/size-48",
   "tuplities-from/size-48",
   "tuplities-hash/size-48",
+  "tuplities-mut/size-48",
   "tuplities-option/size-48",
   "tuplities-ord/size-48",
   "tuplities-partial-eq/size-48",
   "tuplities-partial-ord/size-48",
-  "tuplities-mut/size-48",
   "tuplities-remove/size-48",
   "tuplities-insert/size-48",
   "tuplities-len/size-48",
   "tuplities-index/size-48",
-  "tuplities-ref/size-48",
-  "tuplities-replicate/size-48",
   "tuplities-pop-front/size-48",
   "tuplities-pop-back/size-48",
   "tuplities-push-front/size-48",
   "tuplities-push-back/size-48",
+  "tuplities-ref/size-48",
+  "tuplities-replicate/size-48",
   "tuplities-reverse/size-48",
+  "tuplities-row/size-48",
   "tuplities-split/size-48",
   "tuplities-try-from/size-48",
 ]
@@ -133,24 +194,26 @@ size-64 = [
   "tuplities-debug/size-64",
   "tuplities-default/size-64",
   "tuplities-eq/size-64",
+  "tuplities-flatten-nest/size-64",
   "tuplities-from/size-64",
   "tuplities-hash/size-64",
+  "tuplities-mut/size-64",
   "tuplities-option/size-64",
   "tuplities-ord/size-64",
   "tuplities-partial-eq/size-64",
   "tuplities-partial-ord/size-64",
-  "tuplities-mut/size-64",
   "tuplities-remove/size-64",
   "tuplities-insert/size-64",
   "tuplities-len/size-64",
   "tuplities-index/size-64",
-  "tuplities-ref/size-64",
-  "tuplities-replicate/size-64",
   "tuplities-pop-front/size-64",
   "tuplities-pop-back/size-64",
   "tuplities-push-front/size-64",
   "tuplities-push-back/size-64",
+  "tuplities-ref/size-64",
+  "tuplities-replicate/size-64",
   "tuplities-reverse/size-64",
+  "tuplities-row/size-64",
   "tuplities-split/size-64",
   "tuplities-try-from/size-64",
 ]
@@ -160,24 +223,26 @@ size-96 = [
   "tuplities-debug/size-96",
   "tuplities-default/size-96",
   "tuplities-eq/size-96",
+  "tuplities-flatten-nest/size-96",
   "tuplities-from/size-96",
   "tuplities-hash/size-96",
+  "tuplities-mut/size-96",
   "tuplities-option/size-96",
   "tuplities-ord/size-96",
   "tuplities-partial-eq/size-96",
   "tuplities-partial-ord/size-96",
-  "tuplities-mut/size-96",
   "tuplities-remove/size-96",
   "tuplities-insert/size-96",
   "tuplities-len/size-96",
   "tuplities-index/size-96",
-  "tuplities-ref/size-96",
-  "tuplities-replicate/size-96",
   "tuplities-pop-front/size-96",
   "tuplities-pop-back/size-96",
   "tuplities-push-front/size-96",
   "tuplities-push-back/size-96",
+  "tuplities-ref/size-96",
+  "tuplities-replicate/size-96",
   "tuplities-reverse/size-96",
+  "tuplities-row/size-96",
   "tuplities-split/size-96",
   "tuplities-try-from/size-96",
 ]
@@ -187,24 +252,26 @@ size-128 = [
   "tuplities-debug/size-128",
   "tuplities-default/size-128",
   "tuplities-eq/size-128",
+  "tuplities-flatten-nest/size-128",
   "tuplities-from/size-128",
   "tuplities-hash/size-128",
+  "tuplities-mut/size-128",
   "tuplities-option/size-128",
   "tuplities-ord/size-128",
   "tuplities-partial-eq/size-128",
   "tuplities-partial-ord/size-128",
-  "tuplities-mut/size-128",
   "tuplities-remove/size-128",
   "tuplities-insert/size-128",
   "tuplities-len/size-128",
   "tuplities-index/size-128",
-  "tuplities-ref/size-128",
-  "tuplities-replicate/size-128",
   "tuplities-pop-front/size-128",
   "tuplities-pop-back/size-128",
   "tuplities-push-front/size-128",
   "tuplities-push-back/size-128",
+  "tuplities-ref/size-128",
+  "tuplities-replicate/size-128",
   "tuplities-reverse/size-128",
+  "tuplities-row/size-128",
   "tuplities-split/size-128",
   "tuplities-try-from/size-128",
 ]
