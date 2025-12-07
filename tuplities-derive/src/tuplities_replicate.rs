@@ -44,7 +44,12 @@ pub fn impl_tuple_replicate() -> proc_macro2::TokenStream {
         }
 
         quote! {
-            impl<T: Clone> TupleReplicate<T> for (#(#tuple_elements,)*) {
+            impl<'a, 'b, T: Clone> TupleReplicate<T> for (#(#tuple_elements,)*)
+                where
+                    T: 'a,
+                    Self: 'b,
+                    'a: 'b,
+            {
                 fn tuple_replicate(value: T) -> Self {
                     (#(#replicated_values,)*)
                 }
