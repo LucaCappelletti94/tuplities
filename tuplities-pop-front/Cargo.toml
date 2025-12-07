@@ -11,9 +11,9 @@ keywords.workspace = true
 categories.workspace = true
 homepage.workspace = true
 
-
 [dependencies]
 tuplities-derive.workspace = true
+tuplities-push-front.workspace = true
 
 [lints]
 workspace = true

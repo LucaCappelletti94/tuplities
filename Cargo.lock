@@ -208,6 +208,7 @@ name = "tuplities-pop-front"
 version = "0.1.3"
 dependencies = [
  "tuplities-derive",
+ "tuplities-push-front",
 ]
 
 [[package]]

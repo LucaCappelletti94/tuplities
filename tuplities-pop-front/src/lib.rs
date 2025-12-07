@@ -1,6 +1,7 @@
 #![no_std]
 
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `TuplePopFront` trait.
+use tuplities_push_front::TuplePushFront;
 
 #[tuplities_derive::impl_pop_front]
 /// A trait for tuples that defines the `Front` and `Tail` types, and provides a method to pop the front element.
@@ -9,7 +10,7 @@ pub trait TuplePopFront {
     type Front;
 
     /// The type of the tuple after removing the first element.
-    type Tail;
+    type Tail: TuplePushFront<Self::Front, Output = Self>;
 
     /// Consumes the tuple and returns the first element and the remaining tuple.
     ///
