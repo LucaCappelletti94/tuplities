@@ -192,7 +192,6 @@ mod tests {
 #[cfg(test)]
 mod nested_index_tests {
     use super::*;
-    use typenum;
 
     #[test]
     fn test_nested_index_3_u0() {
