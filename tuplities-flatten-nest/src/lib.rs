@@ -3,7 +3,6 @@
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `FlattenNestedTuple` and `NestTuple` traits.
 
 use tuplities_push_front::TuplePushFront;
-use typenum;
 
 /// A trait for flattening nested tuples into flat tuples.
 ///
@@ -23,9 +22,7 @@ impl FlattenNestedTuple for () {
     type Flattened = ();
 
     #[inline]
-    fn flatten(self) -> Self::Flattened {
-        ()
-    }
+    fn flatten(self) -> Self::Flattened {}
 }
 
 impl<N1> FlattenNestedTuple for (N1,) {
