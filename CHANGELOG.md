@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed in Unreleased
+
+- Simplified `FlattenNestedTuple` trait by removing `flatten_ref()` and `flatten_mut()` methods
+- Refactored `FlattenNestedTuple` implementation to use manual recursive implementations instead of procedural macros for better compile times
+- Updated dependencies in `tuplities-flatten-nest` crate to remove unused `tuplities-ref` and `tuplities-mut` dependencies
+
 ### Added in Unreleased
 
 - `TupleReplicate<T>` trait for creating tuples by replicating a single value across all positions
@@ -26,8 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `TupleMutMap` trait for applying `TupleMut` to each element of a tuple of tuples
 - `FlattenNestedTuple` trait for converting nested tuples like `(A, (B, (C,)))` to flat tuples like `(A, B, C)`
 - `NestTuple` trait for converting flat tuples like `(A, B, C)` to nested tuples like `(A, (B, (C,)))`
-- Added `flatten_ref` and `flatten_mut` methods to `FlattenNestedTuple` trait for accessing references to flattened elements without moving
-- Added `NestedTupleIndex<Idx>` and `NestedTupleIndexMut<Idx>` traits for compile-time indexing into nested tuples using flat indices
+- `NestedTupleIndex<Idx>` and `NestedTupleIndexMut<Idx>` traits for compile-time indexing into nested tuples using flat indices
 
 ## [0.1.0] - 2025-12-05
 

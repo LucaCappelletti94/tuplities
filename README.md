@@ -45,7 +45,7 @@ The library provides several traits for working with tuples:
 - [`TupleTryInto<T>`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryInto.html): Provides a [`tuple_try_into()`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryInto.html#tymethod.tuple_try_into) method to fallibly convert tuples into other types.
 - [`TupleFrom<T>`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleFrom.html): Provides a [`tuple_from()`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleFrom.html#tymethod.tuple_from) method to infallibly convert from other types into tuples.
 - [`TupleInto<T>`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleInto.html): Provides a [`tuple_into()`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleInto.html#tymethod.tuple_into) method to infallibly convert tuples into other types.
-- [`FlattenNestedTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html): Provides a [`flatten()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten) method to convert nested tuples like `(A, (B, (C,)))` into flat tuples like `(A, B, C)`. Also provides [`flatten_ref()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten_ref) and [`flatten_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten_mut) methods for accessing references to flattened elements.
+- [`FlattenNestedTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html): Provides a [`flatten()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten) method to convert nested tuples like `(A, (B, (C,)))` into flat tuples like `(A, B, C)`.
 - [`NestTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html): Provides a [`nest()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html#tymethod.nest) method to convert flat tuples like `(A, B, C)` into nested tuples like `(A, (B, (C,)))`.
 - [`NestedTupleIndex<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html): Provides a [`nested_index()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html#tymethod.nested_index) method to access elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
 - [`NestedTupleIndexMut<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html): Provides a [`nested_index_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html#tymethod.nested_index_mut) method to access mutable elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
@@ -115,11 +115,11 @@ Compile times scale with tuple size due to code generation. Here are measured bu
 |----------------|--------------|
 | 8 (default)    | ~3s          |
 | 16             | ~3s          |
-| 32             | ~4s          |
-| 48             | ~6s          |
-| 64             | ~12s         |
-| 96             | ~44s         |
-| 128            | ~122s        |
+| 32             | ~3s          |
+| 48             | ~4s          |
+| 64             | ~7s          |
+| 96             | ~16s         |
+| 128            | ~32s         |
 
 ## Architecture
 

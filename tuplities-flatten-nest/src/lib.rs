@@ -2,11 +2,9 @@
 
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing the `FlattenNestedTuple` and `NestTuple` traits.
 
-use tuplities_mut::TupleMut;
-use tuplities_ref::TupleRef;
+use tuplities_push_front::TuplePushFront;
+use typenum;
 
-#[tuplities_derive::impl_flatten_nested_tuple]
-#[tuplities_derive::impl_nest_tuple]
 /// A trait for flattening nested tuples into flat tuples.
 ///
 /// This trait takes a nested tuple structure like `(A, (B, (C,)))` and converts it
@@ -15,41 +13,45 @@ use tuplities_ref::TupleRef;
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait FlattenNestedTuple {
     /// The flattened tuple type.
-    type Flattened: NestTuple<Nested = Self> + TupleRef + TupleMut;
+    type Flattened: NestTuple<Nested = Self>;
 
     /// Flattens the nested tuple into a flat tuple.
     fn flatten(self) -> Self::Flattened;
-
-    /// Flattens the nested tuple into a flat tuple of references.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use tuplities_flatten_nest::FlattenNestedTuple;
-    ///
-    /// let nested = (1, (2, (3,)));
-    /// let refs = nested.flatten_ref();
-    /// assert_eq!(refs, (&1, &2, &3));
-    /// ```
-    fn flatten_ref(&self) -> <Self::Flattened as TupleRef>::Ref<'_>;
-
-    /// Flattens the nested tuple into a flat tuple of mutable references.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use tuplities_flatten_nest::FlattenNestedTuple;
-    ///
-    /// let mut nested = (1, (2, (3,)));
-    /// let mut_refs = nested.flatten_mut();
-    /// *mut_refs.0 = 10;
-    /// *mut_refs.1 = 20;
-    /// *mut_refs.2 = 30;
-    /// assert_eq!(nested, (10, (20, (30,))));
-    /// ```
-    fn flatten_mut(&mut self) -> <Self::Flattened as TupleMut>::Mut<'_>;
 }
 
+impl FlattenNestedTuple for () {
+    type Flattened = ();
+
+    #[inline]
+    fn flatten(self) -> Self::Flattened {
+        ()
+    }
+}
+
+impl<N1> FlattenNestedTuple for (N1,) {
+    type Flattened = (N1,);
+
+    #[inline]
+    fn flatten(self) -> Self::Flattened {
+        let (n1,) = self;
+        (n1,)
+    }
+}
+
+impl<Head, Tail> FlattenNestedTuple for (Head, Tail)
+where
+    Tail: FlattenNestedTuple<Flattened: TuplePushFront<Head, Output: NestTuple<Nested = Self>>>,
+{
+    type Flattened = <Tail::Flattened as TuplePushFront<Head>>::Output;
+
+    #[inline]
+    fn flatten(self) -> Self::Flattened {
+        let (head, tail) = self;
+        tail.flatten().push_front(head)
+    }
+}
+
+#[tuplities_derive::impl_nest_tuple]
 /// A trait for nesting flat tuples into nested tuples.
 ///
 /// This trait takes a flat tuple like `(A, B, C)` and converts it
@@ -64,7 +66,6 @@ pub trait NestTuple {
     fn nest(self) -> Self::Nested;
 }
 
-#[tuplities_derive::impl_nested_tuple_index]
 /// A trait for indexing into nested tuples at compile-time known positions.
 ///
 /// This trait allows accessing elements at specific flat indices `Idx`
@@ -91,7 +92,6 @@ pub trait NestedTupleIndex<Idx>: FlattenNestedTuple {
     fn nested_index(&self) -> &Self::Element;
 }
 
-#[tuplities_derive::impl_nested_tuple_index_mut]
 /// A trait for mutable indexing into nested tuples at compile-time known positions.
 ///
 /// This trait allows mutable access to elements at specific flat indices `Idx`
@@ -117,6 +117,70 @@ pub trait NestedTupleIndexMut<Idx>: FlattenNestedTuple {
 
     /// Returns a mutable reference to the element at flat index `Idx`.
     fn nested_index_mut(&mut self) -> &mut Self::Element;
+}
+
+impl<Head> NestedTupleIndex<typenum::U0> for (Head,) {
+    type Element = Head;
+
+    fn nested_index(&self) -> &Self::Element {
+        &self.0
+    }
+}
+
+impl<Head, Tail> NestedTupleIndex<typenum::U0> for (Head, Tail)
+where
+    (Head, Tail): FlattenNestedTuple,
+{
+    type Element = Head;
+
+    fn nested_index(&self) -> &Self::Element {
+        &self.0
+    }
+}
+
+impl<Head, Tail, U, B> NestedTupleIndex<typenum::UInt<U, B>> for (Head, Tail)
+where
+    (Head, Tail): FlattenNestedTuple,
+    typenum::UInt<U, B>: core::ops::Sub<typenum::B1>,
+    Tail: NestedTupleIndex<typenum::Sub1<typenum::UInt<U, B>>>,
+{
+    type Element = <Tail as NestedTupleIndex<typenum::Sub1<typenum::UInt<U, B>>>>::Element;
+
+    fn nested_index(&self) -> &Self::Element {
+        NestedTupleIndex::<typenum::Sub1<typenum::UInt<U, B>>>::nested_index(&self.1)
+    }
+}
+
+impl<Head> NestedTupleIndexMut<typenum::U0> for (Head,) {
+    type Element = Head;
+
+    fn nested_index_mut(&mut self) -> &mut Self::Element {
+        &mut self.0
+    }
+}
+
+impl<Head, Tail> NestedTupleIndexMut<typenum::U0> for (Head, Tail)
+where
+    (Head, Tail): FlattenNestedTuple,
+{
+    type Element = Head;
+
+    fn nested_index_mut(&mut self) -> &mut Self::Element {
+        &mut self.0
+    }
+}
+
+impl<Head, Tail, U, B> NestedTupleIndexMut<typenum::UInt<U, B>> for (Head, Tail)
+where
+    (Head, Tail): FlattenNestedTuple,
+    typenum::UInt<U, B>: core::ops::Sub<typenum::B1>,
+    Tail: NestedTupleIndexMut<typenum::Sub1<typenum::UInt<U, B>>>,
+{
+    type Element = <Tail as NestedTupleIndexMut<typenum::Sub1<typenum::UInt<U, B>>>>::Element;
+
+    fn nested_index_mut(&mut self) -> &mut Self::Element {
+        NestedTupleIndexMut::<typenum::Sub1<typenum::UInt<U, B>>>::nested_index_mut(&mut self.1)
+    }
 }
 
 #[cfg(test)]
@@ -151,41 +215,6 @@ mod tests {
         let nested = original.nest();
         let flattened = nested.flatten();
         assert_eq!(original, flattened);
-    }
-
-    #[test]
-    fn test_flatten_ref_3() {
-        let nested = (1, (2, (3,)));
-        let refs = nested.flatten_ref();
-        assert_eq!(refs, (&1, &2, &3));
-    }
-
-    #[test]
-    fn test_flatten_mut_3() {
-        let mut nested = (1, (2, (3,)));
-        let mut_refs = nested.flatten_mut();
-        *mut_refs.0 = 10;
-        *mut_refs.1 = 20;
-        *mut_refs.2 = 30;
-        assert_eq!(nested, (10, (20, (30,))));
-    }
-
-    #[test]
-    fn test_flatten_ref_2() {
-        let nested = (42, ("hello",));
-        let refs = nested.flatten_ref();
-        assert_eq!(refs, (&42, &"hello"));
-    }
-
-    #[test]
-    fn test_flatten_mut_2() {
-        let mut nested = (42, ([1, 2, 3],));
-        let mut_refs = nested.flatten_mut();
-        *mut_refs.0 = 24;
-        mut_refs.1[0] = 10;
-        mut_refs.1[1] = 20;
-        mut_refs.1[2] = 30;
-        assert_eq!(nested, (24, ([10, 20, 30],)));
     }
 }
 

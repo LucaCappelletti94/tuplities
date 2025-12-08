@@ -10,7 +10,6 @@ mod tuplities_debug;
 mod tuplities_default;
 mod tuplities_eq;
 mod tuplities_first_tuple_row;
-mod tuplities_flatten_nested_tuple;
 mod tuplities_from;
 mod tuplities_hash;
 mod tuplities_index;
@@ -20,7 +19,6 @@ mod tuplities_len;
 mod tuplities_mut;
 mod tuplities_mut_map;
 mod tuplities_nest_tuple;
-mod tuplities_nested_tuple_index;
 mod tuplities_option;
 mod tuplities_ord;
 mod tuplities_partial_eq;
@@ -167,22 +165,6 @@ pub fn impl_tuple_index(_attr: TokenStream, item: TokenStream) -> TokenStream {
     item.into()
 }
 
-/// Generate `NestedTupleIndex<Idx>` trait implementations for all nested tuple sizes and indices.
-#[proc_macro_attribute]
-pub fn impl_nested_tuple_index(_attr: TokenStream, item: TokenStream) -> TokenStream {
-    let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tuplities_nested_tuple_index::impl_nested_tuple_index());
-    item.into()
-}
-
-/// Generate `NestedTupleIndexMut<Idx>` trait implementations for all nested tuple sizes and indices.
-#[proc_macro_attribute]
-pub fn impl_nested_tuple_index_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
-    let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tuplities_nested_tuple_index::impl_nested_tuple_index_mut());
-    item.into()
-}
-
 /// Generate `PushBack` trait implementations for all tuple sizes.
 #[proc_macro_attribute]
 pub fn impl_push_back(_attr: TokenStream, item: TokenStream) -> TokenStream {
@@ -301,14 +283,6 @@ pub fn impl_row_mut(_attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn impl_first_tuple_row(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mut item = proc_macro2::TokenStream::from(item);
     item.extend(tuplities_first_tuple_row::impl_first_tuple_row());
-    item.into()
-}
-
-/// Generate `FlattenNestedTuple` trait implementations for all tuple sizes.
-#[proc_macro_attribute]
-pub fn impl_flatten_nested_tuple(_attr: TokenStream, item: TokenStream) -> TokenStream {
-    let mut item = proc_macro2::TokenStream::from(item);
-    item.extend(tuplities_flatten_nested_tuple::impl_flatten_nested_tuple());
     item.into()
 }
 

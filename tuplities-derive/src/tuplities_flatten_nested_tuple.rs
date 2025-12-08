@@ -71,21 +71,7 @@ fn generate_flatten_impl(size: usize) -> proc_macro2::TokenStream {
     match size {
         0 => quote! { () },
         1 => quote! { self },
-        _ => {
-            let accesses = (0..size).map(|i| {
-                if i == 0 {
-                    quote! { self.0 }
-                } else {
-                    // Generate nested access: self.1.1.1...1.0 with (i-1) ones
-                    let nested_access = (1..i).fold(quote! { self.1 }, |acc, _| {
-                        quote! { #acc .1 }
-                    });
-                    quote! { #nested_access .0 }
-                }
-            });
-
-            quote! { (#(#accesses,)*) }
-        }
+        _ => quote! { self.1.flatten().push_front(self.0) },
     }
 }
 
