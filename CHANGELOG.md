@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `FlattenNestedTuple` trait for converting nested tuples like `(A, (B, (C,)))` to flat tuples like `(A, B, C)`
 - `NestTuple` trait for converting flat tuples like `(A, B, C)` to nested tuples like `(A, (B, (C,)))`
 - `NestedTupleIndex<Idx>` and `NestedTupleIndexMut<Idx>` traits for compile-time indexing into nested tuples using flat indices
+- `NestedTupleOption` trait for transposing nested tuples of options into options of nested tuples
+- `IntoNestedTupleOption` trait for converting nested tuples into nested tuples of options
 
 ## [0.1.0] - 2025-12-05
 
