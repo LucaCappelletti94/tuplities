@@ -12,7 +12,7 @@ use tuplities_push_front::TuplePushFront;
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait FlattenNestedTuple {
     /// The flattened tuple type.
-    type Flattened: NestTuple<Nested = Self>;
+    type Flattened;
 
     /// Flattens the nested tuple into a flat tuple.
     fn flatten(self) -> Self::Flattened;
@@ -37,7 +37,7 @@ impl<N1> FlattenNestedTuple for (N1,) {
 
 impl<Head, Tail> FlattenNestedTuple for (Head, Tail)
 where
-    Tail: FlattenNestedTuple<Flattened: TuplePushFront<Head, Output: NestTuple<Nested = Self>>>,
+    Tail: FlattenNestedTuple<Flattened: TuplePushFront<Head>>,
 {
     type Flattened = <Tail::Flattened as TuplePushFront<Head>>::Output;
 
