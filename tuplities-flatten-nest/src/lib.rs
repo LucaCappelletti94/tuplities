@@ -57,7 +57,7 @@ where
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestTuple {
     /// The nested tuple type.
-    type Nested: FlattenNestedTuple<Flattened = Self>;
+    type Nested;
 
     /// Nests the flat tuple into a nested tuple.
     fn nest(self) -> Self::Nested;
