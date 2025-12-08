@@ -7,12 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed in Unreleased
-
-- Simplified `FlattenNestedTuple` trait by removing `flatten_ref()` and `flatten_mut()` methods
-- Refactored `FlattenNestedTuple` implementation to use manual recursive implementations instead of procedural macros for better compile times
-- Updated dependencies in `tuplities-flatten-nest` crate to remove unused `tuplities-ref` and `tuplities-mut` dependencies
-
 ### Added in Unreleased
 
 - `TupleReplicate<T>` trait for creating tuples by replicating a single value across all positions
