@@ -45,4 +45,17 @@ mod tests {
         let flattened = nested.flatten();
         assert_eq!(original, flattened);
     }
+
+    #[test]
+    fn test_nest_single() {
+        let flat = (99,);
+        let nested = flat.nest();
+        assert_eq!(nested, (99,));
+    }
+
+    #[test]
+    fn test_nest_empty() {
+        let flat: () = ();
+        let _nested: () = flat.nest();
+    }
 }
