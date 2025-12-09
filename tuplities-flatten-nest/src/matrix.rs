@@ -19,7 +19,7 @@ use crate::{flatten_nested::FlattenNestedTuple, nest::NestTuple};
 /// ```
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait NestTupleMatrix: NestTuple {
+pub trait NestTupleMatrix {
     /// The nested matrix type.
     type NestedMatrix;
 
