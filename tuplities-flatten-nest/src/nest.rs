@@ -1,5 +1,7 @@
 //! Module providing the `NestTuple` trait for nesting flat tuples.
 
+use crate::FlattenNestedTuple;
+
 #[tuplities_derive::impl_nest_tuple]
 /// A trait for nesting flat tuples into nested tuples.
 ///
@@ -9,7 +11,7 @@
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestTuple {
     /// The nested tuple type.
-    type Nested;
+    type Nested: FlattenNestedTuple<Flattened = Self>;
 
     /// Nests the flat tuple into a nested tuple.
     fn nest(self) -> Self::Nested;

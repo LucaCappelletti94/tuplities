@@ -21,7 +21,7 @@ use crate::{flatten_nested::FlattenNestedTuple, nest::NestTuple};
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestTupleMatrix {
     /// The nested matrix type.
-    type NestedMatrix;
+    type NestedMatrix: FlattenNestedTupleMatrix<FlattenedMatrix = Self>;
 
     /// Converts a flat tuple of flat tuples into a nested tuple of nested tuples.
     fn nest_matrix(self) -> Self::NestedMatrix;
@@ -46,7 +46,7 @@ pub trait NestTupleMatrix {
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait FlattenNestedTupleMatrix {
     /// The flattened matrix type.
-    type FlattenedMatrix;
+    type FlattenedMatrix: NestTupleMatrix<NestedMatrix = Self>;
 
     /// Converts a nested tuple of nested tuples into a flat tuple of flat tuples.
     fn flatten_matrix(self) -> Self::FlattenedMatrix;
@@ -59,7 +59,7 @@ pub trait FlattenNestedTupleMatrix {
 /// Helper trait to recursively nest elements in an already-nested outer structure
 pub trait NestMatrixElements {
     /// The type after nesting all elements
-    type Output;
+    type Output: FlattenMatrixElements<Output = Self>;
 
     /// Nest all elements in the structure
     fn nest_elements(self) -> Self::Output;
@@ -89,6 +89,8 @@ impl<Head, Tail> NestMatrixElements for (Head, Tail)
 where
     Head: NestTuple,
     Tail: NestMatrixElements,
+    Head::Nested: FlattenNestedTuple<Flattened = Head>,
+    Tail::Output: FlattenMatrixElements<Output = Tail>,
 {
     type Output = (Head::Nested, Tail::Output);
 
@@ -104,6 +106,7 @@ impl<T> NestTupleMatrix for T
 where
     T: NestTuple,
     T::Nested: NestMatrixElements,
+    <T::Nested as NestMatrixElements>::Output: FlattenNestedTuple,
 {
     type NestedMatrix = <T::Nested as NestMatrixElements>::Output;
 
@@ -113,10 +116,10 @@ where
     }
 }
 
-/// Helper trait to recursively flatten elements in a nested outer structure
+/// Helper trait to recursively flatten elements in a nested matrix structure
 pub trait FlattenMatrixElements {
-    /// The type after flattening all elements
-    type Output;
+    /// The type after flattening all nested elements
+    type Output: NestMatrixElements<Output = Self>;
 
     /// Flatten all elements in the structure
     fn flatten_elements(self) -> Self::Output;
@@ -146,6 +149,8 @@ impl<Head, Tail> FlattenMatrixElements for (Head, Tail)
 where
     Head: FlattenNestedTuple,
     Tail: FlattenMatrixElements,
+    Head::Flattened: NestTuple<Nested = Head>,
+    Tail::Output: NestMatrixElements<Output = Tail>,
 {
     type Output = (Head::Flattened, Tail::Output);
 
@@ -161,6 +166,7 @@ impl<T> FlattenNestedTupleMatrix for T
 where
     T: FlattenMatrixElements + FlattenNestedTuple,
     T::Output: FlattenNestedTuple,
+    <T::Output as FlattenNestedTuple>::Flattened: NestTuple,
 {
     type FlattenedMatrix = <T::Output as FlattenNestedTuple>::Flattened;
 
