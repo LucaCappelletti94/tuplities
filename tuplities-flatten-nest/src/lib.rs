@@ -8,6 +8,7 @@ mod nest;
 mod nested_index;
 mod nested_option;
 mod nested_replicate;
+mod nested_try_from;
 
 // Re-export all public traits and types
 pub use flatten_nested::FlattenNestedTuple;
@@ -18,3 +19,4 @@ pub use nest::NestTuple;
 pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
 pub use nested_option::{IntoNestedTupleOption, NestedTupleOption};
 pub use nested_replicate::NestedTupleReplicate;
+pub use nested_try_from::{NestedTupleTryFrom, NestedTupleTryInto};

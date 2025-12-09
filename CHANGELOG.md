@@ -32,6 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NestedTupleReplicate<T>` trait for creating nested tuples by replicating a single value across all positions
 - `NestTupleMatrix` trait for converting flat tuples of flat tuples (like `((A, B), (C, D))`) into nested tuples of nested tuples (like `((A, (B,)), ((C, (D,)),))`)
 - `FlattenNestedTupleMatrix` trait for converting nested tuples of nested tuples back into flat tuples of flat tuples
+- `NestedTupleTryFrom<T, E>` and `NestedTupleTryInto<T, E>` traits for fallible, element-wise conversions between nested tuple types using `TryFrom` conversions and proper error propagation
+- `NestTupleMatrix` trait for converting flat tuples of flat tuples (like `((A, B), (C, D))`) into nested tuples of nested tuples (like `((A, (B,)), ((C, (D,)),))`)
+- `FlattenNestedTupleMatrix` trait for converting nested tuples of nested tuples back into flat tuples of flat tuples
 - `NestMatrixElements` and `FlattenMatrixElements` helper traits for recursive element processing in matrix operations
 - Modular organization of flatten-nest crate into separate modules for better code maintainability
 
