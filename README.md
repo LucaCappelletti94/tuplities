@@ -52,6 +52,8 @@ The library provides several traits for working with tuples:
 - [`NestTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html): Provides a [`nest()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html#tymethod.nest) method to convert flat tuples like `(A, B, C)` into nested tuples like `(A, (B, (C,)))`.
 - [`NestedTupleIndex<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html): Provides a [`nested_index()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html#tymethod.nested_index) method to access elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
 - [`NestedTupleIndexMut<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html): Provides a [`nested_index_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html#tymethod.nested_index_mut) method to access mutable elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
+- [`NestTupleMatrix`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTupleMatrix.html): Provides a [`nest_matrix()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTupleMatrix.html#tymethod.nest_matrix) method to convert flat tuples of flat tuples like `((A, B), (C, D))` into nested tuples of nested tuples like `((A, (B,)), ((C, (D,)),))`.
+- [`FlattenNestedTupleMatrix`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTupleMatrix.html): Provides a [`flatten_matrix()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTupleMatrix.html#tymethod.flatten_matrix) method to convert nested tuples of nested tuples back into flat tuples of flat tuples.
 - [`TupleLen`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.TupleLen.html): Provides the length of the tuple as a compile-time [`typenum::Unsigned`](https://docs.rs/typenum/latest/typenum/marker_traits/trait.Unsigned.html) type.
 - [`UnitTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.UnitTuple.html): A marker trait implemented for empty tuples `()` with `TupleLen<Len = U0>`.
 - [`SingletonTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.SingletonTuple.html): A marker trait implemented for single-element tuples `(T,)` with `TupleLen<Len = U1>`.
@@ -78,7 +80,7 @@ The following features enable individual trait crates:
 - `debug`: Enables `TupleDebug` trait
 - `tuple-default`: Enables `TupleDefault` trait
 - `eq`: Enables `TupleEq` trait
-- `flatten-nest`: Enables `FlattenNestedTuple`, `NestTuple`, `NestedTupleIndex`, and `NestedTupleIndexMut` traits
+- `flatten-nest`: Enables `FlattenNestedTuple`, `NestTuple`, `NestedTupleIndex`, `NestedTupleIndexMut`, `NestTupleMatrix`, and `FlattenNestedTupleMatrix` traits
 - `from`: Enables `TupleFrom` and `TupleInto` traits
 - `hash`: Enables `TupleHash` trait
 - `mut`: Enables `TupleMut` and `TupleMutMap` traits
