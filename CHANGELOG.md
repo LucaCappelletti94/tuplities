@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NestedTupleOption` trait for transposing nested tuples of options into options of nested tuples
 - `IntoNestedTupleOption` trait for converting nested tuples into nested tuples of options
 - `NestedTupleReplicate<T>` trait for creating nested tuples by replicating a single value across all positions
+- `NestedTuplePopFront`, `NestedTuplePopBack`, `NestedTuplePushFront`, `NestedTuplePushBack` traits for manipulating nested tuples by popping/pushing elements at the front or back while preserving nested structure
 - `NestTupleMatrix` trait for converting flat tuples of flat tuples (like `((A, B), (C, D))`) into nested tuples of nested tuples (like `((A, (B,)), ((C, (D,)),))`)
 - `FlattenNestedTupleMatrix` trait for converting nested tuples of nested tuples back into flat tuples of flat tuples
 - `NestedTupleTryFrom<T, E>` and `NestedTupleTryInto<T, E>` traits for fallible, element-wise conversions between nested tuple types using `TryFrom` conversions and proper error propagation

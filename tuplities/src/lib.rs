@@ -17,7 +17,8 @@ pub mod prelude {
     pub use tuplities_flatten_nest::{
         FlattenMatrixElements, FlattenNestedTuple, FlattenNestedTupleMatrix, IntoNestedTupleOption,
         NestMatrixElements, NestTuple, NestTupleMatrix, NestedTupleIndex, NestedTupleIndexMut,
-        NestedTupleOption, NestedTupleReplicate, NestedTupleTryFrom, NestedTupleTryInto,
+        NestedTupleOption, NestedTuplePopBack, NestedTuplePopFront, NestedTuplePushBack,
+        NestedTuplePushFront, NestedTupleReplicate, NestedTupleTryFrom, NestedTupleTryInto,
     };
     #[cfg(feature = "from")]
     pub use tuplities_from::{TupleFrom, TupleInto};
