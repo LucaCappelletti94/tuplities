@@ -47,10 +47,7 @@ pub trait NestedTupleIndex<Idx>: FlattenNestedTuple {
 /// ```
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
-pub trait NestedTupleIndexMut<Idx>: FlattenNestedTuple {
-    /// The type of the element at flat index `Idx`.
-    type Element;
-
+pub trait NestedTupleIndexMut<Idx>: NestedTupleIndex<Idx> {
     /// Returns a mutable reference to the element at flat index `Idx`.
     fn nested_index_mut(&mut self) -> &mut Self::Element;
 }
@@ -88,8 +85,6 @@ where
 }
 
 impl<Head> NestedTupleIndexMut<typenum::U0> for (Head,) {
-    type Element = Head;
-
     fn nested_index_mut(&mut self) -> &mut Self::Element {
         &mut self.0
     }
@@ -99,8 +94,6 @@ impl<Head, Tail> NestedTupleIndexMut<typenum::U0> for (Head, Tail)
 where
     (Head, Tail): FlattenNestedTuple,
 {
-    type Element = Head;
-
     fn nested_index_mut(&mut self) -> &mut Self::Element {
         &mut self.0
     }
@@ -112,8 +105,6 @@ where
     typenum::UInt<U, B>: core::ops::Sub<typenum::B1>,
     Tail: NestedTupleIndexMut<typenum::Sub1<typenum::UInt<U, B>>>,
 {
-    type Element = <Tail as NestedTupleIndexMut<typenum::Sub1<typenum::UInt<U, B>>>>::Element;
-
     fn nested_index_mut(&mut self) -> &mut Self::Element {
         NestedTupleIndexMut::<typenum::Sub1<typenum::UInt<U, B>>>::nested_index_mut(&mut self.1)
     }

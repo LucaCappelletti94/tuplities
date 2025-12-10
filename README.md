@@ -54,10 +54,15 @@ The library provides several traits for working with tuples:
 - [`NestTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html): Provides a [`nest()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html#tymethod.nest) method to convert flat tuples like `(A, B, C)` into nested tuples like `(A, (B, (C,)))`.
 - [`NestedTupleIndex<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html): Provides a [`nested_index()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html#tymethod.nested_index) method to access elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
 - [`NestedTupleIndexMut<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html): Provides a [`nested_index_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html#tymethod.nested_index_mut) method to access mutable elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
+- [`NestedTupleRef`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRef.html): Provides a [`nested_tuple_ref()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRef.html#tymethod.nested_tuple_ref) method to get nested references to each leaf value of a nested tuple.
+- [`NestedTupleMut`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleMut.html): Provides a [`nested_tuple_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleMut.html#tymethod.nested_tuple_mut) method to get nested mutable references to each leaf value of a nested tuple.
 - [`NestedTuplePopFront`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopFront.html): Provides a [`nested_pop_front()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopFront.html#tymethod.nested_pop_front) method to pop the front element of nested tuples.
 - [`NestedTuplePopBack`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopBack.html): Provides a [`nested_pop_back()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopBack.html#tymethod.nested_pop_back) method to pop the back element of nested tuples.
 - [`NestedTuplePushFront<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushFront.html): Provides a [`nested_push_front(element)`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushFront.html#tymethod.nested_push_front) method to push an element to the front of a nested tuple.
 - [`NestedTuplePushBack<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushBack.html): Provides a [`nested_push_back(element)`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushBack.html#tymethod.nested_push_back) method to push an element to the back of a nested tuple.
+- [`NestedTupleRow<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html): Provides a [`nested_tuple_row()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html#tymethod.nested_tuple_row) method to access elements at the specified index across a nested tuple-of-tuples, returning a nested row tuple by value.
+- [`NestedTupleRow<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html): Provides a [`nested_tuple_row()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html#tymethod.nested_tuple_row) method to access elements at the specified index across a nested tuple-of-tuples, returning a nested row tuple of references (analogous to `TupleRow`).
+- [`NestedTupleRowMut<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRowMut.html): Provides [`nested_tuple_row_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRowMut.html#tymethod.nested_tuple_row_mut) for mutable nested row access.
 - [`NestTupleMatrix`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTupleMatrix.html): Provides a [`nest_matrix()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTupleMatrix.html#tymethod.nest_matrix) method to convert flat tuples of flat tuples like `((A, B), (C, D))` into nested tuples of nested tuples like `((A, (B,)), ((C, (D,)),))`.
 - [`FlattenNestedTupleMatrix`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTupleMatrix.html): Provides a [`flatten_matrix()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTupleMatrix.html#tymethod.flatten_matrix) method to convert nested tuples of nested tuples back into flat tuples of flat tuples.
 - [`TupleLen`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.TupleLen.html): Provides the length of the tuple as a compile-time [`typenum::Unsigned`](https://docs.rs/typenum/latest/typenum/marker_traits/trait.Unsigned.html) type.
@@ -120,17 +125,31 @@ tuplities = { version = "0.1.4", default-features = false, features = ["clone", 
 
 ## Performance
 
-Compile times scale with tuple size due to code generation. Here are measured build times for different maximum tuple sizes (on a typical development machine):
+Compile times scale with tuple size due to code generation. Below are measured build times for different maximum tuple sizes captured via the project's `measure_compile_times.sh` script on a typical development machine. Values are approximate and represent wall-clock `real` times. If you only plan to use variadic nested tuples, you may prefer to use only the `tuplities-flatten-nest` crate, which has significantly lower compile times.
+
+### tuplities (root crate)
 
 | Max Tuple Size | Compile Time |
 |----------------|--------------|
-| 8 (default)    | ~3s          |
-| 16             | ~3s          |
-| 32             | ~3s          |
-| 48             | ~4s          |
-| 64             | ~7s          |
-| 96             | ~16s         |
-| 128            | ~32s         |
+| 8 (default)    | ~3.37s       |
+| 16             | ~2.71s       |
+| 32             | ~3.27s       |
+| 48             | ~4.55s       |
+| 64             | ~6.82s       |
+| 96             | ~15.60s      |
+| 128            | ~32.54s      |
+
+### tuplities-flatten-nest (flatten-nest crate only)
+
+| Max Tuple Size | Compile Time |
+|----------------|--------------|
+| 8 (default)    | ~3.34s       |
+| 16             | ~2.39s       |
+| 32             | ~2.43s       |
+| 48             | ~2.56s       |
+| 64             | ~2.77s       |
+| 96             | ~3.35s       |
+| 128            | ~4.52s       |
 
 ## Architecture
 

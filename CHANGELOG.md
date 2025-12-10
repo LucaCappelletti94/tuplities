@@ -31,6 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `IntoNestedTupleOption` trait for converting nested tuples into nested tuples of options
 - `NestedTupleReplicate<T>` trait for creating nested tuples by replicating a single value across all positions
 - `NestedTuplePopFront`, `NestedTuplePopBack`, `NestedTuplePushFront`, `NestedTuplePushBack` traits for manipulating nested tuples by popping/pushing elements at the front or back while preserving nested structure
+- `NestedTuplePopFront`, `NestedTuplePopBack`, `NestedTuplePushFront`, `NestedTuplePushBack` traits for manipulating nested tuples by popping/pushing elements at the front or back while preserving nested structure
+- `NestedTupleRow<Idx>` trait for accessing a nested row (by value) across nested tuples, keeping the resulting row nested as well
+- `NestedTupleRow<Idx>` trait for accessing a nested row (by reference) across nested tuples, keeping the resulting row nested as well
+- `NestedTupleRowMut<Idx>` trait for accessing a nested row as mutable references
+- `NestedTupleRef` and `NestedTupleMut` traits for retrieving nested tuples of references and nested tuples of mutable references, respectively
 - `NestTupleMatrix` trait for converting flat tuples of flat tuples (like `((A, B), (C, D))`) into nested tuples of nested tuples (like `((A, (B,)), ((C, (D,)),))`)
 - `FlattenNestedTupleMatrix` trait for converting nested tuples of nested tuples back into flat tuples of flat tuples
 - `NestedTupleTryFrom<T, E>` and `NestedTupleTryInto<T, E>` traits for fallible, element-wise conversions between nested tuple types using `TryFrom` conversions and proper error propagation
