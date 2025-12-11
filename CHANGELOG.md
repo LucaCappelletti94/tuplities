@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NestedTupleIndex<Idx>` and `NestedTupleIndexMut<Idx>` traits for compile-time indexing into nested tuples using flat indices
 - `NestedTupleOption` trait for transposing nested tuples of options into options of nested tuples
 - `IntoNestedTupleOption` trait for converting nested tuples into nested tuples of options
+- `NestedTupleOptionWith<H>` trait providing `first_none_with`, `first_some_with`, and `transpose_or` helpers that work with a parallel homogeneous nested tuple `H` for result/error mapping
 - `NestedTupleReplicate<T>` trait for creating nested tuples by replicating a single value across all positions
 - `NestedTuplePopFront`, `NestedTuplePopBack`, `NestedTuplePushFront`, `NestedTuplePushBack` traits for manipulating nested tuples by popping/pushing elements at the front or back while preserving nested structure
 - `NestedTuplePopFront`, `NestedTuplePopBack`, `NestedTuplePushFront`, `NestedTuplePushBack` traits for manipulating nested tuples by popping/pushing elements at the front or back while preserving nested structure

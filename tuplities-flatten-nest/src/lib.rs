@@ -20,7 +20,7 @@ pub use matrix::{
 };
 pub use nest::NestTuple;
 pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
-pub use nested_option::{IntoNestedTupleOption, NestedTupleOption};
+pub use nested_option::{IntoNestedTupleOption, NestedTupleOption, NestedTupleOptionWith};
 pub use nested_push_pop::{
     NestedTuplePopBack, NestedTuplePopFront, NestedTuplePushBack, NestedTuplePushFront,
 };

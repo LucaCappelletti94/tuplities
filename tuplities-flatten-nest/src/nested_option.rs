@@ -25,35 +25,38 @@ pub trait NestedTupleOption {
     /// The transposed type: an option of the nested tuple of the inner types.
     type Transposed: IntoNestedTupleOption<IntoOptions = Self>;
 
-    /// A nested homogeneous tuple type with the same shape as `Self` where each element is `H`.
-    ///
-    /// Example: for `Self = (Option<T>, (Option<U>,))` then
-    /// `Self::SameDepth<H>` == `(H, (H,))`.
-    type SameDepth<H>;
-
     /// Transposes the nested tuple of options into an option of the nested tuple.
     ///
     /// Returns `Some(nested_tuple)` if all elements are `Some`, otherwise `None`.
     fn transpose(self) -> Option<Self::Transposed>;
 
-    /// Given a parallel homogeneous nested tuple `xs` (same shape as `self`),
-    /// returns the first `H` that corresponds to the first `None` in `self`,
-    /// or `None` if no elements are `None`.
-    fn first_none_with<H>(self, xs: Self::SameDepth<H>) -> Option<H>;
+    // Note: the `first_none_with`, `first_some_with`, and `transpose_or` helpers were moved
+    // to the `NestedTupleOptionWith<H>` trait to keep `NestedTupleOption` focused on
+    // transposition behavior.
+}
 
-    /// Given a parallel homogeneous nested tuple `xs` (same shape as `self`),
-    /// returns the first `H` that corresponds to the first `Some` in `self`,
-    /// or `None` if no elements are `Some`.
-    fn first_some_with<H>(self, xs: Self::SameDepth<H>) -> Option<H>;
+/// Helper trait for operating on nested `Option` structures with a parallel homogeneous
+/// nested tuple type `SameDepth` carrying elements of type `H`.
+pub trait NestedTupleOptionWith<H>: NestedTupleOption {
+    /// The parallel homogeneous nested tuple type for `H` which has the same shape as `Self`.
+    type SameDepth;
+
+    /// Returns the first `H` corresponding to the first `None` in `self`.
+    fn first_none_with(self, xs: Self::SameDepth) -> Option<H>;
+
+    /// Returns the first `H` corresponding to the first `Some` in `self`.
+    fn first_some_with(self, xs: Self::SameDepth) -> Option<H>;
 
     /// Like `transpose`, but returns a `Result` with `Ok(Transposed)` when all elements
     /// are `Some`, or `Err(H)` with the first `H` corresponding to the first `None`.
     ///
     /// # Errors
     ///
-    /// Returns `Err(H)` if any element is `None`, where `H` is from the parallel
-    /// homogeneous nested tuple `xs`.
-    fn transpose_or<H>(self, xs: Self::SameDepth<H>) -> Result<Self::Transposed, H>;
+    /// Returns `Err(h)` when any element in `self` is `None`. The `h` returned is the
+    /// corresponding element of the parallel homogeneous nested tuple `xs` for the first
+    /// `None` encountered (traversed left-to-right, depth-first in the nested pair
+    /// representation).
+    fn transpose_or(self, xs: Self::SameDepth) -> Result<Self::Transposed, H>;
 }
 
 /// A trait for converting nested tuples into nested tuples of options.
@@ -81,64 +84,20 @@ pub trait IntoNestedTupleOption {
 
 impl NestedTupleOption for () {
     type Transposed = ();
-    type SameDepth<H> = ();
 
     #[inline]
     fn transpose(self) -> Option<Self::Transposed> {
         Some(())
     }
-
-    #[inline]
-    fn first_none_with<H>(self, _xs: Self::SameDepth<H>) -> Option<H> {
-        None
-    }
-
-    #[inline]
-    fn first_some_with<H>(self, _xs: Self::SameDepth<H>) -> Option<H> {
-        None
-    }
-
-    #[inline]
-    fn transpose_or<H>(self, _xs: Self::SameDepth<H>) -> Result<Self::Transposed, H> {
-        Ok(())
-    }
 }
 
 impl<T> NestedTupleOption for (Option<T>,) {
     type Transposed = (T,);
-    type SameDepth<H> = (H,);
 
     #[inline]
     fn transpose(self) -> Option<Self::Transposed> {
         let (opt,) = self;
         opt.map(|t| (t,))
-    }
-
-    #[inline]
-    fn first_none_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
-        let (opt,) = self;
-        let (h,) = xs;
-        match opt {
-            None => Some(h),
-            Some(_) => None,
-        }
-    }
-
-    #[inline]
-    fn first_some_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
-        let (opt,) = self;
-        let (h,) = xs;
-        opt.map(|_| h)
-    }
-
-    #[inline]
-    fn transpose_or<H>(self, xs: Self::SameDepth<H>) -> Result<Self::Transposed, H> {
-        let (opt,) = self;
-        let (h,) = xs;
-        match opt {
-            Some(t) => Ok((t,)),
-            None => Err(h),
-        }
     }
 }
 
@@ -147,7 +106,6 @@ where
     Tail: NestedTupleOption,
 {
     type Transposed = (Head, Tail::Transposed);
-    type SameDepth<H> = (H, Tail::SameDepth<H>);
 
     #[inline]
     fn transpose(self) -> Option<Self::Transposed> {
@@ -155,39 +113,6 @@ where
         match (head_opt, tail.transpose()) {
             (Some(head), Some(tail_transposed)) => Some((head, tail_transposed)),
             _ => None,
-        }
-    }
-
-    #[inline]
-    fn first_none_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
-        let (head_opt, tail) = self;
-        let (h_head, h_tail) = xs;
-        match head_opt {
-            None => Some(h_head),
-            Some(_) => tail.first_none_with(h_tail),
-        }
-    }
-
-    #[inline]
-    fn first_some_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
-        let (head_opt, tail) = self;
-        let (h_head, h_tail) = xs;
-        match head_opt {
-            Some(_) => Some(h_head),
-            None => tail.first_some_with(h_tail),
-        }
-    }
-
-    #[inline]
-    fn transpose_or<H>(self, xs: Self::SameDepth<H>) -> Result<Self::Transposed, H> {
-        let (head_opt, tail) = self;
-        let (h_head, h_tail) = xs;
-        match head_opt {
-            None => Err(h_head),
-            Some(head) => match tail.transpose_or(h_tail) {
-                Ok(tail_transposed) => Ok((head, tail_transposed)),
-                Err(h) => Err(h),
-            },
         }
     }
 }
@@ -221,6 +146,96 @@ where
     fn into_options(self) -> Self::IntoOptions {
         let (head, tail) = self;
         (Some(head), tail.into_options())
+    }
+}
+
+impl<H> NestedTupleOptionWith<H> for () {
+    type SameDepth = ();
+
+    #[inline]
+    fn first_none_with(self, _xs: Self::SameDepth) -> Option<H> {
+        None
+    }
+
+    #[inline]
+    fn first_some_with(self, _xs: Self::SameDepth) -> Option<H> {
+        None
+    }
+
+    #[inline]
+    fn transpose_or(self, _xs: Self::SameDepth) -> Result<Self::Transposed, H> {
+        Ok(())
+    }
+}
+
+impl<T, H> NestedTupleOptionWith<H> for (Option<T>,) {
+    type SameDepth = (H,);
+
+    #[inline]
+    fn first_none_with(self, xs: Self::SameDepth) -> Option<H> {
+        let (opt,) = self;
+        let (h,) = xs;
+        match opt {
+            None => Some(h),
+            Some(_) => None,
+        }
+    }
+
+    #[inline]
+    fn first_some_with(self, xs: Self::SameDepth) -> Option<H> {
+        let (opt,) = self;
+        let (h,) = xs;
+        opt.map(|_| h)
+    }
+
+    #[inline]
+    fn transpose_or(self, xs: Self::SameDepth) -> Result<Self::Transposed, H> {
+        let (opt,) = self;
+        let (h,) = xs;
+        match opt {
+            Some(t) => Ok((t,)),
+            None => Err(h),
+        }
+    }
+}
+
+impl<Head, Tail, H> NestedTupleOptionWith<H> for (Option<Head>, Tail)
+where
+    Tail: NestedTupleOptionWith<H>,
+{
+    type SameDepth = (H, Tail::SameDepth);
+
+    #[inline]
+    fn first_none_with(self, xs: Self::SameDepth) -> Option<H> {
+        let (head_opt, tail) = self;
+        let (h_head, h_tail) = xs;
+        match head_opt {
+            None => Some(h_head),
+            Some(_) => tail.first_none_with(h_tail),
+        }
+    }
+
+    #[inline]
+    fn first_some_with(self, xs: Self::SameDepth) -> Option<H> {
+        let (head_opt, tail) = self;
+        let (h_head, h_tail) = xs;
+        match head_opt {
+            Some(_) => Some(h_head),
+            None => tail.first_some_with(h_tail),
+        }
+    }
+
+    #[inline]
+    fn transpose_or(self, xs: Self::SameDepth) -> Result<Self::Transposed, H> {
+        let (head_opt, tail) = self;
+        let (h_head, h_tail) = xs;
+        match head_opt {
+            None => Err(h_head),
+            Some(head) => match tail.transpose_or(h_tail) {
+                Ok(tail_transposed) => Ok((head, tail_transposed)),
+                Err(h) => Err(h),
+            },
+        }
     }
 }
 

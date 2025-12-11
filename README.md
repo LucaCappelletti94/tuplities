@@ -31,6 +31,7 @@ The library provides several traits for working with tuples:
 - [`IntoTupleOption`](https://docs.rs/tuplities-option/latest/tuplities_option/trait.IntoTupleOption.html): Provides an [`into_options()`](https://docs.rs/tuplities-option/latest/tuplities_option/trait.IntoTupleOption.html#tymethod.into_options) method to convert a tuple into a tuple of options.
 - [`NestedTupleOption`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOption.html): Provides a [`transpose()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOption.html#tymethod.transpose) method to transpose nested tuples of options into options of nested tuples.
 - [`IntoNestedTupleOption`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.IntoNestedTupleOption.html): Provides an [`into_options()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.IntoNestedTupleOption.html#tymethod.into_options) method to convert nested tuples into nested tuples of options.
+- [`NestedTupleOptionWith<H>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionWith.html): Provides `first_none_with`, `first_some_with`, and `transpose_or` helpers which operate with a parallel homogeneous nested tuple of `H` used for result/error mapping.
 - [`NestedTupleTryFrom<T, E>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryFrom.html): Provides a [`nested_tuple_try_from()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryFrom.html#tymethod.nested_tuple_try_from) method to fallibly convert nested tuple types element-wise using `TryFrom` conversions.
 - [`NestedTupleTryInto<T, E>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryInto.html): Provides a [`nested_tuple_try_into()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryInto.html#tymethod.nested_tuple_try_into) convenience method to perform fallible conversions using `NestedTupleTryFrom`.
 - [`NestedTupleReplicate<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleReplicate.html): Provides a [`nested_tuple_replicate(value)`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleReplicate.html#tymethod.nested_tuple_replicate) method to create nested tuples by replicating a single value across all positions.
@@ -91,7 +92,7 @@ The following features enable individual trait crates:
 - `debug`: Enables `TupleDebug` trait
 - `tuple-default`: Enables `TupleDefault` trait
 - `eq`: Enables `TupleEq` trait
-- `flatten-nest`: Enables `FlattenNestedTuple`, `NestTuple`, `NestedTupleIndex`, `NestedTupleIndexMut`, `NestedTupleTryFrom`, `NestedTupleTryInto`, `NestTupleMatrix`, and `FlattenNestedTupleMatrix` traits
+- `flatten-nest`: Enables `FlattenNestedTuple`, `NestTuple`, `NestedTupleIndex`, `NestedTupleIndexMut`, `NestedTupleTryFrom`, `NestedTupleTryInto`, `NestTupleMatrix`, `FlattenNestedTupleMatrix`, `NestedTupleOption`, `IntoNestedTupleOption`, and `NestedTupleOptionWith` traits
 - `from`: Enables `TupleFrom` and `TupleInto` traits
 - `hash`: Enables `TupleHash` trait
 - `mut`: Enables `TupleMut` and `TupleMutMap` traits
