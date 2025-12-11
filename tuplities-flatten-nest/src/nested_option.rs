@@ -25,10 +25,35 @@ pub trait NestedTupleOption {
     /// The transposed type: an option of the nested tuple of the inner types.
     type Transposed: IntoNestedTupleOption<IntoOptions = Self>;
 
+    /// A nested homogeneous tuple type with the same shape as `Self` where each element is `H`.
+    ///
+    /// Example: for `Self = (Option<T>, (Option<U>,))` then
+    /// `Self::SameDepth<H>` == `(H, (H,))`.
+    type SameDepth<H>;
+
     /// Transposes the nested tuple of options into an option of the nested tuple.
     ///
     /// Returns `Some(nested_tuple)` if all elements are `Some`, otherwise `None`.
     fn transpose(self) -> Option<Self::Transposed>;
+
+    /// Given a parallel homogeneous nested tuple `xs` (same shape as `self`),
+    /// returns the first `H` that corresponds to the first `None` in `self`,
+    /// or `None` if no elements are `None`.
+    fn first_none_with<H>(self, xs: Self::SameDepth<H>) -> Option<H>;
+
+    /// Given a parallel homogeneous nested tuple `xs` (same shape as `self`),
+    /// returns the first `H` that corresponds to the first `Some` in `self`,
+    /// or `None` if no elements are `Some`.
+    fn first_some_with<H>(self, xs: Self::SameDepth<H>) -> Option<H>;
+
+    /// Like `transpose`, but returns a `Result` with `Ok(Transposed)` when all elements
+    /// are `Some`, or `Err(H)` with the first `H` corresponding to the first `None`.
+    ///
+    /// # Errors
+    ///
+    /// Returns `Err(H)` if any element is `None`, where `H` is from the parallel
+    /// homogeneous nested tuple `xs`.
+    fn transpose_or<H>(self, xs: Self::SameDepth<H>) -> Result<Self::Transposed, H>;
 }
 
 /// A trait for converting nested tuples into nested tuples of options.
@@ -56,20 +81,64 @@ pub trait IntoNestedTupleOption {
 
 impl NestedTupleOption for () {
     type Transposed = ();
+    type SameDepth<H> = ();
 
     #[inline]
     fn transpose(self) -> Option<Self::Transposed> {
         Some(())
     }
+
+    #[inline]
+    fn first_none_with<H>(self, _xs: Self::SameDepth<H>) -> Option<H> {
+        None
+    }
+
+    #[inline]
+    fn first_some_with<H>(self, _xs: Self::SameDepth<H>) -> Option<H> {
+        None
+    }
+
+    #[inline]
+    fn transpose_or<H>(self, _xs: Self::SameDepth<H>) -> Result<Self::Transposed, H> {
+        Ok(())
+    }
 }
 
 impl<T> NestedTupleOption for (Option<T>,) {
     type Transposed = (T,);
+    type SameDepth<H> = (H,);
 
     #[inline]
     fn transpose(self) -> Option<Self::Transposed> {
         let (opt,) = self;
         opt.map(|t| (t,))
+    }
+
+    #[inline]
+    fn first_none_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
+        let (opt,) = self;
+        let (h,) = xs;
+        match opt {
+            None => Some(h),
+            Some(_) => None,
+        }
+    }
+
+    #[inline]
+    fn first_some_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
+        let (opt,) = self;
+        let (h,) = xs;
+        opt.map(|_| h)
+    }
+
+    #[inline]
+    fn transpose_or<H>(self, xs: Self::SameDepth<H>) -> Result<Self::Transposed, H> {
+        let (opt,) = self;
+        let (h,) = xs;
+        match opt {
+            Some(t) => Ok((t,)),
+            None => Err(h),
+        }
     }
 }
 
@@ -78,6 +147,7 @@ where
     Tail: NestedTupleOption,
 {
     type Transposed = (Head, Tail::Transposed);
+    type SameDepth<H> = (H, Tail::SameDepth<H>);
 
     #[inline]
     fn transpose(self) -> Option<Self::Transposed> {
@@ -85,6 +155,39 @@ where
         match (head_opt, tail.transpose()) {
             (Some(head), Some(tail_transposed)) => Some((head, tail_transposed)),
             _ => None,
+        }
+    }
+
+    #[inline]
+    fn first_none_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
+        let (head_opt, tail) = self;
+        let (h_head, h_tail) = xs;
+        match head_opt {
+            None => Some(h_head),
+            Some(_) => tail.first_none_with(h_tail),
+        }
+    }
+
+    #[inline]
+    fn first_some_with<H>(self, xs: Self::SameDepth<H>) -> Option<H> {
+        let (head_opt, tail) = self;
+        let (h_head, h_tail) = xs;
+        match head_opt {
+            Some(_) => Some(h_head),
+            None => tail.first_some_with(h_tail),
+        }
+    }
+
+    #[inline]
+    fn transpose_or<H>(self, xs: Self::SameDepth<H>) -> Result<Self::Transposed, H> {
+        let (head_opt, tail) = self;
+        let (h_head, h_tail) = xs;
+        match head_opt {
+            None => Err(h_head),
+            Some(head) => match tail.transpose_or(h_tail) {
+                Ok(tail_transposed) => Ok((head, tail_transposed)),
+                Err(h) => Err(h),
+            },
         }
     }
 }
@@ -124,6 +227,8 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[derive(Debug, PartialEq, Eq)]
+    struct NoCopy(i32);
 
     #[test]
     fn test_transpose_empty() {
@@ -188,5 +293,87 @@ mod tests {
         let options = original.into_options();
         let back = options.transpose().unwrap();
         assert_eq!(original, back);
+    }
+
+    #[test]
+    fn test_first_none_and_first_some_with_homogeneous() {
+        let options = (Some(1), (None::<i32>, (Some(3),)));
+        let hom = (10, (20, (30,)));
+        assert_eq!(options.first_none_with(hom), Some(20));
+
+        let hom2 = (11, (12, (13,)));
+        assert_eq!(options.first_some_with(hom2), Some(11));
+    }
+
+    #[test]
+    fn test_all_some_first_none_returns_none() {
+        let options = (Some(1), (Some(2), (Some(3),)));
+        let hom = (10, (20, (30,)));
+        assert_eq!(options.first_none_with(hom), None);
+    }
+
+    #[test]
+    fn test_all_none_first_some_returns_none() {
+        let options = (None::<i32>, (None::<i32>, (None::<i32>,)));
+        let hom = (10, (20, (30,)));
+        assert_eq!(options.first_some_with(hom), None);
+    }
+
+    #[test]
+    fn test_deeply_nested_first_none_prefers_leftmost() {
+        let options = (Some(1), (None::<i32>, (None::<i32>,)));
+        let hom = (10, (20, (30,)));
+        assert_eq!(options.first_none_with(hom), Some(20));
+    }
+
+    #[test]
+    fn test_deeply_nested_first_some_returns_deeper_value_when_head_none() {
+        let options = (None::<i32>, (Some(2), (Some(3),)));
+        let hom = (10, (20, (30,)));
+        assert_eq!(options.first_some_with(hom), Some(20));
+    }
+
+    #[test]
+    fn test_first_none_with_noncopy_hom_movable() {
+        let options = (Some(1), (None::<i32>, (Some(3),)));
+        let hom = (NoCopy(10), (NoCopy(20), (NoCopy(30),)));
+        assert_eq!(options.first_none_with(hom), Some(NoCopy(20)));
+    }
+
+    #[test]
+    fn test_first_some_with_noncopy_hom_movable() {
+        let options = (None::<i32>, (Some(2), (None::<i32>,)));
+        let hom = (NoCopy(11), (NoCopy(22), (NoCopy(33),)));
+        assert_eq!(options.first_some_with(hom), Some(NoCopy(22)));
+    }
+
+    #[test]
+    fn test_all_none_first_none_returns_head() {
+        let options = (None::<i32>, (None::<i32>, (None::<i32>,)));
+        let hom = (10, (20, (30,)));
+        assert_eq!(options.first_none_with(hom), Some(10));
+    }
+
+    #[test]
+    fn test_transpose_or_ok_and_err() {
+        let options = (Some(1), (None::<i32>, (Some(3),)));
+        let hom = (10, (20, (30,)));
+        // Since the second element is None, we expect Err(20)
+        assert_eq!(options.transpose_or(hom), Err(20));
+
+        let options2 = (Some(1), (Some(2), (Some(3),)));
+        let hom2 = (10, (20, (30,)));
+        assert_eq!(options2.transpose_or(hom2), Ok((1, (2, (3,)))));
+    }
+
+    #[test]
+    fn test_transpose_or_single_ok_and_err() {
+        let options = (None::<i32>,);
+        let hom = (99,);
+        assert_eq!(options.transpose_or(hom), Err(99));
+
+        let some = (Some(5),);
+        let hom2 = (77,);
+        assert_eq!(some.transpose_or(hom2), Ok((5,)));
     }
 }
