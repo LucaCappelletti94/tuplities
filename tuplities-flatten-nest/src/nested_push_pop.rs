@@ -54,9 +54,54 @@ impl<Head> NestedTuplePopFront for (Head,) {
     }
 }
 
+// Implementations
+impl<'a, Head> NestedTuplePopFront for &'a (Head,) {
+    type Front = &'a Head;
+    type Tail = ();
+
+    #[inline]
+    fn nested_pop_front(self) -> (Self::Front, Self::Tail) {
+        let (head,) = self;
+        (head, ())
+    }
+}
+
+impl<'a, Head> NestedTuplePopFront for &'a mut (Head,) {
+    type Front = &'a mut Head;
+    type Tail = ();
+
+    #[inline]
+    fn nested_pop_front(self) -> (Self::Front, Self::Tail) {
+        let (head,) = self;
+        (head, ())
+    }
+}
+
 impl<Head, Tail> NestedTuplePopFront for (Head, Tail) {
     type Front = Head;
     type Tail = Tail;
+
+    #[inline]
+    fn nested_pop_front(self) -> (Self::Front, Self::Tail) {
+        let (head, tail) = self;
+        (head, tail)
+    }
+}
+
+impl<'a, Head, Tail> NestedTuplePopFront for &'a (Head, Tail) {
+    type Front = &'a Head;
+    type Tail = &'a Tail;
+
+    #[inline]
+    fn nested_pop_front(self) -> (Self::Front, Self::Tail) {
+        let (head, tail) = self;
+        (head, tail)
+    }
+}
+
+impl<'a, Head, Tail> NestedTuplePopFront for &'a mut (Head, Tail) {
+    type Front = &'a mut Head;
+    type Tail = &'a mut Tail;
 
     #[inline]
     fn nested_pop_front(self) -> (Self::Front, Self::Tail) {

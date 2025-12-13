@@ -29,10 +29,6 @@ pub trait NestedTupleOption {
     ///
     /// Returns `Some(nested_tuple)` if all elements are `Some`, otherwise `None`.
     fn transpose(self) -> Option<Self::Transposed>;
-
-    // Note: the `first_none_with`, `first_some_with`, and `transpose_or` helpers were moved
-    // to the `NestedTupleOptionWith<H>` trait to keep `NestedTupleOption` focused on
-    // transposition behavior.
 }
 
 /// Helper trait for operating on nested `Option` structures with a parallel homogeneous
