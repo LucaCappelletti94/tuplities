@@ -42,6 +42,64 @@ where
     }
 }
 
+/// A trait for infallibly converting from one nested tuple type to another.
+///
+/// This mirrors `From` but works element-wise across nested tuple structures.
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait NestedTupleFrom<T>: Sized {
+    /// Converts `other` into `Self` by applying `From` element-wise.
+    fn nested_tuple_from(other: T) -> Self;
+}
+
+/// A trait for infallibly converting into another nested tuple type.
+///
+/// Automatically implemented for any type that implements `NestedTupleFrom`.
+pub trait NestedTupleInto<T>: Sized {
+    /// Converts `self` into `T` by applying `From` element-wise.
+    fn nested_tuple_into(self) -> T;
+}
+
+impl<T, U> NestedTupleInto<U> for T
+where
+    U: NestedTupleFrom<T>,
+{
+    #[inline]
+    fn nested_tuple_into(self) -> U {
+        U::nested_tuple_from(self)
+    }
+}
+
+impl NestedTupleFrom<()> for () {
+    #[inline]
+    fn nested_tuple_from(_other: ()) -> Self {}
+}
+
+impl<Head, OtherHead> NestedTupleFrom<(OtherHead,)> for (Head,)
+where
+    Head: From<OtherHead>,
+{
+    #[inline]
+    fn nested_tuple_from(other: (OtherHead,)) -> Self {
+        let (other_head,) = other;
+        (Head::from(other_head),)
+    }
+}
+
+impl<Head, Tail, OtherHead, OtherTail> NestedTupleFrom<(OtherHead, OtherTail)> for (Head, Tail)
+where
+    Head: From<OtherHead>,
+    Tail: NestedTupleFrom<OtherTail>,
+{
+    #[inline]
+    fn nested_tuple_from(other: (OtherHead, OtherTail)) -> Self {
+        let (other_head, other_tail) = other;
+        let head = Head::from(other_head);
+        let tail = Tail::nested_tuple_from(other_tail);
+        (head, tail)
+    }
+}
+
 impl<E> NestedTupleTryFrom<(), E> for () {
     #[inline]
     fn nested_tuple_try_from(_other: ()) -> Result<Self, E> {
@@ -114,6 +172,41 @@ mod tests {
         let source = (1u8, (2u8,));
         let target: Result<(u16, (u16,)), MyError> = source.nested_tuple_try_into();
         assert_eq!(target, Ok((1u16, (2u16,))));
+    }
+
+    #[test]
+    fn test_nested_tuple_from_single() {
+        let source = (1u8,);
+        let target: (u16,) = NestedTupleFrom::nested_tuple_from(source);
+        assert_eq!(target, (1u16,));
+    }
+
+    #[test]
+    fn test_nested_tuple_from_nested() {
+        let source = (1u8, (2u8, (3u8,)));
+        let target: (u16, (u16, (u16,))) = NestedTupleFrom::nested_tuple_from(source);
+        assert_eq!(target, (1u16, (2u16, (3u16,))));
+    }
+
+    #[test]
+    fn test_nested_tuple_into() {
+        let source = (1u8, (2u8,));
+        let target: (u16, (u16,)) = source.nested_tuple_into();
+        assert_eq!(target, (1u16, (2u16,)));
+    }
+
+    #[test]
+    fn test_nested_tuple_from_empty() {
+        let source = ();
+        let target: () = NestedTupleFrom::nested_tuple_from(source);
+        assert_eq!(target, ());
+    }
+
+    #[test]
+    fn test_nested_tuple_into_empty() {
+        let source = ();
+        let target: () = source.nested_tuple_into();
+        assert_eq!(target, ());
     }
 
     // Note: We avoid using `TryFromIntError` in these tests to improve portability

@@ -27,4 +27,5 @@ pub use nested_push_pop::{
 pub use nested_ref::{NestedTupleMut, NestedTupleRef};
 pub use nested_replicate::NestedTupleReplicate;
 pub use nested_row::{NestedTupleRow, NestedTupleRowMut};
+pub use nested_try_from::{NestedTupleFrom, NestedTupleInto};
 pub use nested_try_from::{NestedTupleTryFrom, NestedTupleTryInto};
