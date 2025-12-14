@@ -7,6 +7,7 @@ mod matrix;
 mod nest;
 mod nested_index;
 mod nested_option;
+mod nested_option_try_from;
 mod nested_push_pop;
 mod nested_ref;
 mod nested_replicate;
@@ -21,6 +22,10 @@ pub use matrix::{
 pub use nest::NestTuple;
 pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
 pub use nested_option::{IntoNestedTupleOption, NestedTupleOption, NestedTupleOptionWith};
+pub use nested_option_try_from::{
+    NestedTupleOptionFrom, NestedTupleOptionInto, NestedTupleOptionTryFrom,
+    NestedTupleOptionTryInto,
+};
 pub use nested_push_pop::{
     NestedTuplePopBack, NestedTuplePopFront, NestedTuplePushBack, NestedTuplePushFront,
 };

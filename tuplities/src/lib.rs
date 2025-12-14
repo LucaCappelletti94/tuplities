@@ -18,9 +18,10 @@ pub mod prelude {
         FlattenMatrixElements, FlattenNestedTuple, FlattenNestedTupleMatrix, IntoNestedTupleOption,
         NestMatrixElements, NestTuple, NestTupleMatrix, NestedTupleFrom, NestedTupleIndex,
         NestedTupleIndexMut, NestedTupleInto, NestedTupleMut, NestedTupleOption,
-        NestedTupleOptionWith, NestedTuplePopBack, NestedTuplePopFront, NestedTuplePushBack,
-        NestedTuplePushFront, NestedTupleRef, NestedTupleReplicate, NestedTupleRow,
-        NestedTupleRowMut, NestedTupleTryFrom, NestedTupleTryInto,
+        NestedTupleOptionFrom, NestedTupleOptionInto, NestedTupleOptionTryFrom,
+        NestedTupleOptionTryInto, NestedTupleOptionWith, NestedTuplePopBack, NestedTuplePopFront,
+        NestedTuplePushBack, NestedTuplePushFront, NestedTupleRef, NestedTupleReplicate,
+        NestedTupleRow, NestedTupleRowMut, NestedTupleTryFrom, NestedTupleTryInto,
     };
     #[cfg(feature = "from")]
     pub use tuplities_from::{TupleFrom, TupleInto};
