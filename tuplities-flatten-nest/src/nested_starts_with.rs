@@ -32,7 +32,7 @@ mod tests {
     use super::*;
 
     // Helper function to test that a type implements the trait
-    fn _assert_starts_with<T, U>()
+    fn assert_starts_with<T, U>()
     where
         T: NestedTupleStartsWith<U>,
     {
@@ -40,42 +40,42 @@ mod tests {
 
     #[test]
     fn test_empty_starts_with_empty() {
-        _assert_starts_with::<(), ()>();
+        assert_starts_with::<(), ()>();
     }
 
     #[test]
     fn test_single_starts_with_empty() {
-        _assert_starts_with::<(i32,), ()>();
+        assert_starts_with::<(i32,), ()>();
     }
 
     #[test]
     fn test_single_starts_with_itself() {
-        _assert_starts_with::<(i32,), (i32,)>();
+        assert_starts_with::<(i32,), (i32,)>();
     }
 
     #[test]
     fn test_nested_starts_with_empty() {
-        _assert_starts_with::<(i32, (i32, (i32,))), ()>();
+        assert_starts_with::<(i32, (i32, (i32,))), ()>();
     }
 
     #[test]
     fn test_nested_starts_with_single() {
-        _assert_starts_with::<(i32, (i32, (i32,))), (i32,)>();
+        assert_starts_with::<(i32, (i32, (i32,))), (i32,)>();
     }
 
     #[test]
     fn test_nested_starts_with_prefix() {
-        _assert_starts_with::<(i32, (i32, (i32,))), (i32, (i32,))>();
+        assert_starts_with::<(i32, (i32, (i32,))), (i32, (i32,))>();
     }
 
     #[test]
     fn test_nested_starts_with_itself() {
-        _assert_starts_with::<(i32, (i32, (i32,))), (i32, (i32, (i32,)))>();
+        assert_starts_with::<(i32, (i32, (i32,))), (i32, (i32, (i32,)))>();
     }
 
     #[test]
     fn test_different_types() {
-        _assert_starts_with::<(i32, (u64, (bool,))), (i32,)>();
-        _assert_starts_with::<(i32, (u64, (bool,))), (i32, (u64,))>();
+        assert_starts_with::<(i32, (u64, (bool,))), (i32,)>();
+        assert_starts_with::<(i32, (u64, (bool,))), (i32, (u64,))>();
     }
 }
