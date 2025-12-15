@@ -44,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `NestedTupleFrom<T>` and `NestedTupleInto<T>` traits for infallible, element-wise conversions using `From` implementations
 - `NestedTupleOptionFrom<T>` and `NestedTupleOptionInto<T>` traits for infallible, element-wise conversions between nested tuples of `Option`s using `From` implementations
 - `NestedTupleOptionTryFrom<T, E>` and `NestedTupleOptionTryInto<T, E>` traits for fallible, element-wise conversions between nested tuples of `Option`s using `TryFrom` conversions and proper error propagation
+- `NestedTupleStartsWith<Other>` marker trait for compile-time verification that a nested tuple starts with the same types as another nested tuple
 - `NestTupleMatrix` trait for converting flat tuples of flat tuples (like `((A, B), (C, D))`) into nested tuples of nested tuples (like `((A, (B,)), ((C, (D,)),))`)
 - `FlattenNestedTupleMatrix` trait for converting nested tuples of nested tuples back into flat tuples of flat tuples
 - `NestMatrixElements` and `FlattenMatrixElements` helper traits for recursive element processing in matrix operations

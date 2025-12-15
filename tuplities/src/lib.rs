@@ -21,7 +21,8 @@ pub mod prelude {
         NestedTupleOptionFrom, NestedTupleOptionInto, NestedTupleOptionTryFrom,
         NestedTupleOptionTryInto, NestedTupleOptionWith, NestedTuplePopBack, NestedTuplePopFront,
         NestedTuplePushBack, NestedTuplePushFront, NestedTupleRef, NestedTupleReplicate,
-        NestedTupleRow, NestedTupleRowMut, NestedTupleTryFrom, NestedTupleTryInto,
+        NestedTupleRow, NestedTupleRowMut, NestedTupleStartsWith, NestedTupleTryFrom,
+        NestedTupleTryInto,
     };
     #[cfg(feature = "from")]
     pub use tuplities_from::{TupleFrom, TupleInto};

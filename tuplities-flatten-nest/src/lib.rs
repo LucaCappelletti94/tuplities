@@ -12,6 +12,7 @@ mod nested_push_pop;
 mod nested_ref;
 mod nested_replicate;
 mod nested_row;
+mod nested_starts_with;
 mod nested_try_from;
 
 // Re-export all public traits and types
@@ -32,5 +33,6 @@ pub use nested_push_pop::{
 pub use nested_ref::{NestedTupleMut, NestedTupleRef};
 pub use nested_replicate::NestedTupleReplicate;
 pub use nested_row::{NestedTupleRow, NestedTupleRowMut};
+pub use nested_starts_with::NestedTupleStartsWith;
 pub use nested_try_from::{NestedTupleFrom, NestedTupleInto};
 pub use nested_try_from::{NestedTupleTryFrom, NestedTupleTryInto};
