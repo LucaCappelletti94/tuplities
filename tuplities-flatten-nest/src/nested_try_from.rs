@@ -54,19 +54,39 @@ pub trait NestedTupleFrom<T>: Sized {
 
 /// A trait for infallibly converting into another nested tuple type.
 ///
-/// Automatically implemented for any type that implements `NestedTupleFrom`.
+/// This mirrors `Into` but works element-wise across nested tuple structures.
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestedTupleInto<T>: Sized {
-    /// Converts `self` into `T` by applying `From` element-wise.
+    /// Converts `self` into `T` by applying `Into` element-wise.
     fn nested_tuple_into(self) -> T;
 }
 
-impl<T, U> NestedTupleInto<U> for T
+impl NestedTupleInto<()> for () {
+    #[inline]
+    fn nested_tuple_into(self) -> () {}
+}
+
+impl<Head, OtherHead> NestedTupleInto<(OtherHead,)> for (Head,)
 where
-    U: NestedTupleFrom<T>,
+    Head: Into<OtherHead>,
 {
     #[inline]
-    fn nested_tuple_into(self) -> U {
-        U::nested_tuple_from(self)
+    fn nested_tuple_into(self) -> (OtherHead,) {
+        let (head,) = self;
+        (head.into(),)
+    }
+}
+
+impl<Head, Tail, OtherHead, OtherTail> NestedTupleInto<(OtherHead, OtherTail)> for (Head, Tail)
+where
+    Head: Into<OtherHead>,
+    Tail: NestedTupleInto<OtherTail>,
+{
+    #[inline]
+    fn nested_tuple_into(self) -> (OtherHead, OtherTail) {
+        let (head, tail) = self;
+        (head.into(), tail.nested_tuple_into())
     }
 }
 

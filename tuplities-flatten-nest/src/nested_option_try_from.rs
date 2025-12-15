@@ -20,7 +20,7 @@ pub trait NestedTupleOptionTryFrom<T, E>: Sized {
 
 /// A trait for fallibly converting into another nested tuple type.
 ///
-/// This trait is automatically implemented for any type that implements `NestedTupleOptionTryFrom`.
+/// This mirrors `TryInto` but works element-wise across nested tuple structures.
 ///
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestedTupleOptionTryInto<T, E>: Sized {
@@ -32,13 +32,47 @@ pub trait NestedTupleOptionTryInto<T, E>: Sized {
     fn nested_tuple_option_try_into(self) -> Result<T, E>;
 }
 
-impl<T, U, E> NestedTupleOptionTryInto<U, E> for T
+impl<E> NestedTupleOptionTryInto<(), E> for () {
+    #[inline]
+    fn nested_tuple_option_try_into(self) -> Result<(), E> {
+        Ok(())
+    }
+}
+
+impl<Head, OtherHead, E> NestedTupleOptionTryInto<(Option<OtherHead>,), E> for (Option<Head>,)
 where
-    U: NestedTupleOptionTryFrom<T, E>,
+    Head: TryInto<OtherHead>,
+    E: From<Head::Error>,
 {
     #[inline]
-    fn nested_tuple_option_try_into(self) -> Result<U, E> {
-        U::nested_tuple_option_try_from(self)
+    fn nested_tuple_option_try_into(self) -> Result<(Option<OtherHead>,), E> {
+        let (head,) = self;
+        match head {
+            Some(val) => match val.try_into() {
+                Ok(other_head) => Ok((Some(other_head),)),
+                Err(e) => Err(E::from(e)),
+            },
+            None => Ok((None,)),
+        }
+    }
+}
+
+impl<Head, Tail, OtherHead, OtherTail, E>
+    NestedTupleOptionTryInto<(Option<OtherHead>, OtherTail), E> for (Option<Head>, Tail)
+where
+    Head: TryInto<OtherHead>,
+    E: From<Head::Error>,
+    Tail: NestedTupleOptionTryInto<OtherTail, E>,
+{
+    #[inline]
+    fn nested_tuple_option_try_into(self) -> Result<(Option<OtherHead>, OtherTail), E> {
+        let (head, tail) = self;
+        let other_head = match head {
+            Some(val) => Some(val.try_into().map_err(E::from)?),
+            None => None,
+        };
+        let other_tail = tail.nested_tuple_option_try_into()?;
+        Ok((other_head, other_tail))
     }
 }
 
@@ -54,19 +88,40 @@ pub trait NestedTupleOptionFrom<T>: Sized {
 
 /// A trait for infallibly converting into another nested tuple type.
 ///
-/// Automatically implemented for any type that implements `NestedTupleOptionFrom`.
+/// This mirrors `Into` but works element-wise across nested tuple structures.
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestedTupleOptionInto<T>: Sized {
-    /// Converts `self` into `T` by applying `From` element-wise.
+    /// Converts `self` into `T` by applying `Into` element-wise.
     fn nested_tuple_option_into(self) -> T;
 }
 
-impl<T, U> NestedTupleOptionInto<U> for T
+impl NestedTupleOptionInto<()> for () {
+    #[inline]
+    fn nested_tuple_option_into(self) -> () {}
+}
+
+impl<Head, OtherHead> NestedTupleOptionInto<(Option<OtherHead>,)> for (Option<Head>,)
 where
-    U: NestedTupleOptionFrom<T>,
+    Head: Into<OtherHead>,
 {
     #[inline]
-    fn nested_tuple_option_into(self) -> U {
-        U::nested_tuple_option_from(self)
+    fn nested_tuple_option_into(self) -> (Option<OtherHead>,) {
+        let (head,) = self;
+        (head.map(Into::into),)
+    }
+}
+
+impl<Head, Tail, OtherHead, OtherTail> NestedTupleOptionInto<(Option<OtherHead>, OtherTail)>
+    for (Option<Head>, Tail)
+where
+    Head: Into<OtherHead>,
+    Tail: NestedTupleOptionInto<OtherTail>,
+{
+    #[inline]
+    fn nested_tuple_option_into(self) -> (Option<OtherHead>, OtherTail) {
+        let (head, tail) = self;
+        (head.map(Into::into), tail.nested_tuple_option_into())
     }
 }
 
@@ -167,6 +222,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::type_complexity)]
     fn test_nested_tuple_option_try_from_nested() {
         let source = (Some(1u8), (Some(2u8), (Some(3u8),)));
         let target: Result<(Option<u16>, (Option<u16>, (Option<u16>,))), MyError> =
@@ -190,6 +246,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::type_complexity)]
     fn test_nested_tuple_option_from_nested() {
         let source = (Some(1u8), (Some(2u8), (Some(3u8),)));
         let target: (Option<u16>, (Option<u16>, (Option<u16>,))) =
@@ -255,6 +312,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::type_complexity)]
     fn test_nested_tuple_option_try_from_custom_wrapper_error_nested() {
         let source = (Some(WrapI16(256)), (Some(WrapI16(1)), (Some(WrapI16(2)),)));
         let target: Result<(Option<u8>, (Option<u8>, (Option<u8>,))), WrapErr> =
@@ -263,6 +321,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::type_complexity)]
     fn test_nested_tuple_option_from_with_none() {
         let source = (None::<u8>, (Some(2u8), (None::<u8>,)));
         let target: (Option<u16>, (Option<u16>, (Option<u16>,))) =
@@ -271,6 +330,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::type_complexity)]
     fn test_nested_tuple_option_try_from_with_none() {
         let source = (None::<u8>, (Some(2u8), (None::<u8>,)));
         let target: Result<(Option<u16>, (Option<u16>, (Option<u16>,))), MyError> =
