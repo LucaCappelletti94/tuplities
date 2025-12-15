@@ -43,39 +43,39 @@ repository = "https://github.com/lucacappelletti94/tuplities"
 homepage = "https://github.com/lucacappelletti94/tuplities"
 keywords = ["tuples", "utilities", "metaprogramming", "typenum"]
 categories = ["development-tools", "data-structures"]
-version = "0.1.3"
+version = "0.1.4"
 readme = "README.md"
 rust-version = "1.85"
 
 [workspace.dependencies]
-tuplities-clone = { path = "tuplities-clone", version = "0.1.3" }
-tuplities-copy = { path = "tuplities-copy", version = "0.1.3" }
-tuplities-debug = { path = "tuplities-debug", version = "0.1.3" }
-tuplities-default = { path = "tuplities-default", version = "0.1.3" }
-tuplities-eq = { path = "tuplities-eq", version = "0.1.3" }
-tuplities-flatten-nest = { path = "tuplities-flatten-nest", version = "0.1.3" }
-tuplities-from = { path = "tuplities-from", version = "0.1.3" }
-tuplities-hash = { path = "tuplities-hash", version = "0.1.3" }
-tuplities-index = { path = "tuplities-index", version = "0.1.3" }
-tuplities-insert = { path = "tuplities-insert", version = "0.1.3" }
-tuplities-len = { path = "tuplities-len", version = "0.1.3" }
-tuplities-mut = { path = "tuplities-mut", version = "0.1.3" }
-tuplities-option = { path = "tuplities-option", version = "0.1.3" }
-tuplities-ord = { path = "tuplities-ord", version = "0.1.3" }
-tuplities-partial-eq = { path = "tuplities-partial-eq", version = "0.1.3" }
-tuplities-partial-ord = { path = "tuplities-partial-ord", version = "0.1.3" }
-tuplities-pop-back = { path = "tuplities-pop-back", version = "0.1.3" }
-tuplities-pop-front = { path = "tuplities-pop-front", version = "0.1.3" }
-tuplities-push-back = { path = "tuplities-push-back", version = "0.1.3" }
-tuplities-push-front = { path = "tuplities-push-front", version = "0.1.3" }
-tuplities-ref = { path = "tuplities-ref", version = "0.1.3" }
-tuplities-remove = { path = "tuplities-remove", version = "0.1.3" }
-tuplities-replicate = { path = "tuplities-replicate", version = "0.1.3" }
-tuplities-reverse = { path = "tuplities-reverse", version = "0.1.3" }
-tuplities-row = { path = "tuplities-row", version = "0.1.3" }
-tuplities-split = { path = "tuplities-split", version = "0.1.3" }
-tuplities-try-from = { path = "tuplities-try-from", version = "0.1.3" }
-tuplities-derive = { path = "tuplities-derive", version = "0.1.3" }
+tuplities-clone = { path = "tuplities-clone", version = "0.1.4" }
+tuplities-copy = { path = "tuplities-copy", version = "0.1.4" }
+tuplities-debug = { path = "tuplities-debug", version = "0.1.4" }
+tuplities-default = { path = "tuplities-default", version = "0.1.4" }
+tuplities-eq = { path = "tuplities-eq", version = "0.1.4" }
+tuplities-flatten-nest = { path = "tuplities-flatten-nest", version = "0.1.4" }
+tuplities-from = { path = "tuplities-from", version = "0.1.4" }
+tuplities-hash = { path = "tuplities-hash", version = "0.1.4" }
+tuplities-index = { path = "tuplities-index", version = "0.1.4" }
+tuplities-insert = { path = "tuplities-insert", version = "0.1.4" }
+tuplities-len = { path = "tuplities-len", version = "0.1.4" }
+tuplities-mut = { path = "tuplities-mut", version = "0.1.4" }
+tuplities-option = { path = "tuplities-option", version = "0.1.4" }
+tuplities-ord = { path = "tuplities-ord", version = "0.1.4" }
+tuplities-partial-eq = { path = "tuplities-partial-eq", version = "0.1.4" }
+tuplities-partial-ord = { path = "tuplities-partial-ord", version = "0.1.4" }
+tuplities-pop-back = { path = "tuplities-pop-back", version = "0.1.4" }
+tuplities-pop-front = { path = "tuplities-pop-front", version = "0.1.4" }
+tuplities-push-back = { path = "tuplities-push-back", version = "0.1.4" }
+tuplities-push-front = { path = "tuplities-push-front", version = "0.1.4" }
+tuplities-ref = { path = "tuplities-ref", version = "0.1.4" }
+tuplities-remove = { path = "tuplities-remove", version = "0.1.4" }
+tuplities-replicate = { path = "tuplities-replicate", version = "0.1.4" }
+tuplities-reverse = { path = "tuplities-reverse", version = "0.1.4" }
+tuplities-row = { path = "tuplities-row", version = "0.1.4" }
+tuplities-split = { path = "tuplities-split", version = "0.1.4" }
+tuplities-try-from = { path = "tuplities-try-from", version = "0.1.4" }
+tuplities-derive = { path = "tuplities-derive", version = "0.1.4" }
 typenum = { version = "1" }
 
 [workspace.lints.rust]
