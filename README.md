@@ -149,7 +149,7 @@ where
 
 // Usage
 fn main() {
-    let tuple = (42, "hello", true, false, 3.5);  
+    let tuple = (42, "hello", true);
     tuple.print_tuple();
     let another_tuple = ();
     another_tuple.print_tuple();
@@ -159,6 +159,57 @@ fn main() {
 ```
 
 This pattern is extensively used in libraries like [`diesel-builders`](https://github.com/LucaCappelletti94/diesel-builders/) to build complex, type-safe abstractions over tuples of varying sizes.
+
+### Comparison with Macro-based Approach
+
+Without nested tuples, achieving the same result typically requires defining a recursive macro that implements the trait for every tuple size up to a maximum limit. This approach has several downsides:
+
+1. **Code Bloat**: The macro generates a separate implementation for each tuple size, leading to a large amount of generated code.
+2. **Compile Times & Quadratic Bounds Growth**: The compiler has to process all these implementations, which significantly increases compile times. The number of trait bounds generated increases quadratically with the maximum tuple size `N` (proportional to `N^2`), as the macro generates implementations for all sizes from 0 to `N`, and size `k` requires `k` bounds.
+3. **Maintenance**: Writing and maintaining complex macros can be error-prone and difficult to debug.
+4. **Code Coverage**: Code coverage tools often struggle to provide meaningful information for code generated via macros, making it harder to ensure your variadic logic is fully tested.
+
+Here is how the same trait would be implemented using macros:
+
+```rust
+use core::fmt::Display;
+
+trait PrintTuple {
+    fn print_tuple(&self);
+}
+
+macro_rules! impl_print_tuple {
+    // Base case: empty tuple
+    () => {
+        impl PrintTuple for () {
+            fn print_tuple(&self) {}
+        }
+    };
+    // Recursive step: implement for (Head, Tail...) and recurse
+    ($Head:ident $(, $Tail:ident)*) => {
+        impl<$Head, $($Tail),*> PrintTuple for ($Head, $($Tail,)*)
+        where
+            $Head: Display,
+            $($Tail: Display,)*
+        {
+            fn print_tuple(&self) {
+                #[allow(non_snake_case)]
+                let ($Head, $($Tail,)*) = self;
+                println!("{}", $Head);
+                $(
+                    println!("{}", $Tail);
+                )*
+            }
+        }
+
+        // Recurse for smaller tuple size
+        impl_print_tuple!($($Tail),*);
+    };
+}
+
+// Invoke once for the maximum size you want to support (e.g., 12)
+impl_print_tuple!(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12);
+```
 
 ## Features
 
@@ -213,25 +264,25 @@ Compile times scale with tuple size due to code generation. Below are measured b
 
 | Max Tuple Size | Compile Time |
 |----------------|--------------|
-| 8 (default)    | ~3.37s       |
+| 8 (default)    | ~4.07s       |
 | 16             | ~2.71s       |
-| 32             | ~3.27s       |
+| 32             | ~3.29s       |
 | 48             | ~4.55s       |
-| 64             | ~6.82s       |
-| 96             | ~15.60s      |
-| 128            | ~32.54s      |
+| 64             | ~6.83s       |
+| 96             | ~15.75s      |
+| 128            | ~32.44s      |
 
 ### tuplities-flatten-nest (flatten-nest crate only)
 
 | Max Tuple Size | Compile Time |
 |----------------|--------------|
-| 8 (default)    | ~3.34s       |
-| 16             | ~2.39s       |
-| 32             | ~2.43s       |
-| 48             | ~2.56s       |
-| 64             | ~2.77s       |
-| 96             | ~3.35s       |
-| 128            | ~4.52s       |
+| 8 (default)    | ~3.18s       |
+| 16             | ~2.45s       |
+| 32             | ~2.60s       |
+| 48             | ~2.86s       |
+| 64             | ~3.40s       |
+| 96             | ~5.46s       |
+| 128            | ~9.52s       |
 
 ## Architecture
 
