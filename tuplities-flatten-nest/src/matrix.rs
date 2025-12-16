@@ -21,7 +21,7 @@ use crate::{flatten_nested::FlattenNestedTuple, nest::NestTuple};
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestTupleMatrix {
     /// The nested matrix type.
-    type NestedMatrix: FlattenNestedTupleMatrix<FlattenedMatrix = Self>;
+    type NestedMatrix;
 
     /// Converts a flat tuple of flat tuples into a nested tuple of nested tuples.
     fn nest_matrix(self) -> Self::NestedMatrix;
@@ -46,7 +46,7 @@ pub trait NestTupleMatrix {
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait FlattenNestedTupleMatrix {
     /// The flattened matrix type.
-    type FlattenedMatrix: NestTupleMatrix<NestedMatrix = Self>;
+    type FlattenedMatrix;
 
     /// Converts a nested tuple of nested tuples into a flat tuple of flat tuples.
     fn flatten_matrix(self) -> Self::FlattenedMatrix;
@@ -59,7 +59,7 @@ pub trait FlattenNestedTupleMatrix {
 /// Helper trait to recursively nest elements in an already-nested outer structure
 pub trait NestMatrixElements {
     /// The type after nesting all elements
-    type Output: FlattenMatrixElements<Output = Self>;
+    type Output: FlattenMatrixElements;
 
     /// Nest all elements in the structure
     fn nest_elements(self) -> Self::Output;
@@ -119,7 +119,7 @@ where
 /// Helper trait to recursively flatten elements in a nested matrix structure
 pub trait FlattenMatrixElements {
     /// The type after flattening all nested elements
-    type Output: NestMatrixElements<Output = Self>;
+    type Output;
 
     /// Flatten all elements in the structure
     fn flatten_elements(self) -> Self::Output;

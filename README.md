@@ -6,7 +6,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Downloads](https://img.shields.io/crates/d/tuplities.svg)](https://crates.io/crates/tuplities)
 
-Tuple utilities in Rust, fractioned across several crates to improve compile times. There is a main crate `tuplities` that re-exports traits from subcrates in its `prelude` module, so that the subcrates may be compiled in parallel cutting down on overall build times.
+Tuple utilities in Rust, fractioned across several crates to improve compile times, providing several useful traits for both variadic programming with tuples as well as flat tuple manipulation.
+
+The main crate `tuplities` re-exports traits from subcrates in its `prelude` module, so that the subcrates may be compiled in parallel cutting down on overall build times.
 
 This library is `#[no_std]` compatible, making it suitable for embedded systems and other environments without the standard library.
 
@@ -85,6 +87,78 @@ The library provides several traits for working with tuples:
 - [`TupleRowMut<Idx>`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.TupleRowMut.html): Provides a [`tuple_row_mut()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.TupleRowMut.html#tymethod.tuple_row_mut) method to access mutable elements at the specified index across all tuples in a tuple of tuples (mutable row-wise indexing).
 - [`FirstTupleRow`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.FirstTupleRow.html): A convenience trait providing a [`first_tuple_row()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.FirstTupleRow.html#tymethod.first_tuple_row) method to access the first element of each tuple in a tuple of tuples.
 - [`LastTupleRow`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.LastTupleRow.html): A convenience trait providing a [`last_tuple_row()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.LastTupleRow.html#tymethod.last_tuple_row) method to access the last element of each tuple in a tuple of tuples.
+
+## Variadic Programming with Nested Tuples
+
+One of the most powerful features of `tuplities` is the ability to perform variadic programming on tuples of arbitrary length by converting them to a nested representation `(Head, (Tail...))`. This allows you to define traits recursively without needing to implement them for every possible tuple size using macros.
+
+It is important to note that "true" variadic generics are not yet available in Rust. As such, there is still a limit on how large the flat tuples can be, determined by which `size-XX` feature flags are enabled in this crate. However, this nested approach nevertheless allows for an arbitrary level of recursion while maintaining performant compile times, typically in the order of a few seconds even for large tuple sizes.
+
+Here is an example of how to define a trait that works on tuples of any size where all elements implement `Display`:
+
+```rust
+use tuplities::prelude::*;
+use core::fmt::Display;
+
+// 1. Define the trait for the nested structure (recursive)
+trait MyVariadicTrait {
+    fn print_all(&self);
+}
+
+// 2. Implement for the base cases (unit and single-element tuples)
+impl MyVariadicTrait for () {
+    fn print_all(&self) {}
+}
+
+impl<Head> MyVariadicTrait for (Head,)
+where
+    Head: Display,
+{
+    fn print_all(&self) {
+        println!("{}", self.0);
+    }
+}
+
+// 3. Implement for the recursive case (Head, Tail)
+impl<Head, Tail> MyVariadicTrait for (Head, Tail)
+where
+    Head: Display,        // Constraint on the current element
+    Tail: MyVariadicTrait, // Recursive constraint on the rest
+{
+    fn print_all(&self) {
+        println!("{}", self.0);
+        self.1.print_all();
+    }
+}
+
+// 4. Define the user-facing trait for flat tuples
+trait PrintTuple {
+    fn print_tuple(&self);
+}
+
+// 5. Blanket implementation for any tuple that can be nested
+//    and whose nested form implements MyVariadicTrait
+impl<T> PrintTuple for T
+where
+    for<'a> &'a T: NestTuple<Nested: MyVariadicTrait>,
+{
+    fn print_tuple(&self) {
+        self.nest().print_all();
+    }
+}
+
+// Usage
+fn main() {
+    let tuple = (42, "hello", true, false, 3.5);  
+    tuple.print_tuple();
+    let another_tuple = ();
+    another_tuple.print_tuple();
+    let yet_another_tuple = ("only one element",);
+    yet_another_tuple.print_tuple();
+}
+```
+
+This pattern is extensively used in libraries like [`diesel-builders`](https://github.com/LucaCappelletti94/diesel-builders/) to build complex, type-safe abstractions over tuples of varying sizes.
 
 ## Features
 

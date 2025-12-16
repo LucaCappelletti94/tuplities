@@ -20,7 +20,7 @@ pub use flatten_nested::FlattenNestedTuple;
 pub use matrix::{
     FlattenMatrixElements, FlattenNestedTupleMatrix, NestMatrixElements, NestTupleMatrix,
 };
-pub use nest::NestTuple;
+pub use nest::{NestTuple, NestTupleMut, NestTupleRef};
 pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
 pub use nested_option::{IntoNestedTupleOption, NestedTupleOption, NestedTupleOptionWith};
 pub use nested_option_try_from::{
