@@ -100,7 +100,7 @@ Here is an example of how to define a trait that works on tuples of any size whe
 use tuplities::prelude::*;
 use core::fmt::Display;
 
-// 1. Define the trait for flat & nested tuples
+// 1. Define flat & nested traits
 trait PrintTuple {
     fn print_tuple(&self);
 }
@@ -121,7 +121,7 @@ impl<Head: Display> PrintNested for (Head,) {
 // 3. Implement for the recursive case
 impl<Head, Tail> PrintNested for (Head, Tail)
 where
-    Head: Display, // Current element constraint
+    Head: Display, // Current constraint
     Tail: PrintNested, // Recursive constraint
 {
     fn print_nested(&self) {
@@ -130,7 +130,7 @@ where
     }
 }
 
-// 4. Blanket implementation for any nestable tuple
+// 4. Blanket implementation for nestable tuples
 //    whose nested form implements PrintNested
 impl<T> PrintTuple for T
 where
