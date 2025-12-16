@@ -148,14 +148,12 @@ where
 }
 
 // Usage
-fn main() {
-    let tuple = (42, "hello", true);
-    tuple.print_tuple();
-    let another_tuple = ();
-    another_tuple.print_tuple();
-    let yet_another_tuple = ("only one element",);
-    yet_another_tuple.print_tuple();
-}
+let tuple = (42, "hello", true);
+tuple.print_tuple();
+let another_tuple = ();
+another_tuple.print_tuple();
+let yet_another_tuple = ("only one element",);
+yet_another_tuple.print_tuple();
 ```
 
 This pattern is extensively used in libraries like [`diesel-builders`](https://github.com/LucaCappelletti94/diesel-builders/) to build complex, type-safe abstractions over tuples of varying sizes.
