@@ -100,46 +100,44 @@ Here is an example of how to define a trait that works on tuples of any size whe
 use tuplities::prelude::*;
 use core::fmt::Display;
 
-// 1. Define the trait for the nested structure (recursive)
-trait MyVariadicTrait {
-    fn print_all(&self);
-}
-
-// 2. Implement for the base cases (unit and single-element tuples)
-impl MyVariadicTrait for () {
-    fn print_all(&self) {}
-}
-impl<Head: Display> MyVariadicTrait for (Head,) {
-    fn print_all(&self) {
-        println!("{}", self.0);
-    }
-}
-
-// 3. Implement for the recursive case (Head, Tail)
-impl<Head, Tail> MyVariadicTrait for (Head, Tail)
-where
-    Head: Display,        // Constraint on the current element
-    Tail: MyVariadicTrait, // Recursive constraint on the rest
-{
-    fn print_all(&self) {
-        println!("{}", self.0);
-        self.1.print_all();
-    }
-}
-
-// 4. Define the trait for flat tuples
+// 1. Define the trait for flat & nested tuples
 trait PrintTuple {
     fn print_tuple(&self);
 }
+trait PrintNested {
+    fn print_nested(&self);
+}
 
-// 5. Blanket implementation for any tuple that can be nested
-//    and whose nested form implements MyVariadicTrait
+// 2. Implement for the base cases
+impl PrintNested for () {
+    fn print_nested(&self) {}
+}
+impl<Head: Display> PrintNested for (Head,) {
+    fn print_nested(&self) {
+        println!("{}", self.0);
+    }
+}
+
+// 3. Implement for the recursive case
+impl<Head, Tail> PrintNested for (Head, Tail)
+where
+    Head: Display, // Current element constraint
+    Tail: PrintNested, // Recursive constraint
+{
+    fn print_nested(&self) {
+        println!("{}", self.0);
+        self.1.print_nested();
+    }
+}
+
+// 4. Blanket implementation for any nestable tuple
+//    whose nested form implements PrintNested
 impl<T> PrintTuple for T
 where
-    for<'a> &'a T: NestTuple<Nested: MyVariadicTrait>,
+    for<'a> &'a T: NestTuple<Nested: PrintNested>,
 {
     fn print_tuple(&self) {
-        self.nest().print_all();
+        self.nest().print_nested();
     }
 }
 
