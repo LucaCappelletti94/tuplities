@@ -109,11 +109,7 @@ trait MyVariadicTrait {
 impl MyVariadicTrait for () {
     fn print_all(&self) {}
 }
-
-impl<Head> MyVariadicTrait for (Head,)
-where
-    Head: Display,
-{
+impl<Head: Display> MyVariadicTrait for (Head,) {
     fn print_all(&self) {
         println!("{}", self.0);
     }
@@ -131,7 +127,7 @@ where
     }
 }
 
-// 4. Define the user-facing trait for flat tuples
+// 4. Define the trait for flat tuples
 trait PrintTuple {
     fn print_tuple(&self);
 }
@@ -185,18 +181,12 @@ macro_rules! impl_print_tuple {
     };
     // Recursive step: implement for (Head, Tail...) and recurse
     ($Head:ident $(, $Tail:ident)*) => {
-        impl<$Head, $($Tail),*> PrintTuple for ($Head, $($Tail,)*)
-        where
-            $Head: Display,
-            $($Tail: Display,)*
-        {
+        impl<$Head: Display, $($Tail: Display),*> PrintTuple for ($Head, $($Tail,)*) {
             fn print_tuple(&self) {
                 #[allow(non_snake_case)]
                 let ($Head, $($Tail,)*) = self;
                 println!("{}", $Head);
-                $(
-                    println!("{}", $Tail);
-                )*
+                $(println!("{}", $Tail);)*
             }
         }
 
