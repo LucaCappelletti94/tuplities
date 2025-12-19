@@ -1,5 +1,7 @@
 //! Module providing option transposition traits for nested tuples.
 
+use crate::NestedTupleRef;
+
 /// A trait for transposing nested tuples of options into options of nested tuples.
 ///
 /// This trait takes a nested tuple where each element is an `Option<T>` and transposes it
@@ -58,7 +60,7 @@ pub trait NestedTupleOptionWith<H>: NestedTupleOption {
 /// A trait for converting nested tuples into nested tuples of options.
 pub trait IntoNestedTupleOption {
     /// The nested tuple of options type.
-    type IntoOptions: NestedTupleOption<Transposed = Self>;
+    type IntoOptions: NestedTupleOption<Transposed = Self> + NestedTupleRef;
 
     /// Converts the nested tuple into a nested tuple of `Some` values.
     ///
