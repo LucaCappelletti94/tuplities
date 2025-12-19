@@ -5,7 +5,7 @@ use crate::IntoNestedTupleOption;
 /// Trait to obtain a nested tuple of references from a nested tuple of values.
 pub trait NestedTupleRef {
     /// The nested tuple type containing references to each leaf value.
-    type Ref<'a>: Copy + IntoNestedTupleOption
+    type Ref<'a>: Copy + IntoNestedTupleOption<IntoOptions: Copy>
     where
         Self: 'a;
 
