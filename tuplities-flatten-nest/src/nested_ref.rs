@@ -1,9 +1,11 @@
 //! Module providing reference accessors for nested tuples (nested tuples -> nested tuples of references).
 
+use crate::IntoNestedTupleOption;
+
 /// Trait to obtain a nested tuple of references from a nested tuple of values.
 pub trait NestedTupleRef {
     /// The nested tuple type containing references to each leaf value.
-    type Ref<'a>: Copy
+    type Ref<'a>: Copy + IntoNestedTupleOption
     where
         Self: 'a;
 
