@@ -58,7 +58,10 @@ pub trait NestedTupleOptionWith<H>: NestedTupleOption {
 /// A trait for converting nested tuples into nested tuples of options.
 pub trait IntoNestedTupleOption {
     /// The nested tuple of options type.
-    type IntoOptions: NestedTupleOption<Transposed = Self> + IntoNestedTupleOption;
+    type IntoOptions: NestedTupleOption<Transposed = Self>
+        + IntoNestedTupleOption<
+            IntoOptions: NestedTupleFlattenOption<FlattenedOptions = Self::IntoOptions>,
+        >;
 
     /// Converts the nested tuple into a nested tuple of `Some` values.
     ///
@@ -253,24 +256,23 @@ where
 /// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
 pub trait NestedTupleFlattenOption {
     /// The flattened type: a nested tuple of options.
-    type Flattened;
+    type FlattenedOptions: IntoNestedTupleOption<IntoOptions = Self>;
 
     /// Flattens the nested tuple of double options into a nested tuple of options.
-    fn flatten_options(self) -> Self::Flattened;
+    fn flatten_options(self) -> Self::FlattenedOptions;
 }
 
 impl NestedTupleFlattenOption for () {
-    type Flattened = ();
-
+    type FlattenedOptions = ();
     #[inline]
-    fn flatten_options(self) -> Self::Flattened {}
+    fn flatten_options(self) -> Self::FlattenedOptions {}
 }
 
 impl<T> NestedTupleFlattenOption for (Option<Option<T>>,) {
-    type Flattened = (Option<T>,);
+    type FlattenedOptions = (Option<T>,);
 
     #[inline]
-    fn flatten_options(self) -> Self::Flattened {
+    fn flatten_options(self) -> Self::FlattenedOptions {
         let (opt,) = self;
         (opt.flatten(),)
     }
@@ -280,10 +282,10 @@ impl<Head, Tail> NestedTupleFlattenOption for (Option<Option<Head>>, Tail)
 where
     Tail: NestedTupleFlattenOption,
 {
-    type Flattened = (Option<Head>, Tail::Flattened);
+    type FlattenedOptions = (Option<Head>, Tail::FlattenedOptions);
 
     #[inline]
-    fn flatten_options(self) -> Self::Flattened {
+    fn flatten_options(self) -> Self::FlattenedOptions {
         let (head, tail) = self;
         (head.flatten(), tail.flatten_options())
     }
