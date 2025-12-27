@@ -263,9 +263,7 @@ impl NestedTupleFlattenOption for () {
     type Flattened = ();
 
     #[inline]
-    fn flatten_options(self) -> Self::Flattened {
-        ()
-    }
+    fn flatten_options(self) -> Self::Flattened {}
 }
 
 impl<T> NestedTupleFlattenOption for (Option<Option<T>>,) {
@@ -445,6 +443,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::type_complexity)]
     fn test_flatten_options() {
         let nested = (Some(Some(1)), (Some(None), (None,)));
         let flattened: (Option<i32>, (Option<i32>, (Option<i32>,))) = nested.flatten_options();
