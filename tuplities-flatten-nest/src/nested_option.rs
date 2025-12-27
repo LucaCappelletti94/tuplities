@@ -58,7 +58,7 @@ pub trait NestedTupleOptionWith<H>: NestedTupleOption {
 /// A trait for converting nested tuples into nested tuples of options.
 pub trait IntoNestedTupleOption {
     /// The nested tuple of options type.
-    type IntoOptions: NestedTupleOption<Transposed = Self> + IntoNestedTupleOption;
+    type IntoOptions: NestedTupleOption<Transposed = Self>;
 
     /// Converts the nested tuple into a nested tuple of `Some` values.
     ///
