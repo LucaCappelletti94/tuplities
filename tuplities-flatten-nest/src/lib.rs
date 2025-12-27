@@ -22,7 +22,9 @@ pub use matrix::{
 };
 pub use nest::{NestTuple, NestTupleMut, NestTupleRef};
 pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
-pub use nested_option::{IntoNestedTupleOption, NestedTupleOption, NestedTupleOptionWith};
+pub use nested_option::{
+    IntoNestedTupleOption, NestedTupleFlattenOption, NestedTupleOption, NestedTupleOptionWith,
+};
 pub use nested_option_try_from::{
     NestedTupleOptionFrom, NestedTupleOptionInto, NestedTupleOptionTryFrom,
     NestedTupleOptionTryInto,

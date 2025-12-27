@@ -58,7 +58,7 @@ pub trait NestedTupleOptionWith<H>: NestedTupleOption {
 /// A trait for converting nested tuples into nested tuples of options.
 pub trait IntoNestedTupleOption {
     /// The nested tuple of options type.
-    type IntoOptions: NestedTupleOption<Transposed = Self>;
+    type IntoOptions: NestedTupleOption<Transposed = Self> + IntoNestedTupleOption;
 
     /// Converts the nested tuple into a nested tuple of `Some` values.
     ///
@@ -235,6 +235,62 @@ where
     }
 }
 
+/// A trait for flattening nested tuples of double options into nested tuples of options.
+///
+/// This trait takes a nested tuple where each element is an `Option<Option<T>>` and flattens it
+/// into a nested tuple where each element is an `Option<T>`.
+///
+/// # Examples
+///
+/// ```
+/// use tuplities_flatten_nest::NestedTupleFlattenOption;
+///
+/// let nested_double_options = (Some(Some(1)), (Some(None), (None,)));
+/// let flattened: (Option<i32>, (Option<i32>, (Option<i32>,))) = nested_double_options.flatten_options();
+/// assert_eq!(flattened, (Some(1), (None, (None,))));
+/// ```
+///
+/// Part of the [`tuplities`](https://docs.rs/tuplities/latest/tuplities/) crate.
+pub trait NestedTupleFlattenOption {
+    /// The flattened type: a nested tuple of options.
+    type Flattened;
+
+    /// Flattens the nested tuple of double options into a nested tuple of options.
+    fn flatten_options(self) -> Self::Flattened;
+}
+
+impl NestedTupleFlattenOption for () {
+    type Flattened = ();
+
+    #[inline]
+    fn flatten_options(self) -> Self::Flattened {
+        ()
+    }
+}
+
+impl<T> NestedTupleFlattenOption for (Option<Option<T>>,) {
+    type Flattened = (Option<T>,);
+
+    #[inline]
+    fn flatten_options(self) -> Self::Flattened {
+        let (opt,) = self;
+        (opt.flatten(),)
+    }
+}
+
+impl<Head, Tail> NestedTupleFlattenOption for (Option<Option<Head>>, Tail)
+where
+    Tail: NestedTupleFlattenOption,
+{
+    type Flattened = (Option<Head>, Tail::Flattened);
+
+    #[inline]
+    fn flatten_options(self) -> Self::Flattened {
+        let (head, tail) = self;
+        (head.flatten(), tail.flatten_options())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -386,5 +442,12 @@ mod tests {
         let some = (Some(5),);
         let hom2 = (77,);
         assert_eq!(some.transpose_or(hom2), Ok((5,)));
+    }
+
+    #[test]
+    fn test_flatten_options() {
+        let nested = (Some(Some(1)), (Some(None), (None,)));
+        let flattened: (Option<i32>, (Option<i32>, (Option<i32>,))) = nested.flatten_options();
+        assert_eq!(flattened, (Some(1), (None, (None,))));
     }
 }
