@@ -2,11 +2,14 @@
 
 //! [tuplities](https://github.com/lucacappelletti94/tuplities) suite crate providing traits for flattening and nesting tuples.
 
+extern crate alloc;
+
 mod flatten_nested;
 mod matrix;
 mod nest;
 mod nested_chain;
 mod nested_index;
+mod nested_into_vec;
 mod nested_option;
 mod nested_option_try_from;
 mod nested_push_pop;
@@ -24,6 +27,7 @@ pub use matrix::{
 pub use nest::{NestTuple, NestTupleMut, NestTupleRef};
 pub use nested_chain::NestedTupleChain;
 pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
+pub use nested_into_vec::NestedTupleIntoVec;
 pub use nested_option::{
     IntoNestedTupleOption, NestedTupleFlattenOption, NestedTupleOption, NestedTupleOptionWith,
 };
