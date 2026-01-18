@@ -4,6 +4,7 @@
 [![CI](https://github.com/LucaCappelletti94/tuplities/workflows/Rust%20CI/badge.svg)](https://github.com/LucaCappelletti94/tuplities/actions)
 [![Security Audit](https://github.com/LucaCappelletti94/tuplities/workflows/Security%20Audit/badge.svg)](https://github.com/LucaCappelletti94/tuplities/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Codecov](https://codecov.io/gh/LucaCappelletti94/tuplities/branch/main/graph/badge.svg)](https://codecov.io/gh/LucaCappelletti94/tuplities)
 [![Downloads](https://img.shields.io/crates/d/tuplities.svg)](https://crates.io/crates/tuplities)
 
 Tuple utilities in Rust, fractioned across several crates to improve compile times, providing several useful traits for both variadic programming with tuples as well as flat tuple manipulation.
