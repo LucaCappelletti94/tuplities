@@ -5,6 +5,7 @@
 mod flatten_nested;
 mod matrix;
 mod nest;
+mod nested_chain;
 mod nested_index;
 mod nested_option;
 mod nested_option_try_from;
@@ -21,6 +22,7 @@ pub use matrix::{
     FlattenMatrixElements, FlattenNestedTupleMatrix, NestMatrixElements, NestTupleMatrix,
 };
 pub use nest::{NestTuple, NestTupleMut, NestTupleRef};
+pub use nested_chain::NestedTupleChain;
 pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
 pub use nested_option::{
     IntoNestedTupleOption, NestedTupleFlattenOption, NestedTupleOption, NestedTupleOptionWith,

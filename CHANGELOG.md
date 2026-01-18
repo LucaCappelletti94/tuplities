@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added in Unreleased
 
+- `NestedTupleChain` trait for chaining two nested tuples together.
 - `NestTupleRef` and `NestTupleMut` traits for converting flat tuples into nested tuples of references and mutable references, respectively.
 - `NestedTupleFlattenOption` trait for flattening nested tuples of double options into nested tuples of options.
 
