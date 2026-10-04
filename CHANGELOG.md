@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Public methods provide executable examples for result shapes, borrowed mutation, and conversion errors.
 - `cargo llvm-cov` measures runtime targets and doctests.
 - CI covers Rust `1.85.0`, allocator-free embedded builds, supported flat widths, and mixed features.
+- GitHub releases publish `tuplities` to `crates.io` using `OIDC` trusted publishing.
 - `unsafe_code` is forbidden.
 
 ## [0.1.4] - 2025-12-15
