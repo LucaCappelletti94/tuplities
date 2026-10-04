@@ -17,10 +17,6 @@ rust-version = "1.85"
 [workspace.dependencies]
 typenum = { version = "1" }
 
-[profile.mutants]
-inherits = "test"
-debug = "none"
-
 [workspace.lints.rust]
 unsafe_code = "forbid"
 missing_docs = "forbid"

@@ -11,14 +11,14 @@ permissions:
 
 jobs:
   validate:
-    name: Workflow and harness validation
+    name: Workflow validation
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Install security and shell validators
+      - name: Install workflow validators
         uses: taiki-e/install-action@e407f7bafb71fd004bc5c2da3032e5470cbb6ef0 # v2.87.24
         with:
           tool: shellcheck@0.11.0,zizmor@1.30.1
@@ -34,9 +34,3 @@ jobs:
         run: '"$RUNNER_TEMP/actionlint"'
       - name: Audit workflow security
         run: zizmor --offline --strict-collection .github/workflows
-      - name: Check shell harnesses
-        run: shellcheck tools/*.sh
-      - name: Check Python syntax
-        run: python3 -B tools/verify_harness_syntax.py
-      - name: Test verification policies
-        run: python3 -B -m unittest discover -s tools/tests

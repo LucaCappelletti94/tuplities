@@ -19,11 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The minimum supported Rust version is `1.85`.
 - Public methods provide executable examples for result shapes, borrowed mutation, and conversion errors.
 - `cargo llvm-cov` measures runtime targets and doctests.
-- CI covers Rust `1.85.0`, allocator-free embedded builds, supported flat widths, mixed features, and bounded mutation analysis.
-- `tools/verify_diesel_builders.sh` exercises isolated downstream SQLite consumers.
-- `tools/verify_compile_workloads.sh` retains first-build and second-build reports for recursive and flat workloads.
-- CI validates workflows and harnesses, verifies packaged MSRV consumers, and exercises pinned and moving-main downstream dependencies.
-- Mutation grading rejects new survivors, stale equivalence reviews, incomplete reports, and tool failures while retaining raw results.
+- CI covers Rust `1.85.0`, allocator-free embedded builds, supported flat widths, and mixed features.
 - `unsafe_code` is forbidden.
 
 ## [0.1.4] - 2025-12-15

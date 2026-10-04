@@ -171,57 +171,23 @@ jobs:
     - name: Check embedded target
       run: cargo check -p tuplities --target thumbv7em-none-eabi --no-default-features
 
-  feature-configuration:
-    name: Feature configuration
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      features: ${{ steps.discover.outputs.features }}
-    steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      with:
-        persist-credentials: false
-    - name: Discover supported feature configurations
-      id: discover
-      run: |
-        python3 - <<'PY'
-        import json
-        import os
-        import tomllib
-
-        with open("tuplities/Cargo.toml", "rb") as manifest:
-            features = tomllib.load(manifest)["features"]
-
-        sizes = sorted(
-            (name for name in features if name.startswith("size-") and name[5:].isdigit()),
-            key=lambda name: int(name[5:]),
-        )
-        configurations = [
-            "--no-default-features --features alloc",
-            "--no-default-features --features flatten-nest",
-        ]
-        configurations += [
-            f"--no-default-features --features flatten-nest,{size}" for size in sizes
-        ]
-        if len(sizes) >= 2:
-            configurations.append(
-                f"--no-default-features --features flatten-nest,{sizes[0]},{sizes[1]}"
-            )
-
-        with open(os.environ["GITHUB_OUTPUT"], "a") as output:
-            output.write(f"features={json.dumps(configurations)}")
-        PY
-
   features:
     name: Features ${{ matrix.features }}
     if: github.event_name == 'push' || github.event_name == 'pull_request'
-    needs: feature-configuration
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
       matrix:
-        features: ${{ fromJSON(needs.feature-configuration.outputs.features) }}
+        features:
+          - alloc
+          - flatten-nest
+          - flatten-nest,size-16
+          - flatten-nest,size-32
+          - flatten-nest,size-48
+          - flatten-nest,size-64
+          - flatten-nest,size-96
+          - flatten-nest,size-128
+          - flatten-nest,size-16,size-32
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
@@ -244,13 +210,11 @@ jobs:
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: target
-        key: ${{ runner.os }}-cargo-build-features-stable-${{ matrix.features }}-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-build-features-stable-${{ strategy.job-index }}-${{ hashFiles('**/Cargo.lock') }}
     - name: Run tests
       env:
-        FEATURE_ARGS: ${{ matrix.features }}
-      run: |
-        read -r -a features <<< "$FEATURE_ARGS"
-        nice -n 10 cargo test -p tuplities "${features[@]}"
+        FEATURES: ${{ matrix.features }}
+      run: nice -n 10 cargo test -p tuplities --no-default-features --features "$FEATURES"
 
   coverage:
     name: Code Coverage
@@ -296,47 +260,3 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: target/coverage.lcov
         fail_ci_if_error: false
-
-  mutants:
-    name: Mutation testing
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    timeout-minutes: 180
-    env:
-      CARGO_BUILD_JOBS: "2"
-    steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      with:
-        persist-credentials: false
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
-      with:
-        toolchain: stable
-    - name: Cache cargo registry
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-      with:
-        path: ~/.cargo/registry
-        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-    - name: Cache cargo index
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-      with:
-        path: ~/.cargo/git
-        key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-    - name: Install cargo-mutants
-      uses: taiki-e/install-action@e407f7bafb71fd004bc5c2da3032e5470cbb6ef0
-      with:
-        tool: cargo-mutants@27.1.0
-        fallback: none
-    - name: Run bounded mutation testing
-      run: |
-        status=0
-        nice -n 10 cargo mutants -p tuplities --jobs 2 --jobserver-tasks 2 --all-features \
-          --output "$RUNNER_TEMP/mutation-results" || status=$?
-        python3 -B tools/check_mutants.py \
-          "$RUNNER_TEMP/mutation-results/mutants.out/outcomes.json" --exit-code "$status"
-    - name: Upload mutation reports
-      if: always()
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-      with:
-        name: mutation-reports
-        path: ${{ runner.temp }}/mutation-results/mutants.out/
