@@ -20,11 +20,9 @@ jobs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
-      with:
-        toolchain: stable
     - name: Install cargo-audit
-      run: cargo install cargo-audit
-    - name: Run security audit
-      run: cargo audit
+      uses: taiki-e/install-action@e407f7bafb71fd004bc5c2da3032e5470cbb6ef0
+      with:
+        tool: cargo-audit
+        fallback: none
+    - run: cargo audit
