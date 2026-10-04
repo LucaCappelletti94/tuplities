@@ -7,11 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## Added in Unreleased
+### `0.2.0` package contract
 
-- `NestedTupleChain` trait for chaining two nested tuples together.
-- `NestTupleRef` and `NestTupleMut` traits for converting flat tuples into nested tuples of references and mutable references, respectively.
-- `NestedTupleFlattenOption` trait for flattening nested tuples of double options into nested tuples of options.
+- One `tuplities` package provides recursive tuple utilities and flat tuple interoperability.
+- The `flatten-nest` feature enables flat bridges and `alloc`.
+- Flat widths are selected through the existing `size-N` features.
+- `NestedTuple` provides structural membership and a compile-time element count.
+- Recursive indexing and row access operate without flat tuple support or allocation.
+- Declarative `neple!` and `neplety!` construct and name singleton-terminated lists.
+- Recursive split, insert, remove, and linear-time reverse consume owned tuple nodes and preserve element types.
+- The minimum supported Rust version is `1.85`.
+- Public methods provide executable examples for result shapes, borrowed mutation, and conversion errors.
+- `cargo llvm-cov` measures runtime targets and doctests.
+- CI covers Rust `1.85.0`, allocator-free embedded builds, supported flat widths, mixed features, and bounded mutation analysis.
+- `tools/verify_diesel_builders.sh` exercises isolated downstream SQLite consumers.
+- `tools/verify_compile_workloads.sh` retains first-build and second-build reports for recursive and flat workloads.
+- CI validates workflows and harnesses, verifies packaged MSRV consumers, and exercises pinned and moving-main downstream dependencies.
+- Mutation grading rejects new survivors, stale equivalence reviews, incomplete reports, and tool failures while retaining raw results.
+- `unsafe_code` is forbidden.
 
 ## [0.1.4] - 2025-12-15
 

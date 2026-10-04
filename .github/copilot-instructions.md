@@ -1,42 +1,22 @@
 # tuplities Copilot Instructions
 
-## Architecture Overview
-This is a Rust workspace providing tuple utilities. The project is split into three crates for improved compile times:
+## Architecture
 
-- `tuplities/`: Main crate that re-exports traits from subcrates
-- `tuplities-{snake_trait_name}/`: One of several crates of the suite which provides the `Tuple{camel_trait_name}` trait with derive macro implementation
-- `tuplities-derive/`: Procedural macro crate that generates all of the trait implementations for tuples of various sizes
+The workspace contains one crate, `tuplities/`. Recursive utilities operate on `()`, singleton tuples `(T,)`, and nested pairs `(Head, Tail)`.
 
-The derive macro generates implementations for tuples from size 0 (unit `()`) up to `MAX_TUPLE_SIZE`, controlled by Cargo features to balance functionality against compile time.
+`tuplities/src/flat_bridge.rs` generates flat/nested boundary conversions through internal `macro_rules!` macros. The default flat limit is 8. Features `size-16`, `size-32`, `size-48`, `size-64`, `size-96`, and `size-128` select larger limits, with the largest enabled size taking precedence.
 
-## Key Patterns
-
-- **Feature-gated sizes**: Use features like `size-16`, `size-32` to control maximum supported tuple size (default: 8). See `tuplities-derive/src/tuple_size.rs` for size configuration logic.
-- **Procedural macro generation**: Implementations are generated using `generate_all_sizes()` function that iterates over tuple sizes. See `tuplities-derive/src/tuplities_clone.rs` for the pattern.
-- **Type parameter generation**: Use `type_params()` and `indices()` helpers in `tuple_size.rs` for generating generic type lists and field access indices.
-
-## Developer Workflows
-- Build all crates: `cargo build --workspace`
-- Run tests: `cargo test --workspace`
-- Enable larger tuple support: `cargo build --workspace --features size-32` (propagates to all crates)
-- Debug macro expansion: `cargo expand --package tuplities-derive`
-
-## Code Examples
-```rust
-// Basic usage
-use tuplities::prelude::TupleClone;
-
-let original = (1, "hello".to_string(), vec![1, 2, 3]);
-let cloned = original.tuple_clone();
-assert_eq!(original, cloned);
-```
+The crate is `no_std`. The `alloc` feature enables homogeneous vector conversion. The default `flatten-nest` feature enables flat tuple and matrix conversions and includes `alloc`.
 
 ## Conventions
 
-- Strict linting: Workspace enforces `missing_docs = "forbid"` and extensive Clippy rules. Always document public APIs.
-- Edition 2024: Use modern Rust features available in the 2024 edition.
-- Workspace dependencies: Define shared deps in root `Cargo.toml` under `[workspace.dependencies]`.
+- Use recursive trait implementations for nested tuple operations.
+- Preserve public associated-type equalities used by downstream generic code.
+- Keep shared dependencies under `[workspace.dependencies]`.
+- Document public APIs and preserve the workspace's Rust and Clippy lints.
+- The crate README provides crate-level documentation and executable doctests.
+- Use Rust edition `2024` and support the declared minimum compiler.
 
-## Integration Points
-- External deps: `syn`, `quote`, `proc-macro2` for macro generation
-- Cross-crate communication: Derive crate generates code used by clone crate, re-exported by main crate
+## Verification
+
+Scope checks to `-p tuplities`. Verify default features, `--no-default-features`, `alloc`, and supported flat width configurations. Exercise flat/nested round trips, mutable borrowing, and downstream behavior when changing the bridges.

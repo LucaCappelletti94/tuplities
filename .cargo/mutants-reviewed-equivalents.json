@@ -1,0 +1,39 @@
+{
+  "records": [
+    {
+      "file": "tuplities/src/nested_into_vec.rs",
+      "function": "<impl NestedTupleIntoVec<T> for ()>::into_vec -> Vec<T>",
+      "replacement": "vec![]",
+      "sha256": "da55257b29ace1b1e12422a5eb5a8a277a1759ea74201479e9e495c11b41acbd",
+      "reason": "Both constructors produce an empty `Vec` without allocating."
+    },
+    {
+      "file": "tuplities/src/nested_option.rs",
+      "function": "<impl NestedTupleOption for ()>::transpose -> Option<Self::Transposed>",
+      "replacement": "Some(Default::default())",
+      "sha256": "7d55fedd4dcce4cb0a0265fa856b97f7d96a1e5cf083f3a482c46b98c6b4bef0",
+      "reason": "`Self::Transposed` is `()`, whose default is `()`."
+    },
+    {
+      "file": "tuplities/src/nested_option.rs",
+      "function": "<impl NestedTupleOptionWith<H> for ()>::transpose_or -> Result<Self::Transposed, H>",
+      "replacement": "Ok(Default::default())",
+      "sha256": "7d55fedd4dcce4cb0a0265fa856b97f7d96a1e5cf083f3a482c46b98c6b4bef0",
+      "reason": "`Self::Transposed` is `()`, whose default is `()`."
+    },
+    {
+      "file": "tuplities/src/nested_option_try_from.rs",
+      "function": "<impl NestedTupleOptionTryFrom<(), E> for ()>::nested_tuple_option_try_from -> Result<Self, E>",
+      "replacement": "Ok(Default::default())",
+      "sha256": "ef7a1d449e1e2a22109936cfe16e6db8fa0cde4dc39abd673d80e5a68dcf6bcf",
+      "reason": "`Self` is `()`, whose default is `()`."
+    },
+    {
+      "file": "tuplities/src/nested_try_from.rs",
+      "function": "<impl NestedTupleTryFrom<(), E> for ()>::nested_tuple_try_from -> Result<Self, E>",
+      "replacement": "Ok(Default::default())",
+      "sha256": "cbfe4acde1b8d7143001355215a8e30baca156a7a9c85ec1db0abecb965509dd",
+      "reason": "`Self` is `()`, whose default is `()`."
+    }
+  ]
+}

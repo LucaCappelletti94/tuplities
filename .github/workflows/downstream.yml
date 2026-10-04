@@ -1,0 +1,86 @@
+name: Downstream verification
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-revisions:
+    name: Pinned revisions
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CARGO_BUILD_JOBS: "4"
+      DIESEL_BUILDERS_REV: 7041ce661200fcf644d44c63e15695d880737945
+      DIESEL_REV: 81f1cdb2927f6d0ca11039c16bca2ebd2c117be2
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+      with:
+        toolchain: stable
+    - name: Install SQLite prerequisites
+      run: |
+        sudo apt-get update
+        sudo apt-get install --yes libsqlite3-dev pkg-config
+    - name: Cache cargo dependencies
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          ~/.cargo/git
+          ~/.cargo/registry
+        key: ${{ runner.os }}-downstream-cargo-pinned-${{ hashFiles('tools/verify_diesel_builders.sh') }}
+    - name: Verify the pinned diesel-builders and diesel revisions
+      run: bash tools/verify_diesel_builders.sh
+    - name: Upload diagnostics
+      if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: downstream-diagnostics-pinned
+        path: target/verification/diesel-builders/
+
+  moving-main:
+    name: Moving git main
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      CARGO_BUILD_JOBS: "4"
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+      with:
+        toolchain: stable
+    - name: Install SQLite prerequisites
+      run: |
+        sudo apt-get update
+        sudo apt-get install --yes libsqlite3-dev pkg-config
+    - name: Cache cargo dependencies
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          ~/.cargo/git
+          ~/.cargo/registry
+        key: ${{ runner.os }}-downstream-cargo-moving-main
+    - name: Verify diesel-builders git main
+      run: bash tools/verify_diesel_builders.sh
+    - name: Upload diagnostics
+      if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: downstream-diagnostics-moving-main
+        path: target/verification/diesel-builders/

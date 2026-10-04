@@ -1,290 +1,46 @@
 # tuplities
 
+[![Crates.io](https://img.shields.io/crates/v/tuplities.svg)](https://crates.io/crates/tuplities)
 [![Documentation](https://docs.rs/tuplities/badge.svg)](https://docs.rs/tuplities)
 [![CI](https://github.com/LucaCappelletti94/tuplities/workflows/Rust%20CI/badge.svg)](https://github.com/LucaCappelletti94/tuplities/actions)
 [![Security Audit](https://github.com/LucaCappelletti94/tuplities/workflows/Security%20Audit/badge.svg)](https://github.com/LucaCappelletti94/tuplities/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Codecov](https://codecov.io/gh/LucaCappelletti94/tuplities/branch/main/graph/badge.svg)](https://codecov.io/gh/LucaCappelletti94/tuplities)
-[![Downloads](https://img.shields.io/crates/d/tuplities.svg)](https://crates.io/crates/tuplities)
 
-Tuple utilities in Rust, fractioned across several crates to improve compile times, providing several useful traits for both variadic programming with tuples as well as flat tuple manipulation.
-
-The main crate `tuplities` re-exports traits from subcrates in its `prelude` module, so that the subcrates may be compiled in parallel cutting down on overall build times.
-
-This library is `#[no_std]` compatible, making it suitable for embedded systems and other environments without the standard library.
-
-```toml
-[dependencies]
-tuplities = "0.1.4"
-```
-
-The library provides several traits for working with tuples:
-
-- [`TupleClone`](https://docs.rs/tuplities-clone/latest/tuplities_clone/trait.TupleClone.html): Provides a [`tuple_clone()`](https://docs.rs/tuplities-clone/latest/tuplities_clone/trait.TupleClone.html#tymethod.tuple_clone) method to clone tuples. All elements must implement `Clone`.
-- [`TupleCopy`](https://docs.rs/tuplities-copy/latest/tuplities_copy/trait.TupleCopy.html): Provides a [`tuple_copy()`](https://docs.rs/tuplities-copy/latest/tuplities_copy/trait.TupleCopy.html#tymethod.tuple_copy) method to copy tuples. All elements must implement `Copy`.
-- [`TupleDebug`](https://docs.rs/tuplities-debug/latest/tuplities_debug/trait.TupleDebug.html): Provides a [`tuple_debug()`](https://docs.rs/tuplities-debug/latest/tuplities_debug/trait.TupleDebug.html#tymethod.tuple_debug) method that returns a debug string representation of the tuple. All elements must implement `Debug`.
-- [`TupleDefault`](https://docs.rs/tuplities-default/latest/tuplities_default/trait.TupleDefault.html): Provides a [`tuple_default()`](https://docs.rs/tuplities-default/latest/tuplities_default/trait.TupleDefault.html#tymethod.tuple_default) method to create default instances of tuples. All elements must implement `Default`.
-- [`TupleReplicate<T>`](https://docs.rs/tuplities-replicate/latest/tuplities_replicate/trait.TupleReplicate.html): Provides a [`tuple_replicate(value)`](https://docs.rs/tuplities-replicate/latest/tuplities_replicate/trait.TupleReplicate.html#tymethod.tuple_replicate) method to create tuples by replicating a single value across all positions. The value must implement `Clone` for tuples with 2+ elements, but not for empty tuples or single-element tuples.
-- [`TupleHash`](https://docs.rs/tuplities-hash/latest/tuplities_hash/trait.TupleHash.html): Provides a [`tuple_hash<H: Hasher>()`](https://docs.rs/tuplities-hash/latest/tuplities_hash/trait.TupleHash.html#tymethod.tuple_hash) method to hash tuples with any hasher. All elements must implement `Hash`.
-- [`TuplePartialEq`](https://docs.rs/tuplities-partial-eq/latest/tuplities_partial_eq/trait.TuplePartialEq.html): Provides a [`tuple_eq()`](https://docs.rs/tuplities-partial-eq/latest/tuplities_partial_eq/trait.TuplePartialEq.html#tymethod.tuple_eq) method to compare tuples for partial equality. All elements must implement `PartialEq`.
-- [`TupleEq`](https://docs.rs/tuplities-eq/latest/tuplities_eq/trait.TupleEq.html): Provides a [`tuple_eq()`](https://docs.rs/tuplities-eq/latest/tuplities_eq/trait.TupleEq.html#tymethod.tuple_eq) method to compare tuples for total equality. All elements must implement `Eq`.
-- [`TuplePartialOrd`](https://docs.rs/tuplities-partial-ord/latest/tuplities_partial_ord/trait.TuplePartialOrd.html): Provides a [`tuple_partial_cmp()`](https://docs.rs/tuplities-partial-ord/latest/tuplities_partial_ord/trait.TuplePartialOrd.html#tymethod.tuple_partial_cmp) method to compare tuples for partial ordering. All elements must implement `PartialOrd`.
-- [`TupleOrd`](https://docs.rs/tuplities-ord/latest/tuplities_ord/trait.TupleOrd.html): Provides a [`tuple_cmp()`](https://docs.rs/tuplities-ord/latest/tuplities_ord/trait.TupleOrd.html#tymethod.tuple_cmp) method to compare tuples for total ordering. All elements must implement `Ord`.
-- [`TupleOption`](https://docs.rs/tuplities-option/latest/tuplities_option/trait.TupleOption.html): Provides a [`transpose()`](https://docs.rs/tuplities-option/latest/tuplities_option/trait.TupleOption.html#tymethod.transpose) method to transpose a tuple of options into an option of a tuple. All elements must be `Option<T>`.
-- [`IntoTupleOption`](https://docs.rs/tuplities-option/latest/tuplities_option/trait.IntoTupleOption.html): Provides an [`into_options()`](https://docs.rs/tuplities-option/latest/tuplities_option/trait.IntoTupleOption.html#tymethod.into_options) method to convert a tuple into a tuple of options.
-- [`NestedTupleOption`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOption.html): Provides a [`transpose()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOption.html#tymethod.transpose) method to transpose nested tuples of options into options of nested tuples.
-- [`IntoNestedTupleOption`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.IntoNestedTupleOption.html): Provides an [`into_options()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.IntoNestedTupleOption.html#tymethod.into_options) method to convert nested tuples into nested tuples of options.
-- [`NestedTupleFlattenOption`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleFlattenOption.html): Provides a [`flatten_options()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleFlattenOption.html#tymethod.flatten_options) method to flatten nested tuples of double options into nested tuples of options.
-- [`NestedTupleOptionWith<H>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionWith.html): Provides `first_none_with`, `first_some_with`, and `transpose_or` helpers which operate with a parallel homogeneous nested tuple of `H` used for result/error mapping.
-- [`NestedTupleTryFrom<T, E>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryFrom.html): Provides a [`nested_tuple_try_from()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryFrom.html#tymethod.nested_tuple_try_from) method to fallibly convert nested tuple types element-wise using `TryFrom` conversions.
-- [`NestedTupleTryInto<T, E>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryInto.html): Provides a [`nested_tuple_try_into()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleTryInto.html#tymethod.nested_tuple_try_into) convenience method to perform fallible conversions using `NestedTupleTryFrom`.
-- [`NestedTupleFrom<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleFrom.html): Provides an infallible [`nested_tuple_from()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleFrom.html#tymethod.nested_tuple_from) method to convert nested tuples using `From` element-wise.
-- [`NestedTupleInto<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleInto.html): Provides an infallible [`nested_tuple_into()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleInto.html#tymethod.nested_tuple_into) convenience method to perform conversions using `NestedTupleFrom`.
-- [`NestedTupleOptionFrom<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionFrom.html): Provides a [`nested_tuple_option_from()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionFrom.html#tymethod.nested_tuple_option_from) method to convert nested tuples of `Option`s using `From` element-wise.
-- [`NestedTupleOptionInto<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionInto.html): Provides a [`nested_tuple_option_into()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionInto.html#tymethod.nested_tuple_option_into) convenience method to perform conversions using `NestedTupleOptionFrom`.
-- [`NestedTupleOptionTryFrom<T, E>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionTryFrom.html): Provides a [`nested_tuple_option_try_from()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionTryFrom.html#tymethod.nested_tuple_option_try_from) method to fallibly convert nested tuples of `Option`s using `TryFrom` conversions.
-- [`NestedTupleOptionTryInto<T, E>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionTryInto.html): Provides a [`nested_tuple_option_try_into()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleOptionTryInto.html#tymethod.nested_tuple_option_try_into) convenience method to perform fallible conversions using `NestedTupleOptionTryFrom`.
-- [`NestedTupleReplicate<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleReplicate.html): Provides a [`nested_tuple_replicate(value)`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleReplicate.html#tymethod.nested_tuple_replicate) method to create nested tuples by replicating a single value across all positions.
-- [`NestedTupleChain<Other>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleChain.html): Provides a [`chain()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleChain.html#tymethod.chain) method to chain two nested tuples.
-- [`TupleRef`](https://docs.rs/tuplities-ref/latest/tuplities_ref/trait.TupleRef.html): Provides a [`tuple_ref()`](https://docs.rs/tuplities-ref/latest/tuplities_ref/trait.TupleRef.html#tymethod.tuple_ref) method to get references to each element in the tuple.
-- [`TupleMut`](https://docs.rs/tuplities-mut/latest/tuplities_mut/trait.TupleMut.html): Provides a [`tuple_mut()`](https://docs.rs/tuplities-mut/latest/tuplities_mut/trait.TupleMut.html#tymethod.tuple_mut) method to get mutable references to each element in the tuple.
-- [`TupleRefMap`](https://docs.rs/tuplities-ref/latest/tuplities_ref/trait.TupleRefMap.html): Provides a [`tuple_ref_map()`](https://docs.rs/tuplities-ref/latest/tuplities_ref/trait.TupleRefMap.html#tymethod.tuple_ref_map) method to apply `TupleRef` to each element of a tuple of tuples, returning a tuple of tuples of references.
-- [`TupleMutMap`](https://docs.rs/tuplities-mut/latest/tuplities_mut/trait.TupleMutMap.html): Provides a [`tuple_mut_map()`](https://docs.rs/tuplities-mut/latest/tuplities_mut/trait.TupleMutMap.html#tymethod.tuple_mut_map) method to apply `TupleMut` to each element of a tuple of tuples, returning a tuple of tuples of mutable references.
-- [`TuplePopFront`](https://docs.rs/tuplities-pop-front/latest/tuplities_pop_front/trait.TuplePopFront.html): Provides a [`pop_front()`](https://docs.rs/tuplities-pop-front/latest/tuplities_pop_front/trait.TuplePopFront.html#tymethod.pop_front) method to remove and return the first element of the tuple along with the remaining elements as a new tuple.
-- [`TuplePopBack`](https://docs.rs/tuplities-pop-back/latest/tuplities_pop_back/trait.TuplePopBack.html): Provides a [`pop_back()`](https://docs.rs/tuplities-pop-back/latest/tuplities_pop_back/trait.TuplePopBack.html#tymethod.pop_back) method to remove and return the last element of the tuple along with the remaining elements as a new tuple.
-- [`TuplePushFront<T>`](https://docs.rs/tuplities-push-front/latest/tuplities_push_front/trait.TuplePushFront.html): Provides a [`push_front(element)`](https://docs.rs/tuplities-push-front/latest/tuplities_push_front/trait.TuplePushFront.html#tymethod.push_front) method to add an element to the front of the tuple, returning a new tuple.
-- [`TuplePushBack<T>`](https://docs.rs/tuplities-push-back/latest/tuplities_push_back/trait.TuplePushBack.html): Provides a [`push_back(element)`](https://docs.rs/tuplities-push-back/latest/tuplities_push_back/trait.TuplePushBack.html#tymethod.push_back) method to add an element to the back of the tuple, returning a new tuple.
-- [`TupleRemove<Idx>`](https://docs.rs/tuplities-remove/latest/tuplities_remove/trait.TupleRemove.html): Provides a [`remove()`](https://docs.rs/tuplities-remove/latest/tuplities_remove/trait.TupleRemove.html#tymethod.remove) method to remove and return the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple along with the remaining elements as a new tuple.
-- [`TupleInsert<Idx, T>`](https://docs.rs/tuplities-insert/latest/tuplities_insert/trait.TupleInsert.html): Provides an [`insert()`](https://docs.rs/tuplities-insert/latest/tuplities_insert/trait.TupleInsert.html#tymethod.insert) method to insert an element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` into the tuple, returning the tuple with the element inserted.
-- [`TupleSplit<Idx>`](https://docs.rs/tuplities-split/latest/tuplities_split/trait.TupleSplit.html): Provides a [`split()`](https://docs.rs/tuplities-split/latest/tuplities_split/trait.TupleSplit.html#tymethod.split) method to split a tuple at the specified compile-time index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`, returning two tuples containing the elements before and at/after the index.
-- [`TupleReverse`](https://docs.rs/tuplities-reverse/latest/tuplities_reverse/trait.TupleReverse.html): Provides a [`reverse()`](https://docs.rs/tuplities-reverse/latest/tuplities_reverse/trait.TupleReverse.html#tymethod.reverse) method to reverse the order of elements in a tuple.
-- [`TupleTryFrom<T>`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryFrom.html): Provides a [`tuple_try_from()`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryFrom.html#tymethod.tuple_try_from) method to fallibly convert from other types into tuples.
-- [`TupleTryInto<T>`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryInto.html): Provides a [`tuple_try_into()`](https://docs.rs/tuplities-try-from/latest/tuplities_try_from/trait.TupleTryInto.html#tymethod.tuple_try_into) method to fallibly convert tuples into other types.
-- [`TupleFrom<T>`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleFrom.html): Provides a [`tuple_from()`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleFrom.html#tymethod.tuple_from) method to infallibly convert from other types into tuples.
-- [`TupleInto<T>`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleInto.html): Provides a [`tuple_into()`](https://docs.rs/tuplities-from/latest/tuplities_from/trait.TupleInto.html#tymethod.tuple_into) method to infallibly convert tuples into other types.
-- [`FlattenNestedTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html): Provides a [`flatten()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTuple.html#tymethod.flatten) method to convert nested tuples like `(A, (B, (C,)))` into flat tuples like `(A, B, C)`.
-- [`NestTuple`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html): Provides a [`nest()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTuple.html#tymethod.nest) method to convert flat tuples like `(A, B, C)` into nested tuples like `(A, (B, (C,)))`.
-- [`NestedTupleIndex<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html): Provides a [`nested_index()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndex.html#tymethod.nested_index) method to access elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
-- [`NestedTupleIndexMut<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html): Provides a [`nested_index_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleIndexMut.html#tymethod.nested_index_mut) method to access mutable elements at flat indices in nested tuples using [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx`.
-- [`NestedTupleRef`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRef.html): Provides a [`nested_tuple_ref()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRef.html#tymethod.nested_tuple_ref) method to get nested references to each leaf value of a nested tuple.
-- [`NestedTupleMut`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleMut.html): Provides a [`nested_tuple_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleMut.html#tymethod.nested_tuple_mut) method to get nested mutable references to each leaf value of a nested tuple.
-- [`NestedTuplePopFront`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopFront.html): Provides a [`nested_pop_front()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopFront.html#tymethod.nested_pop_front) method to pop the front element of nested tuples.
-- [`NestedTuplePopBack`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopBack.html): Provides a [`nested_pop_back()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePopBack.html#tymethod.nested_pop_back) method to pop the back element of nested tuples.
-- [`NestedTuplePushFront<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushFront.html): Provides a [`nested_push_front(element)`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushFront.html#tymethod.nested_push_front) method to push an element to the front of a nested tuple.
-- [`NestedTuplePushBack<T>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushBack.html): Provides a [`nested_push_back(element)`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTuplePushBack.html#tymethod.nested_push_back) method to push an element to the back of a nested tuple.
-- [`NestedTupleRow<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html): Provides a [`nested_tuple_row()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html#tymethod.nested_tuple_row) method to access elements at the specified index across a nested tuple-of-tuples, returning a nested row tuple by value.
-- [`NestedTupleRow<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html): Provides a [`nested_tuple_row()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRow.html#tymethod.nested_tuple_row) method to access elements at the specified index across a nested tuple-of-tuples, returning a nested row tuple of references (analogous to `TupleRow`).
-- [`NestedTupleRowMut<Idx>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRowMut.html): Provides [`nested_tuple_row_mut()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleRowMut.html#tymethod.nested_tuple_row_mut) for mutable nested row access.
-- [`NestedTupleStartsWith<Other>`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestedTupleStartsWith.html): A marker trait for compile-time verification that a nested tuple starts with the same types as another nested tuple. For example, `(A, (B, (C,)))` implements `NestedTupleStartsWith<(A,)>` and `NestedTupleStartsWith<(A, (B,))>`.
-- [`NestTupleMatrix`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTupleMatrix.html): Provides a [`nest_matrix()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.NestTupleMatrix.html#tymethod.nest_matrix) method to convert flat tuples of flat tuples like `((A, B), (C, D))` into nested tuples of nested tuples like `((A, (B,)), ((C, (D,)),))`.
-- [`FlattenNestedTupleMatrix`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTupleMatrix.html): Provides a [`flatten_matrix()`](https://docs.rs/tuplities-flatten-nest/latest/tuplities_flatten_nest/trait.FlattenNestedTupleMatrix.html#tymethod.flatten_matrix) method to convert nested tuples of nested tuples back into flat tuples of flat tuples.
-- [`TupleLen`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.TupleLen.html): Provides the length of the tuple as a compile-time [`typenum::Unsigned`](https://docs.rs/typenum/latest/typenum/marker_traits/trait.Unsigned.html) type.
-- [`UnitTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.UnitTuple.html): A marker trait implemented for empty tuples `()` with `TupleLen<Len = U0>`.
-- [`SingletonTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.SingletonTuple.html): A marker trait implemented for single-element tuples `(T,)` with `TupleLen<Len = U1>`.
-- [`PairTuple`](https://docs.rs/tuplities-len/latest/tuplities_len/trait.PairTuple.html): A marker trait implemented for two-element tuples `(T1, T2)` with `TupleLen<Len = U2>`.
-- [`TupleIndex<Idx>`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndex.html): Provides an [`index()`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndex.html#tymethod.index) method to access the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
-- [`TupleIndexMut<Idx>`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndexMut.html): Provides an [`index_mut()`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.TupleIndexMut.html#tymethod.index_mut) method to access a mutable reference to the element at the specified index [`typenum`](https://docs.rs/typenum/latest/typenum/)'s `Idx` of the tuple.
-- [`FirstTupleIndex`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.FirstTupleIndex.html): A convenience trait providing a [`first_tuple_index()`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.FirstTupleIndex.html#tymethod.first_tuple_index) method to access the first element of a tuple.
-- [`LastTupleIndex`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.LastTupleIndex.html): A convenience trait providing a [`last_tuple_index()`](https://docs.rs/tuplities-index/latest/tuplities_index/trait.LastTupleIndex.html#tymethod.last_tuple_index) method to access the last element of a tuple.
-- [`TupleRow<Idx>`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.TupleRow.html): Provides a [`tuple_row()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.TupleRow.html#tymethod.tuple_row) method to access elements at the specified index across all tuples in a tuple of tuples (row-wise indexing).
-- [`TupleRowMut<Idx>`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.TupleRowMut.html): Provides a [`tuple_row_mut()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.TupleRowMut.html#tymethod.tuple_row_mut) method to access mutable elements at the specified index across all tuples in a tuple of tuples (mutable row-wise indexing).
-- [`FirstTupleRow`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.FirstTupleRow.html): A convenience trait providing a [`first_tuple_row()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.FirstTupleRow.html#tymethod.first_tuple_row) method to access the first element of each tuple in a tuple of tuples.
-- [`LastTupleRow`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.LastTupleRow.html): A convenience trait providing a [`last_tuple_row()`](https://docs.rs/tuplities-row/latest/tuplities_row/trait.LastTupleRow.html#tymethod.last_tuple_row) method to access the last element of each tuple in a tuple of tuples.
-
-## Variadic Programming with Nested Tuples
-
-One of the most powerful features of `tuplities` is the ability to perform variadic programming on tuples of arbitrary length by converting them to a nested representation `(Head, (Tail...))`. This allows you to define traits recursively without needing to implement them for every possible tuple size using macros.
-
-It is important to note that "true" variadic generics are not yet available in Rust. As such, there is still a limit on how large the flat tuples can be, determined by which `size-XX` feature flags are enabled in this crate. However, this nested approach nevertheless allows for an arbitrary level of recursion while maintaining performant compile times, typically in the order of a few seconds even for large tuple sizes.
-
-Here is an example of how to define a trait that works on tuples of any size where all elements implement `Display`:
+Recursive heterogeneous tuple utilities for `no_std` Rust. Use `neple!` to construct lists and `neplety!` to name their types. Traits and macros are available at the crate root and through `tuplities::prelude`.
 
 ```rust
 use tuplities::prelude::*;
-use core::fmt::Display;
 
-// 1. Define flat & nested traits
-trait PrintTuple {
-    fn print_tuple(&self);
-}
-trait PrintNested {
-    fn print_nested(&self);
-}
+type Values = neplety!(u8, &'static str, bool);
+let values: Values = neple!(1_u8, "two").chain(neple!(true));
+assert_eq!(values, (1, ("two", (true,))));
+assert_eq!(values.into_options().transpose(), Some(values));
+assert!(*NestedTupleIndex::<typenum::U2>::nested_index(&values));
+assert_eq!(Values::LEN, 3);
 
-// 2. Implement for the base cases
-impl PrintNested for () {
-    fn print_nested(&self) {}
-}
-impl<Head: Display> PrintNested for (Head,) {
-    fn print_nested(&self) {
-        println!("{}", self.0);
-    }
-}
-
-// 3. Implement for the recursive case
-impl<Head, Tail> PrintNested for (Head, Tail)
-where
-    Head: Display, // Current constraint
-    Tail: PrintNested, // Recursive constraint
-{
-    fn print_nested(&self) {
-        println!("{}", self.0);
-        self.1.print_nested();
-    }
-}
-
-// 4. Blanket implementation for nestable tuples
-//    whose nested form implements PrintNested
-impl<T> PrintTuple for T
-where
-    for<'a> &'a T: NestTuple<Nested: PrintNested>,
-{
-    fn print_tuple(&self) {
-        self.nest().print_nested();
-    }
-}
-
-// Usage
-let tuple = (42, "hello", true);
-tuple.print_tuple();
-let another_tuple = ();
-another_tuple.print_tuple();
-let yet_another_tuple = ("only one element",);
-yet_another_tuple.print_tuple();
+let (prefix, suffix) = NestedTupleSplit::<typenum::U1>::nested_split(values);
+let inserted = NestedTupleInsert::<typenum::U1, _>::nested_insert(prefix.chain(suffix), 42_u16);
+let (removed, remainder) = NestedTupleRemove::<typenum::U1>::nested_remove(inserted);
+assert_eq!(removed, 42);
+assert_eq!(remainder.nested_reverse(), neple!(true, "two", 1_u8));
 ```
 
-This pattern is extensively used in libraries like [`diesel-builders`](https://github.com/LucaCappelletti94/diesel-builders/) to build complex, type-safe abstractions over tuples of varying sizes.
+Split preserves its suffix and singleton-terminates its prefix. Insertion and removal preserve untouched suffixes and singleton-terminate reconstructed empty tails, while reversal produces a singleton-terminated list. Consuming operations accept reference-valued elements and leave borrowed recursive tails untouched, with traversal into borrowed tails rejected.
 
-### Comparison with Macro-based Approach
-
-Without nested tuples, achieving the same result typically requires defining a recursive macro that implements the trait for every tuple size up to a maximum limit. This approach has several downsides:
-
-1. **Code Bloat**: The macro generates a separate implementation for each tuple size, leading to a large amount of generated code.
-2. **Compile Times & Quadratic Bounds Growth**: The compiler has to process all these implementations, which significantly increases compile times. The number of trait bounds generated increases quadratically with the maximum tuple size `N` (proportional to `N^2`), as the macro generates implementations for all sizes from 0 to `N`, and size `k` requires `k` bounds.
-3. **Maintenance**: Writing and maintaining complex macros can be error-prone and difficult to debug.
-4. **Code Coverage**: Code coverage tools often struggle to provide meaningful information for code generated via macros, making it harder to ensure your variadic logic is fully tested.
-
-Here is how the same trait would be implemented using macros:
+The default `flatten-nest` feature provides flat/nested tuple and matrix conversions and enables `alloc`. Flat conversions support widths through 8, with `size-16`, `size-32`, `size-48`, `size-64`, `size-96`, and `size-128` selecting larger limits. Enabling multiple size features selects the largest limit.
 
 ```rust
-use core::fmt::Display;
+# #[cfg(feature = "flatten-nest")] {
+use tuplities::{FlattenNestedTuple, NestTuple};
 
-trait PrintTuple {
-    fn print_tuple(&self);
-}
-
-macro_rules! impl_print_tuple {
-    // Base case: empty tuple
-    () => {
-        impl PrintTuple for () {
-            fn print_tuple(&self) {}
-        }
-    };
-    // Recursive step: implement for (Head, Tail...) and recurse
-    ($Head:ident $(, $Tail:ident)*) => {
-        impl<$Head: Display, $($Tail: Display),*> PrintTuple for ($Head, $($Tail,)*) {
-            fn print_tuple(&self) {
-                #[allow(non_snake_case)]
-                let ($Head, $($Tail,)*) = self;
-                println!("{}", $Head);
-                $(println!("{}", $Tail);)*
-            }
-        }
-
-        // Recurse for smaller tuple size
-        impl_print_tuple!($($Tail),*);
-    };
-}
-
-// Invoke once for the maximum size you want to support (e.g., 12)
-impl_print_tuple!(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12);
+let flat = (String::from("one"), 2_u8, true);
+let nested = flat.nest();
+assert_eq!(nested, (String::from("one"), (2, (true,))));
+assert_eq!(nested.flatten(), (String::from("one"), 2, true));
+# }
 ```
 
-## Features
+Disable default features for the allocator-free recursive core and enable `alloc` for `NestedTupleIntoVec`. Indexing, row access, and `NestedTuple::LEN` depend on recursive structure without flat arity limits. Both singleton-terminated and unit-terminated lists support these operations, including borrowed tails.
 
-The crate provides optional features to enable specific traits. All features are enabled by default for convenience, but can be selectively disabled to reduce compile time and binary size.
-
-### Trait Features
-
-The following features enable individual trait crates:
-
-- `clone`: Enables `TupleClone` trait
-- `copy`: Enables `TupleCopy` trait
-- `debug`: Enables `TupleDebug` trait
-- `tuple-default`: Enables `TupleDefault` trait
-- `eq`: Enables `TupleEq` trait
-- `flatten-nest`: Enables `FlattenNestedTuple`, `NestTuple`, `NestedTupleIndex`, `NestedTupleIndexMut`, `NestedTupleTryFrom`, `NestedTupleTryInto`, `NestTupleMatrix`, `FlattenNestedTupleMatrix`, `NestedTupleOption`, `IntoNestedTupleOption`, and `NestedTupleOptionWith` traits
-- `from`: Enables `TupleFrom` and `TupleInto` traits
-- `hash`: Enables `TupleHash` trait
-- `mut`: Enables `TupleMut` and `TupleMutMap` traits
-- `option`: Enables `TupleOption` and `IntoTupleOption` traits
-- `ord`: Enables `TupleOrd` trait
-- `partial-eq`: Enables `TuplePartialEq` trait
-- `partial-ord`: Enables `TuplePartialOrd` trait
-- `remove`: Enables `TupleRemove` trait
-- `insert`: Enables `TupleInsert` trait
-- `len`: Enables `TupleLen`, `UnitTuple`, `SingletonTuple`, and `PairTuple` traits
-- `index`: Enables `TupleIndex`, `TupleIndexMut`, `FirstTupleIndex`, and `LastTupleIndex` traits
-- `pop-front`: Enables `TuplePopFront`, `TupleRefFront`, and `TupleMutFront` traits
-- `pop-back`: Enables `TuplePopBack`, `TupleRefBack`, and `TupleMutBack` traits
-- `push-front`: Enables `TuplePushFront` trait
-- `push-back`: Enables `TuplePushBack` trait
-- `ref`: Enables `TupleRef` and `TupleRefMap` traits
-- `replicate`: Enables `TupleReplicate` trait
-- `reverse`: Enables `TupleReverse` trait
-- `row`: Enables `TupleRow`, `TupleRowMut`, `FirstTupleRow`, and `LastTupleRow` traits
-- `split`: Enables `TupleSplit` trait
-- `try-from`: Enables `TupleTryFrom` and `TupleTryInto` traits
-
-### Size Features
-
-Additionally, the crate provides features to generate trait implementations for tuples up to different sizes: 8 (default), 16, 32, 48, 64, 96, or 128 elements. Use the `size-XX` features to enable larger tuple support.
-
-```toml
-[dependencies]
-tuplities = { version = "0.1.4", default-features = false, features = ["clone", "index", "size-32"] }
-```
-
-## Performance
-
-Compile times scale with tuple size due to code generation. Below are measured build times for different maximum tuple sizes captured via the project's `measure_compile_times.sh` script on a typical development machine. Values are approximate and represent wall-clock `real` times. If you only plan to use variadic nested tuples, you may prefer to use only the `tuplities-flatten-nest` crate, which has significantly lower compile times.
-
-### tuplities (root crate)
-
-| Max Tuple Size | Compile Time |
-|----------------|--------------|
-| 8 (default)    | ~4.07s       |
-| 16             | ~2.71s       |
-| 32             | ~3.29s       |
-| 48             | ~4.55s       |
-| 64             | ~6.83s       |
-| 96             | ~15.75s      |
-| 128            | ~32.44s      |
-
-### tuplities-flatten-nest (flatten-nest crate only)
-
-| Max Tuple Size | Compile Time |
-|----------------|--------------|
-| 8 (default)    | ~3.18s       |
-| 16             | ~2.45s       |
-| 32             | ~2.60s       |
-| 48             | ~2.86s       |
-| 64             | ~3.40s       |
-| 96             | ~5.46s       |
-| 128            | ~9.52s       |
-
-## Architecture
-
-The project is split into multiple crates for improved compile times:
-
-- `tuplities/`: Main crate that re-exports traits from subcrates
-- `tuplities-{trait_name}/`: Individual crates providing specific traits
-- `tuplities-derive/`: Procedural macro crate that generates trait implementations
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## Contribution
-
-Contributions are welcome! Please open issues or pull requests on the [GitHub repository](https://github.com/lucacappelletti94/tuplities).
+Rust `1.85` or later is required. Standard traits such as `Clone`, `Copy`, `Debug`, equality, ordering, and hashing compose through nested pairs without additional tuple traits.
