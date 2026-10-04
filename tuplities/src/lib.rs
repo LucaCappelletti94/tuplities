@@ -1,74 +1,80 @@
 #![no_std]
+#![recursion_limit = "256"]
 #![doc = include_str!("../README.md")]
 
-/// Re-exports of commonly used traits and types.
+#[cfg(feature = "alloc")]
+extern crate alloc;
+
+#[cfg(feature = "flatten-nest")]
+mod flat_bridge;
+mod flatten_nested;
+#[cfg(feature = "flatten-nest")]
+mod matrix;
+mod nest;
+mod nested_chain;
+mod nested_index;
+#[cfg(feature = "alloc")]
+mod nested_into_vec;
+mod nested_option;
+mod nested_option_try_from;
+mod nested_push_pop;
+mod nested_ref;
+mod nested_replicate;
+mod nested_reverse;
+mod nested_row;
+mod nested_starts_with;
+mod nested_structure;
+mod nested_try_from;
+mod nested_tuple;
+
+pub use flatten_nested::FlattenNestedTuple;
+#[cfg(feature = "flatten-nest")]
+pub use matrix::{
+    FlattenMatrixElements, FlattenNestedTupleMatrix, NestMatrixElements, NestTupleMatrix,
+};
+pub use nest::{NestTuple, NestTupleMut, NestTupleRef};
+pub use nested_chain::NestedTupleChain;
+pub use nested_index::{NestedTupleIndex, NestedTupleIndexMut};
+#[cfg(feature = "alloc")]
+pub use nested_into_vec::NestedTupleIntoVec;
+pub use nested_option::{
+    IntoNestedTupleOption, NestedTupleFlattenOption, NestedTupleOption, NestedTupleOptionWith,
+};
+pub use nested_option_try_from::{
+    NestedTupleOptionFrom, NestedTupleOptionInto, NestedTupleOptionTryFrom,
+    NestedTupleOptionTryInto,
+};
+pub use nested_push_pop::{
+    NestedTuplePopBack, NestedTuplePopFront, NestedTuplePushBack, NestedTuplePushFront,
+};
+pub use nested_ref::{NestedTupleMut, NestedTupleRef};
+pub use nested_replicate::NestedTupleReplicate;
+pub use nested_reverse::NestedTupleReverse;
+pub use nested_row::{NestedTupleRow, NestedTupleRowMut};
+pub use nested_starts_with::NestedTupleStartsWith;
+pub use nested_structure::{NestedTupleInsert, NestedTupleRemove, NestedTupleSplit};
+pub use nested_try_from::{
+    NestedTupleFrom, NestedTupleInto, NestedTupleTryFrom, NestedTupleTryInto,
+};
+pub use nested_tuple::NestedTuple;
+
+/// Traits and construction macros for recursive tuples and optional flat-tuple conversions.
 pub mod prelude {
-    #[cfg(feature = "clone")]
-    pub use tuplities_clone::TupleClone;
-    #[cfg(feature = "copy")]
-    pub use tuplities_copy::TupleCopy;
-    #[cfg(feature = "debug")]
-    pub use tuplities_debug::TupleDebug;
-    #[cfg(feature = "tuple-default")]
-    pub use tuplities_default::TupleDefault;
-    #[cfg(feature = "eq")]
-    pub use tuplities_eq::TupleEq;
+    #[cfg(feature = "alloc")]
+    pub use crate::NestedTupleIntoVec;
     #[cfg(feature = "flatten-nest")]
-    pub use tuplities_flatten_nest::{
-        FlattenMatrixElements, FlattenNestedTuple, FlattenNestedTupleMatrix, IntoNestedTupleOption,
-        NestMatrixElements, NestTuple, NestTupleMatrix, NestTupleMut, NestTupleRef,
-        NestedTupleChain, NestedTupleFlattenOption, NestedTupleFrom, NestedTupleIndex,
-        NestedTupleIndexMut, NestedTupleInto, NestedTupleIntoVec, NestedTupleMut,
-        NestedTupleOption, NestedTupleOptionFrom, NestedTupleOptionInto, NestedTupleOptionTryFrom,
-        NestedTupleOptionTryInto, NestedTupleOptionWith, NestedTuplePopBack, NestedTuplePopFront,
-        NestedTuplePushBack, NestedTuplePushFront, NestedTupleRef, NestedTupleReplicate,
-        NestedTupleRow, NestedTupleRowMut, NestedTupleStartsWith, NestedTupleTryFrom,
-        NestedTupleTryInto,
+    pub use crate::{
+        FlattenMatrixElements, FlattenNestedTupleMatrix, NestMatrixElements, NestTupleMatrix,
     };
-    #[cfg(feature = "from")]
-    pub use tuplities_from::{TupleFrom, TupleInto};
-    #[cfg(feature = "hash")]
-    pub use tuplities_hash::TupleHash;
-    #[cfg(feature = "index")]
-    pub use tuplities_index::{FirstTupleIndex, LastTupleIndex, TupleIndex, TupleIndexMut};
-    #[cfg(feature = "insert")]
-    pub use tuplities_insert::TupleInsert;
-    #[cfg(feature = "len")]
-    pub use tuplities_len::{PairTuple, SingletonTuple, TupleLen, UnitTuple};
-    #[cfg(feature = "mut")]
-    pub use tuplities_mut::TupleMut;
-    #[cfg(feature = "mut")]
-    pub use tuplities_mut::TupleMutMap;
-    #[cfg(feature = "option")]
-    pub use tuplities_option::{IntoTupleOption, TupleOption};
-    #[cfg(feature = "ord")]
-    pub use tuplities_ord::TupleOrd;
-    #[cfg(feature = "partial-eq")]
-    pub use tuplities_partial_eq::TuplePartialEq;
-    #[cfg(feature = "partial-ord")]
-    pub use tuplities_partial_ord::TuplePartialOrd;
-    #[cfg(feature = "pop-back")]
-    pub use tuplities_pop_back::{TupleMutBack, TuplePopBack, TupleRefBack};
-    #[cfg(feature = "pop-front")]
-    pub use tuplities_pop_front::{TupleMutFront, TuplePopFront, TupleRefFront};
-    #[cfg(feature = "push-back")]
-    pub use tuplities_push_back::TuplePushBack;
-    #[cfg(feature = "push-front")]
-    pub use tuplities_push_front::TuplePushFront;
-    #[cfg(feature = "ref")]
-    pub use tuplities_ref::TupleRef;
-    #[cfg(feature = "ref")]
-    pub use tuplities_ref::TupleRefMap;
-    #[cfg(feature = "remove")]
-    pub use tuplities_remove::TupleRemove;
-    #[cfg(feature = "replicate")]
-    pub use tuplities_replicate::TupleReplicate;
-    #[cfg(feature = "reverse")]
-    pub use tuplities_reverse::TupleReverse;
-    #[cfg(feature = "row")]
-    pub use tuplities_row::{FirstTupleRow, LastTupleRow, TupleRow, TupleRowMut};
-    #[cfg(feature = "split")]
-    pub use tuplities_split::TupleSplit;
-    #[cfg(feature = "try-from")]
-    pub use tuplities_try_from::{TupleTryFrom, TupleTryInto};
+    pub use crate::{
+        FlattenNestedTuple, IntoNestedTupleOption, NestTuple, NestTupleMut, NestTupleRef,
+        NestedTuple, NestedTupleChain, NestedTupleFlattenOption, NestedTupleFrom, NestedTupleIndex,
+        NestedTupleIndexMut, NestedTupleInsert, NestedTupleInto, NestedTupleMut, NestedTupleOption,
+        NestedTupleOptionFrom, NestedTupleOptionInto, NestedTupleOptionTryFrom,
+        NestedTupleOptionTryInto, NestedTupleOptionWith, NestedTuplePopBack, NestedTuplePopFront,
+        NestedTuplePushBack, NestedTuplePushFront, NestedTupleRef, NestedTupleRemove,
+        NestedTupleReplicate, NestedTupleReverse, NestedTupleRow, NestedTupleRowMut,
+        NestedTupleSplit, NestedTupleStartsWith, NestedTupleTryFrom, NestedTupleTryInto, neple,
+        neplety,
+    };
 }

@@ -2,101 +2,118 @@ name: Rust CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
+  CARGO_BUILD_JOBS: "4"
 
 permissions:
   contents: read
 
 jobs:
   test:
-    name: Test
+    name: Tests (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        rust: [stable, beta, nightly]
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@master
-      with:
-        toolchain: ${{ matrix.rust }}
-    - name: Cache cargo registry
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-      with:
-        path: ~/.cargo/registry
-        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-    - name: Cache cargo index
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-      with:
-        path: ~/.cargo/git
-        key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-    - name: Cache cargo build
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-      with:
-        path: target
-        key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-    - name: Run tests
-      run: cargo test --verbose
-    - name: Run tests (release)
-      run: cargo test --release --verbose
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: stable
+      - run: cargo test -p tuplities --locked
+      - run: cargo test -p tuplities --all-features --locked
 
-  fmt:
-    name: Rustfmt
+  quality:
+    name: Formatting, linting, and documentation
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@stable
-      with:
-        components: rustfmt
-    - name: Check formatting
-      run: cargo fmt --all -- --check
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+      - run: cargo fmt -p tuplities -- --check
+      - run: cargo clippy -p tuplities --all-targets --all-features --locked -- -D warnings
+      - run: cargo doc -p tuplities --no-deps --all-features --locked
+        env:
+          RUSTDOCFLAGS: -D warnings
 
-  clippy:
-    name: Clippy
+  msrv:
+    name: MSRV and no_std
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@stable
-      with:
-        components: clippy
-    - name: Run clippy
-      run: cargo clippy --all-targets -- -D warnings
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: 1.85.0
+          targets: thumbv7em-none-eabi
+      - run: cargo check -p tuplities --lib --all-features --locked
+      - run: cargo check -p tuplities --lib --no-default-features --locked
+      - run: cargo check -p tuplities --lib --no-default-features --target thumbv7em-none-eabi --locked
 
-  doc:
-    name: Documentation
+  features:
+    name: Features (${{ matrix.features || 'core' }})
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        features:
+          - ""
+          - alloc
+          - flatten-nest
+          - flatten-nest,size-16
+          - flatten-nest,size-32
+          - flatten-nest,size-48
+          - flatten-nest,size-64
+          - flatten-nest,size-96
+          - flatten-nest,size-128
+          - flatten-nest,size-16,size-32
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@stable
-    - name: Check documentation
-      run: cargo doc --no-deps --document-private-items
-      env:
-        RUSTDOCFLAGS: -D warnings
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: stable
+      - run: cargo test -p tuplities --no-default-features --features "$FEATURES" --locked
+        env:
+          FEATURES: ${{ matrix.features }}
 
   coverage:
-    name: Code Coverage
+    name: Coverage
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - name: Install Rust
-      uses: dtolnay/rust-toolchain@nightly
-      with:
-        components: llvm-tools-preview
-    - name: Install tarpaulin
-      uses: taiki-e/install-action@cargo-tarpaulin
-    - name: Generate coverage
-      run: cargo tarpaulin --engine=llvm --out xml --workspace --exclude tuplities-derive --run-types AllTargets --run-types Doctests
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: nightly
+          components: llvm-tools-preview
+      - uses: taiki-e/install-action@e407f7bafb71fd004bc5c2da3032e5470cbb6ef0
+        with:
+          tool: cargo-llvm-cov
+          fallback: none
+      - run: cargo llvm-cov -p tuplities --all-targets --all-features --locked --no-report
+      - run: cargo llvm-cov -p tuplities --doc --all-features --locked --no-clean --lcov --output-path target/coverage.lcov
+      - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: target/coverage.lcov
+          fail_ci_if_error: false
